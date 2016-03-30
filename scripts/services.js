@@ -4,7 +4,7 @@
 'use strict';
 
 var SERVICE_PATH = {
-    ARTICLE_LIST : "dummy/list-:tagId.json",
+    ARTICLE_LIST : "dummy/list-:tagId-:page.json",
 }
 
 var blogServices = angular.module('blogServices', ['ngResource']);

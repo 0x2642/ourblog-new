@@ -10,7 +10,9 @@ blogController.controller('HomeController',['$rootScope','$scope','ArticleList',
         var getList = function(pageNum){
             ArticleList.get({page:pageNum},function (data) {
                 $rootScope.title = data.title;
-                $scope.top = data.top;
+                if(pageNum == 1){
+                    $scope.top = data.top;
+                }
                 $scope.articles = data.articles;
                 $scope.pagenation = data.pagenation;
             });            

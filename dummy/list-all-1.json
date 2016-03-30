@@ -1,0 +1,62 @@
+{
+    "title": "主页",
+    "top": {
+        "id": 1000,
+        "title": "我想上头条",
+        "description": "那就帮你上头条的文章描述",
+        "author": {
+            "id": "xykbear",
+            "name": "XYKbear"
+        },
+        "timestamp": 1459346686265,
+        "thumb": "images/thumb.jpg",
+        "tags": [
+            "ACG",
+            "Life"
+        ],
+        "actions": [
+            "edit",
+            "delete"
+        ]
+    },
+    "articles": [
+        {
+            "id": 1001,
+            "title": "文章标题1",
+            "description": "文章描述1",
+            "author": {
+                "id": "xykbear",
+                "name": "XYKbear"
+            },
+            "timestamp": 1459346686265,
+            "thumb": "images/thumb.jpg",
+            "tags": [
+                "JavaScript",
+                "Code"
+            ],
+            "actions": [
+                "edit"
+            ]
+        },
+        {
+            "id": 1002,
+            "title": "文章标题2",
+            "description": "文章描述2",
+            "author": {
+                "id": "xykbear",
+                "name": "XYKbear"
+            },
+            "timestamp": 1459346686265,
+            "thumb": "images/thumb.jpg",
+            "tags": [
+                "ACG",
+                "Tubing"
+            ],
+            "actions": []
+        }
+    ],
+    "pagenation": {
+        "current": 1,
+        "max": 2
+    }
+}

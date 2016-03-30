@@ -1,0 +1,19 @@
+<a ng-href="#/post/{{info.id}}"><h2>{{info.title}}</h2></a>
+<div class="meta">
+    <p><a ng-href="#/author/{{info.author.id}}">{{info.author.name}}</a></p>
+    <p>{{info.timestamp|date}}</p>
+    <ul>
+        <li ng-repeat="tag in info.tags">
+            <a ng-href="#/tag/{{tag}}">{{tag}}</a>
+        </li>
+    </ul>
+</div>
+<div class="action" ng-hide="{{info.actions.length==0}}">
+    <ul>
+        <li ng-repeat="action in info.actions">
+            <a ng-href="#/{{action}}/{{info.id}}">{{action}}</a>
+        </li>
+    </ul>
+</div>
+<div class="desc">{{info.description}}</div>
+<div class="thumb"><img ng-src="{{info.thumb}}" /></div>

@@ -1,7 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 'use strict';
 
-var app = angular.module('ourblog', ['ngRoute','blogController','blogServices']);
+var app = angular.module('ourblog', ['ngRoute','blogController','blogServices','blogDirective']);
 app.config(function ($routeProvider) {
     $routeProvider
     .when('/home',{

@@ -1,7 +1,7 @@
-<h1>{{top.title}}</h1>
-<ul ng-repeat="article in articles">
-    <li>
-        <h2>{{article.title}}</h2>
+<article info="top" class="top"></article>
+<ul>
+    <li ng-repeat="article in articles">
+        <article info="article"></article>
     </li>
 </ul>
 <button ng-click="previous()" ng-hide="(pagenation.current==1)">Previous</button>
