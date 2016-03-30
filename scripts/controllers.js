@@ -4,12 +4,53 @@
 'use strict';
 
 var blogController = angular.module('blogController',[]);
-blogController.controller('HomeController',['$rootScope','$scope','HomeSerivce',function ($rootScope,$scope,HomeSerivce) {
-    //var data = homeService;
-    $rootScope.title = "Homepage";
-    $scope.title = "HomoPage";
-}]);
-blogController.controller('ListController',['$rootScope','$scope','$routeParam','ListService',function($rootScope,$scope,$routeParam,ListService){
-    $rootScope.title = $routeParam.tagId;
-    $scope.title = "tagatag";
-}]);
+
+blogController.controller('HomeController',['$rootScope','$scope','ArticleList',
+    function ($rootScope,$scope,ArticleList) {
+        var getList = function(pageNum){
+            ArticleList.get({page:pageNum},function (data) {
+                $rootScope.title = data.title;
+                $scope.top = data.top;
+                $scope.articles = data.articles;
+                $scope.pagenation = data.pagenation;
+            });            
+        }
+        getList(1);
+        $scope.next = function(){
+            var pagenation = $scope.pagenation;
+            if(pagenation.current < pagenation.max){
+                getList(parseInt(pagenation.current+1));
+            }
+        }
+        $scope.previous = function(){
+            var pagenation = $scope.pagenation;
+            if(pagenation.current > 1){
+                getList(parseInt(pagenation.current-1));
+            }
+        }
+    }]);
+    
+blogController.controller('ListController',['$rootScope','$scope','$routeParams','ArticleList',
+    function($rootScope,$scope,$routeParams,ArticleList){
+        var getList = function(pageNum){
+            ArticleList.get({tagId:$routeParams.tagId,page:2},function (data) {
+                $rootScope.title = data.title;
+                $scope.tagInfo = data.tagInfo;
+                $scope.articles = data.articles;
+                $scope.pagenation = data.pagenation;
+            });
+        }
+        getList(1);
+        $scope.next = function(){
+            var pagenation = $scope.pagenation;
+            if(pagenation.current < pagenation.max){
+                getList(parseInt(pagenation.current+1));
+            }
+        }
+        $scope.previous = function(){
+            var pagenation = $scope.pagenation;
+            if(pagenation.current > 1){
+                getList(parseInt(pagenation.current-1));
+            }
+        }
+    }]);
