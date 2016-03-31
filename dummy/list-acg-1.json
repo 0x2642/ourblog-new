@@ -1,34 +1,15 @@
 {
-    "title": "所有文章",
+    "title": "ACG",
+    "tagInfo": {
+        "id":"acg",
+        "name":"ACG",
+        "description":"关于萌萌二次元"
+    },
     "articles": [
         {
-            "id": 1003,
-            "title": "文章标题3",
-            "description": "文章描述3",
-            "author": {
-                "id": "xykbear",
-                "name": "XYKbear"
-            },
-            "timestamp": 1459346686265,
-            "thumb": "images/thumb.jpg",
-            "tags": [
-                {
-                    "id": "code",
-                    "name": "技术"
-                },
-                {
-                    "id": "php",
-                    "name": "PHP"
-                }
-            ],
-            "actions": [
-                "edit"
-            ]
-        },
-        {
-            "id": 1004,
-            "title": "文章标题4",
-            "description": "文章描述4",
+            "id": 2001,
+            "title": "ACG文章标题1",
+            "description": "ACG文章描述1",
             "author": {
                 "id": "xykbear",
                 "name": "XYKbear"
@@ -41,15 +22,39 @@
                     "name": "ACG"
                 },
                 {
-                    "id": "steam",
-                    "name": "Steam"
+                    "id": "twice",
+                    "name": "二次"
+                }
+            ],
+            "actions": [
+                "edit"
+            ]
+        },
+        {
+            "id": 2002,
+            "title": "ACG文章标题2",
+            "description": "ACG文章描述2",
+            "author": {
+                "id": "xykbear",
+                "name": "XYKbear"
+            },
+            "timestamp": 1459346686265,
+            "thumb": "images/thumb.jpg",
+            "tags": [
+                {
+                    "id": "acg",
+                    "name": "ACG"
+                },
+                {
+                    "id": "tubing",
+                    "name": "菟饼"
                 }
             ],
             "actions": []
         }
     ],
     "pagenation": {
-        "current": 2,
-        "max": 2
+        "current": 1,
+        "max": 1
     }
 }

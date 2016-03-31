@@ -1,6 +1,4 @@
 /// <reference path="../typings/tsd.d.ts" />
-/// <reference path="app.js" />
-/// <reference path="controllers.js" />
 'use strict';
 
 var SERVICE_PATH = {

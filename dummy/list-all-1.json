@@ -11,8 +11,14 @@
         "timestamp": 1459346686265,
         "thumb": "images/thumb.jpg",
         "tags": [
-            "ACG",
-            "Life"
+            {
+                "id": "acg",
+                "name": "ACG"
+            },
+            {
+                "id": "lefe",
+                "name": "生活"
+            }
         ],
         "actions": [
             "edit",
@@ -31,8 +37,14 @@
             "timestamp": 1459346686265,
             "thumb": "images/thumb.jpg",
             "tags": [
-                "JavaScript",
-                "Code"
+                {
+                    "id": "javascirpt",
+                    "name": "JavaScript"
+                },
+                {
+                    "id": "code",
+                    "name": "技术"
+                }
             ],
             "actions": [
                 "edit"
@@ -49,8 +61,14 @@
             "timestamp": 1459346686265,
             "thumb": "images/thumb.jpg",
             "tags": [
-                "ACG",
-                "Tubing"
+                {
+                    "id": "acg",
+                    "name": "ACG"
+                },
+                {
+                    "id": "tubing",
+                    "name": "菟饼"
+                }
             ],
             "actions": []
         }

@@ -1,3 +1,9 @@
-<div>
-    {{title}}
-</div>
+<h1>{{tagInfo.name}}</h1>
+<p>{{tagInfo.description}}</p>
+<ul>
+    <li ng-repeat="article in articles">
+        <article info="article"></article>
+    </li>
+</ul>
+<button ng-click="previous()" ng-hide="(pagenation.current==1)">Previous</button>
+<button ng-click="next()" ng-hide="(pagenation.current==pagenation.max)">Next</button>

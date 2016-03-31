@@ -32,14 +32,16 @@ blogController.controller('HomeController',['$rootScope','$scope','ArticleList',
         }
     }]);
     
-blogController.controller('ListController',['$rootScope','$scope','$routeParams','ArticleList',
-    function($rootScope,$scope,$routeParams,ArticleList){
+blogController.controller('ListController',['$rootScope','$scope','$location','$routeParams','ArticleList',
+    function($rootScope,$scope,$location,$routeParams,ArticleList){
         var getList = function(pageNum){
-            ArticleList.get({tagId:$routeParams.tagId,page:2},function (data) {
+            ArticleList.get({tagId:$routeParams.tagId,page:pageNum},function (data) {
                 $rootScope.title = data.title;
                 $scope.tagInfo = data.tagInfo;
                 $scope.articles = data.articles;
                 $scope.pagenation = data.pagenation;
+            },function (error) {
+                $location.path("/error/"+error.status);
             });
         }
         getList(1);
@@ -56,3 +58,9 @@ blogController.controller('ListController',['$rootScope','$scope','$routeParams'
             }
         }
     }]);
+
+blogController.controller('ErrorController',['$rootScope','$scope','$routeParams',
+    function ($rootScope,$scope,$routeParams) {
+        $rootScope.title = "出错啦！";
+        $scope.status = $routeParams.errorCode;
+    }])

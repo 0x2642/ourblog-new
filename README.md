@@ -10,5 +10,5 @@ See the whole project [here](https://github.com/0x2642/ourblog)
 ### IntelliSense with Visual Studio Code
 1. ```npm -g install tsd```
 2. ```tsd install```
-3. include "tsd.d.ts" file in the "typings" folder, like:
+3. include "tsd.d.ts" file, like:
 ```/// <reference path="../typings/tsd.d.ts" />```

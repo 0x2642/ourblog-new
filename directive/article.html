@@ -4,14 +4,14 @@
     <p>{{info.timestamp|date}}</p>
     <ul>
         <li ng-repeat="tag in info.tags">
-            <a ng-href="#/tag/{{tag}}">{{tag}}</a>
+            <a ng-href="#/tag/{{tag.id}}">{{tag.name}}</a>
         </li>
     </ul>
 </div>
 <div class="action" ng-hide="{{info.actions.length==0}}">
     <ul>
         <li ng-repeat="action in info.actions">
-            <a ng-href="#/{{action}}/{{info.id}}">{{action}}</a>
+            <a ng-href="#/{{action}}/{{info.id}}">{{action|action}}</a>
         </li>
     </ul>
 </div>
