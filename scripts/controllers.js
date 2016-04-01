@@ -58,9 +58,14 @@ blogController.controller('ListController',['$rootScope','$scope','$location','$
             }
         }
     }]);
+    
+blogController.controller('PostController',['$rootScope','$scope','$location','$routeParams','Article',
+    function ($rootScope,$scope,$location,$routeParams,Article) {
+        
+    }])
 
 blogController.controller('ErrorController',['$rootScope','$scope','$routeParams',
     function ($rootScope,$scope,$routeParams) {
         $rootScope.title = "出错啦！";
         $scope.status = $routeParams.errorCode;
-    }])
+    }]);
