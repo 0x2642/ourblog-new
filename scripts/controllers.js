@@ -59,9 +59,59 @@ blogController.controller('ListController',['$rootScope','$scope','$location','$
         }
     }]);
     
-blogController.controller('PostController',['$rootScope','$scope','$location','$routeParams','Article',
-    function ($rootScope,$scope,$location,$routeParams,Article) {
-        
+blogController.controller('ArticleController',['$rootScope','$scope','$location','$routeParams','Article','$log',
+    function ($rootScope,$scope,$location,$routeParams,Article,$log) {
+        var action = $routeParams.action;
+        var articleId = $routeParams.articleId;
+        if(articleId == null && (action == "edit" || action == "delete" || action == null)){
+            $location.path("/home");
+        }
+        if(articleId && articleId != "" && /^[A-Za-z0-9]+$/.test(articleId) || action == "add"){
+            switch(action){
+                case "delete" : 
+                    Article.delete({articleId:articleId},function (success) {
+                        $location.path("/home");
+                    },function(error){
+                        $location.path("/home");
+                    });
+                    break;
+                case "edit" : 
+                    Article.edit({articleId:articleId},function(data){
+                        $rootScope.title = "编辑:"+data.title;
+                        $scope.articleTitle = data.title;
+                        $scope.articleText = data.text;
+                    });
+                    $scope.save = function(){
+                        Article.save({articleId:articleId},{title:$scope.articleTitle,text:$scope.articleText},function (data) {
+                            $location.path("/article/{{data}}");
+                        },function (error) {
+                            //exception
+                        });
+                    }
+                    break;
+                case "add" :
+                    $rootScope.title = "新建文章";
+                    $scope.articleTitle = "新建文章";
+                    $scope.articleText = "";
+                    $scope.save = function(){
+                        Article.save({articleId:""},{title:$scope.articleTitle,text:$scope.articleText},function (data) {
+                            $location.path("/article/{{data}}");
+                        },function (error) {
+                            //exception
+                        });
+                    }
+                    break;
+                default : 
+                    Article.view({articleId:articleId},function(data){
+                        $rootScope.title = data.title;
+                        $scope.title = data.title;
+                        $scope.text = data.text;
+                        $scope.author = data.author;
+                    });
+            };
+        }else{
+            $location.path("/home");
+        }
     }])
 
 blogController.controller('ErrorController',['$rootScope','$scope','$routeParams',

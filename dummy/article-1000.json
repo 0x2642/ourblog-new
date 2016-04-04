@@ -1,0 +1,9 @@
+{
+    "title":"文章标题1",
+    "text":"文章内容1",
+    "author":{
+        "id":"xykbear",
+        "name":"XYKbear",
+        "descrption":"关于这位作者"
+    }
+}

@@ -1,4 +1,4 @@
-<a ng-href="#/post/{{info.id}}"><h2>{{info.title}}</h2></a>
+<a ng-href="#/article/{{info.id}}"><h2>{{info.title}}</h2></a>
 <div class="meta">
     <p><a ng-href="#/author/{{info.author.id}}">{{info.author.name}}</a></p>
     <p>{{info.timestamp|date}}</p>
@@ -11,7 +11,7 @@
 <div class="action" ng-hide="{{info.actions.length==0}}">
     <ul>
         <li ng-repeat="action in info.actions">
-            <a ng-href="#/{{action}}/{{info.id}}">{{action|action}}</a>
+            <a ng-href="#/article/{{info.id}}/{{action}}">{{action|action}}</a>
         </li>
     </ul>
 </div>

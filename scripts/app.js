@@ -12,13 +12,13 @@ app.config(function ($routeProvider) {
         controller: "ListController",
         templateUrl: "views/list.html"
     })
-    .when('/post/:postId',{
-        controller: "PostController",
-        templateUrl: "views/post.html"
+    .when('/article/:articleId',{
+        controller: "ArticleController",
+        templateUrl: "views/article.html"
     })
-    .when('/post/:postId/:action',{
-        controller: "PostController",
-        templateUrl: "view/edit.html"
+    .when('/article/:articleId?/:action',{
+        controller: "ArticleController",
+        templateUrl: "views/edit.html"
     })
     .when('/error/:errorCode',{
         controller: "ErrorController",
