@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN" ng-app="ourblog">
 <head>
     <meta charset="utf-8">
@@ -11,33 +11,47 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <!--[if lte IE 9]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
-  <![endif]-->
-
-  <nav class="navbar">
+  <header class="header">
     <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#/"><h1>0x2642 Blog</h1></a>
+      <div class="header-logo clearfix">
+        <img src="https://avatars2.githubusercontent.com/u/12589920?v=3&s=120"/>
       </div>
-      
-      <div class="navbar-list">
-        <ul class="nav navbar-nav">
-          <li><a ng-href="#/">肮脏的主页</a></li>
-          <li><a ng-href="#/tag/code">加班之道</a></li>
-          <li><a ng-href="#/tag/acg">萌萌二次元</a></li>
-          <li><a ng-href="#/tag/life">生活与哲学</a></li>
+      <div class="header-title clearfix">
+        <h1><a href="#/">0x2642 Blog</a></h1>
+        <p class="header-intro">//当你下班的时候想想还在加班的教主</p>
+      </div>
+      <nav class="navbar clearfix">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <h3 class="navbar-link"><a ng-href="#/">Home</a></h3>
+            <p class="navbar-desc">肮脏的主页</p></li>
+          <li class="navbar-item">
+            <h3 class="navbar-link"><a ng-href="#/tag/code">Code</a></h3>
+            <p class="navbar-desc">加班之道</p>
+          </li>
+          <li class="navbar-item">
+            <h3 class="navbar-link"><a ng-href="#/tag/acg">ACG</a></h3>
+            <p class="navbar-desc">萌萌二次元</p>
+          </li>
+          <li class="navbar-item">
+            <h3 class="navbar-link"><a ng-href="#/tag/life">Life</a></h3>
+            <p class="navbar-desc">生活与哲学</p>
+          </li>
         </ul>
+      </nav>
+      <div class="header-search">
+        <div class="search-input clearfix">
+          <input type="text" placeholder="搜索" id="searchInput"/>
+        </div>
+        <div class="search-result"></div>
       </div>
-      
-      <div class="navbar-control">
-        <input id="searchInput"/>
-        <a href="#/Search">Go</a>
     </div>
-  </nav>
+  </header>
 
-  <div class="container">
-    <div ng-view></div>
+  <div class="contents">
+    <div class="container">
+      <div ng-view></div>
+    </div>
   </div>
 
   <footer class="footer">

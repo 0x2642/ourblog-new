@@ -9,16 +9,16 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
+html,body{
+    padding: 0;
+    margin: 0;
+}
 html {
     color: #000;
     font-size: 16px;
+    font-family: "Microsoft Yahei";
     line-height: 1.25;
     background-color: #EDEDED;
-}
-body {
-    margin: 0 auto;
-    width: 1280px;
 }
 
 /*
@@ -86,24 +86,15 @@ textarea {
 }
 
 /* ==========================================================================
-   Browser Upgrade Prompt
-   ========================================================================== */
-
-.browserupgrade {
-    margin: 0.2em 0;
-    background: #FFCC00;
-    color: #FFF;
-    padding: 0.2em 0;
-}
-
-/* ==========================================================================
-   Common classes
+   Component classes
    ========================================================================== */
 
 a{
+    color: #333;
     text-decoration: none;
 }
 a:hover{
+    color: #000;
     text-decoration: underline;
 }
 button {
@@ -127,16 +118,133 @@ button.large {
     padding: 3px 16px;
 }
 
+input[type='text']{
+    font-size: 24px;
+    line-height: 32px;
+    border-radius: 4px;
+    padding: 4px 8px;
+    background-color: #FFF;
+    color: #333;
+    border: 0;
+}
 
+/* ==========================================================================
+   Common classes
+   ========================================================================== */
+.header-title h1,
+.header-intro,
+.navbar-list,
+.navbar-link,
+.navbar-desc{
+    margin: 0;
+    padding: 0;
+}
 
+.header{
+    height: 280px;
+    background: #AA66FF;
+}
+.header-logo{
+    height: 120px;
+    float: left;
+    padding: 80px 0;
+    background-color: rgba(0,0,0,0.6);
+    width: 30%;
+}
+.header-logo>img{
+    float: right;
+    padding-right: 20px;
+}
+.header-title{
+    float: left;
+    padding: 80px 0;
+    width: 70%;
+}
+.header-title a{
+    color: #FFF;
+}
+.header-title a:hover{
+    color: #FFF;
+    text-decoration: none;
+}
+.header-title h1,.header-intro{
+    margin-left: 20px;
+}
+.header-title h1{
+    font-size: 64px;
+    line-height: 80px;
+}
+.header-intro{
+    color: #333;
+    font-size: 32px;
+    line-height: 40px
+}
+.navbar{
+    float: left;
+    padding: 40px 0;
+    width: 30%;
+    height: 100%;
+}
+.navbar-list{
+    margin-right: 40px;
+    float: right;
+}
+.navbar-item{
+    list-style: none;
+    text-align: right;
+    min-width: 200px;
+    height: 80px;
+    border-bottom: 1px solid #AAF;
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+.navbar-link{
+    font-style: normal;
+    text-transform: uppercase;
+    line-height: 40px;
+    font-size: 32px;
+}
+.navbar-link>a{
+    color: #336;
+}
+.navbar-link>a:hover{
+    color: #669;
+    text-decoration: none;
+}
+.navbar-desc{
+    color: #669;
+    font-style: italic;
+}
+.header-search{
+    width: 100%;
+    height: 40px;
+    padding-top: 220px;
+    padding-bottom: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.search-input{
+    width: 30%;
+}
+#searchInput{
+    float: right;
+    margin-right: 20px;
+    background-color: rgba(255,255,255,0.2);
+}
+#searchInput:focus{
+    background-color: #FFF;
+}
 
-
-
-
-
-
-
-
+.contents{
+    padding-left: 30%;
+    background-color: #DDCCFF;
+}
+.contents .container{
+    min-height: 500px;
+    padding: 40px;
+    background-color: #FFFFFF;
+}
 
 
 /* ==========================================================================
