@@ -16,7 +16,7 @@ html,body{
 html {
     color: #000;
     font-size: 16px;
-    font-family: "Microsoft Yahei";
+    font-family: "Microsoft Yahei",verdana;
     line-height: 1.25;
     background-color: #EDEDED;
 }
@@ -142,7 +142,7 @@ input[type='text']{
 
 .header{
     height: 280px;
-    background: #AA66FF;
+    background: url('') fixed #000033;
 }
 .header-logo{
     height: 120px;
@@ -194,7 +194,7 @@ input[type='text']{
     text-align: right;
     min-width: 200px;
     height: 80px;
-    border-bottom: 1px solid #AAF;
+    border-bottom: 1px solid #666;
     margin-bottom: 20px;
     padding-right: 10px;
 }
@@ -205,14 +205,14 @@ input[type='text']{
     font-size: 32px;
 }
 .navbar-link>a{
-    color: #336;
+    color: #CCC;
 }
 .navbar-link>a:hover{
-    color: #669;
+    color: #FFF;
     text-decoration: none;
 }
 .navbar-desc{
-    color: #669;
+    color: #999;
     font-style: italic;
 }
 .header-search{
@@ -238,12 +238,47 @@ input[type='text']{
 
 .contents{
     padding-left: 30%;
-    background-color: #DDCCFF;
+    background-color: #333;
 }
 .contents .container{
     min-height: 500px;
     padding: 40px;
-    background-color: #FFFFFF;
+    background-color: #FFF;
+}
+
+.list-item{
+    margin-bottom: 20px;
+    max-width: 660px;
+    line-height: 17px;
+}
+.item-thumb{
+    float: left;
+    margin-right: 20px;
+    width: 200px;
+    height: 120px;
+}
+.thumb-image{
+    width: 199px;
+    height: 119px;
+    overflow: hidden;
+    background-position: 50% 25%;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: -webkit-flex;
+    display: flex;
+    margin-right: 16px;
+    border: 1px solid #EEE;
+}
+.item-info{
+    margin-left: 210px;
+}
+.item-info h2{
+    display: block;
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: bold;
+    margin-bottom: 4px;
 }
 
 

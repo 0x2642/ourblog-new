@@ -3,12 +3,12 @@
 
 var blogDirective = angular.module('blogDirective',[]);
 
-blogDirective.directive('article',function () {
-    return {
-        restrict:'E',
-        scope:{
-            info:'='
-        },
-        templateUrl:'directive/article.html'
-    };
-});
+// blogDirective.directive('listitem',function () {
+//     return {
+//         restrict:'E',
+//         scope:{
+//             info:'='
+//         },
+//         templateUrl:'directive/listitem.html'
+//     };
+// });
