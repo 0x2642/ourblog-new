@@ -3,28 +3,24 @@
 
 var app = angular.module('ourblog', ['ngRoute','blogController','blogServices','blogDirective','blogFilters']);
 app.config(function ($routeProvider) {
+    var blogList = {
+        controller: 'ListController',
+        templateUrl: 'views/list.html'
+    };
+    
     $routeProvider
-    .when('/home',{
-        controller: 'HomeController',
-        templateUrl: 'views/home.html'
-    })
-    .when('/tag/:tagId',{
-        controller: "ListController",
-        templateUrl: "views/list.html"
-    })
-    .when('/article/:articleId',{
-        controller: "ArticleController",
-        templateUrl: "views/article.html"
-    })
-    .when('/article/:articleId?/:action',{
-        controller: "ArticleController",
-        templateUrl: "views/edit.html"
-    })
-    .when('/error/:errorCode',{
-        controller: "ErrorController",
-        templateUrl: "views/error.html"  
-    })
+    .when('/',blogList)
+    .when('/tag/:tagId',blogList)
+    .when('/author/:tagId',blogList)
+    // .when('/article/:articleId',{
+    //     controller: "ArticleController",
+    //     templateUrl: "views/article.html"
+    // })
+    // .when('/article/:articleId?\/:action?',{
+    //     controller: "ArticleController",
+    //     templateUrl: "views/edit.html"
+    // })
     .otherwise({
-        redirectTo: '/home'
+        redirectTo: '/'
     });
 });
