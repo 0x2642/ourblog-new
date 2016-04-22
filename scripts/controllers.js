@@ -32,28 +32,51 @@ var blogController = angular.module('blogController',[]);
 //         }
 //     }]);
     
-blogController.controller('ListController',['$rootScope','$scope','$routeParams','blogList',
-    function($rootScope,$scope,$location,$routeParams,blogList){
-        var getList = function(pageNum){
-            ArticleList.get({tagId:$routeParams.tagId,page:pageNum},function (data) {
-                $rootScope.title = data.title;
-                $scope.tagInfo = data.tagInfo;
-                $scope.articles = data.articles;
-                $scope.pagenation = data.pagenation;
-            },function (error) {
-                $location.path("/error/"+error.status);
+blogController.controller('ListController',['$rootScope','$scope','$routeParams','blogList','blogMessage',
+    function($rootScope,$scope,$routeParams,blogList,blogMessage){
+        var data = new Object();
+        if($routeParams.tag){
+            //tag
+            $rootScope.title = $scope.meta = "#" + $routeParams.tag;
+            data.tag = $routeParams.tag;
+        }else if($routeParams.author){
+            //author
+            $rootScope.title = $scope.meta = "@" + $routeParams.author;
+            data.author = $routeParams.author;
+        }else if($routeParams.text){
+            //search
+            $rootScope.title = "搜索结果";
+            $scope.meta = "搜索："+text;
+            var arr;
+            arr = text.match(/(?:tag:|#)(\w+\b)/i);//匹配标签
+            data.tag = arr&&arr[1]||"";
+            arr = text.match(/(?:^|\s+)([\w\u4e00-\u9fa5\u0800-\u4e00]+)(?:\s+|$)/i);//匹配关键词（中日英数）
+            data.keyword = arr&&arr[1]||"";
+            arr = text.match(/(?:author:|@)(\w+\b)/i);//匹配作者
+            data.author = arr&&arr[1]||"";
+        }else{
+            //home
+            $rootScope.title = $scope.meta = "主页";
+        }
+        var getList = function (page=1){
+            data.page = page;
+            $scope.list = blogList.get(data,function(success){
+                $scope.articles = success.articles;
+                $scope.pagenation = success.pagenation;
+            },function(fail){
+                blogMessage.error(fail.status);
             });
         }
-        getList(1);
-        $scope.next = function(){
+        getList();
+        $scope.nextPage = function(){//上一页
             var pagenation = $scope.pagenation;
-            if(pagenation.current < pagenation.max){
+            if(pagenation&&(pagenation.current < pagenation.max)){
                 getList(parseInt(pagenation.current+1));
             }
         }
-        $scope.previous = function(){
+        $scope.previousPage = function(){//下一页
             var pagenation = $scope.pagenation;
-            if(pagenation.current > 1){
+            if(pagenation&&(pagenation.current >1)){
                 getList(parseInt(pagenation.current-1));
             }
         }

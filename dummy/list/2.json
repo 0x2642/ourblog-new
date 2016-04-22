@@ -12,14 +12,8 @@
             "timestamp": 1459346686265,
             "thumb": "images/thumb.jpg",
             "tags": [
-                {
-                    "id": "code",
-                    "name": "技术"
-                },
-                {
-                    "id": "php",
-                    "name": "PHP"
-                }
+                "code",
+                "PHP"
             ],
             "actions": [
                 "edit"
@@ -36,14 +30,8 @@
             "timestamp": 1459346686265,
             "thumb": "images/thumb.jpg",
             "tags": [
-                {
-                    "id": "acg",
-                    "name": "ACG"
-                },
-                {
-                    "id": "steam",
-                    "name": "Steam"
-                }
+                "ACG",
+                "Steam"
             ],
             "actions": []
         }

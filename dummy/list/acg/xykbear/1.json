@@ -1,0 +1,40 @@
+{
+    "articles": [
+        {
+            "id": 2001,
+            "title": "ACG文章标题1",
+            "description": "ACG文章描述1",
+            "author": {
+                "id": "xykbear",
+                "name": "XYKbear"
+            },
+            "timestamp": 1459346686265,
+            "thumb": "images/thumb.jpg",
+            "tags": [
+                "ACG"
+            ],
+            "actions": [
+                "edit"
+            ]
+        },
+        {
+            "id": 2002,
+            "title": "ACG文章标题2",
+            "description": "ACG文章描述2",
+            "author": {
+                "id": "xykbear",
+                "name": "XYKbear"
+            },
+            "timestamp": 1459346686265,
+            "thumb": "images/thumb.jpg",
+            "tags": [
+                "ACG"
+            ],
+            "actions": []
+        }
+    ],
+    "pagenation": {
+        "current": 1,
+        "max": 1
+    }
+}

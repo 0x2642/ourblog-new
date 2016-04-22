@@ -10,8 +10,9 @@ app.config(function ($routeProvider) {
     
     $routeProvider
     .when('/',blogList)
-    .when('/tag/:tagId',blogList)
-    .when('/author/:tagId',blogList)
+    .when('/tag/:tag',blogList)
+    .when('/author/:author',blogList)
+    .when('/search/:text',blogList)
     // .when('/article/:articleId',{
     //     controller: "ArticleController",
     //     templateUrl: "views/article.html"

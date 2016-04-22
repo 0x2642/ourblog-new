@@ -1,5 +1,5 @@
 <div class="list-header">
-	<p>./{{title}}</p>
+	<p>{{meta}}</p>
 </div>
 <div class="list-body">
 	<div class="list-item" ng-repeat="article in articles">
@@ -10,7 +10,7 @@
 		    <div class="info-main">
 		        <h2><a ng-href="#/article/{{article.id}}">{{article.title}}</a></h2>
 		        <div class="tags clearfix">
-		            <a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag.id}}">{{tag.name}}</a>
+		            <a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
 		        </div>
 		        <p>{{article.description}}</p>
 		    </div>
@@ -22,6 +22,6 @@
 	</div>
 </div>
 <div class="list-footer">
-	<button ng-click="previous()" ng-hide="(pagenation.current==1)">Previous</button>
-	<button ng-click="next()" ng-hide="(pagenation.current==pagenation.max)">Next</button>
+	<button ng-click="previousPage()" ng-hide="(pagenation.current==1)" class="large">上一页</button>
+	<button ng-click="nextPage()" ng-hide="(pagenation.current==pagenation.max)" class="large">下一页</button>
 </div>

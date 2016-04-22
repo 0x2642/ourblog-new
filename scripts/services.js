@@ -2,8 +2,8 @@
 'use strict';
 
 var SERVICE_PATH = {
-    LIST : "dummy/list-:tagId-:page.json",
-    ARTICLE : "dummy/article-:articleId.json",
+    LIST : "dummy/list/:tag/:author/:page.json",
+    ARTICLE : "dummy/article.json",
     AUTHOR: "",
     LOGIN: "",
     REGISTRY: ""
@@ -42,49 +42,12 @@ blogServices.factory('blogMessage',['$log',
 //List接口
 blogServices.factory('blogList', ['$resource','blogMessage',
     function ($resource,blogMessage) {
-        var res_list = $resource(SERVICE_PATH.LIST);        
-        return {
-            default: function(page=1,callback){//默认调用（主页）
-                return res_list.get({
-                    page:page
-                },callback,function(httpResponse){
-                    blogMessage.error(httpResponse);
-                });
-            },
-            tag: function(tag="",page=1,callback){//获取标签列表
-                return res_list.get({
-                    tag:tag,
-                    page:page
-                },callback,function(httpResponse){
-                    blogMessage.error(httpResponse);
-                });
-            },
-            author: function(author="",page=1,callback){//获取作者列表
-                return res_list.get({
-                    author:author,
-                    page:page
-                },callback,function(httpResponse){
-                    blogMessage.error(httpResponse);
-                });
-            },
-            search: function(text="",page=1,callback){//搜索功能
-                var key,author,tag,arr;
-                arr = text.match(/(?:tag:|#)(\w+\b)/i);//匹配标签
-                tag = arr&&arr[1]||"";
-                arr = text.match(/(?:^|\s+)([\w\u4e00-\u9fa5\u0800-\u4e00]+)(?:\s+|$)/i);//匹配关键词（中日英数）
-                key = arr&&arr[1]||"";
-                arr = text.match(/(?:author:|@)(\w+\b)/i);//匹配作者
-                author = arr&&arr[1]||"";
-                return res_list.get({
-                    tag:tag,
-                    keyword:key,
-                    author:author,
-                    page:page
-                },callback,function(httpResponse){
-                    blogMessage.error(httpResponse);
-                });
-            }
-        }
+        return $resource(SERVICE_PATH.LIST,{
+            tag:'@tag',
+            author:'@author',
+            keyword:'@keyword',
+            page:1
+        });
     }]);
 
 //Article接口

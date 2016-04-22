@@ -1,10 +1,4 @@
 {
-    "title": "ACG",
-    "tagInfo": {
-        "id":"acg",
-        "name":"ACG",
-        "description":"关于萌萌二次元"
-    },
     "articles": [
         {
             "id": 2001,
@@ -17,14 +11,7 @@
             "timestamp": 1459346686265,
             "thumb": "images/thumb.jpg",
             "tags": [
-                {
-                    "id": "acg",
-                    "name": "ACG"
-                },
-                {
-                    "id": "twice",
-                    "name": "二次"
-                }
+                "ACG"
             ],
             "actions": [
                 "edit"
@@ -41,14 +28,7 @@
             "timestamp": 1459346686265,
             "thumb": "images/thumb.jpg",
             "tags": [
-                {
-                    "id": "acg",
-                    "name": "ACG"
-                },
-                {
-                    "id": "tubing",
-                    "name": "菟饼"
-                }
+                "ACG"
             ],
             "actions": []
         }
