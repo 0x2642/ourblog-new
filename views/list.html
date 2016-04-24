@@ -1,23 +1,23 @@
 <div class="list-header">
-	<p>{{meta}}</p>
+	<p class="reset">{{meta|proper}}</p>
 </div>
 <div class="list-body">
 	<div class="list-item" ng-repeat="article in articles">
 		<div class="item-thumb">
-		    <div class="thumb-image" style="display: block;opacity: 1;background-image:url('{{article.thumb}}')"></div>
+			<div class="thumb-image" style="display: block;opacity: 1;background-image:url('{{article.thumb}}')"></div>
 		</div>
 		<div class="item-info">
-		    <div class="info-main">
-		        <h2><a ng-href="#/article/{{article.id}}">{{article.title}}</a></h2>
-		        <div class="tags clearfix">
-		            <a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
-		        </div>
-		        <p>{{article.description}}</p>
-		    </div>
-		    <div class="info-meta">
-		        <p><a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
-		        <p>{{article.timestamp|date:"yyyy-MM-dd"}}</p>
-		    </div>
+			<div class="info-main">
+				<h2><a ng-href="#/article/{{article.id}}">{{article.title}}</a></h2>
+				<div class="meta clearfix">
+					<p><a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
+					<p>{{article.timestamp|date:"yyyy-MM-dd"}}</p>
+				</div>
+				<p>{{article.description}}</p>
+			</div>
+			<div class="info-tags">
+				<a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
+			</div>
 		</div>
 	</div>
 </div>

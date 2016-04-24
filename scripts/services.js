@@ -40,14 +40,21 @@ blogServices.factory('blogMessage',['$log',
     }]);
 
 //List接口
-blogServices.factory('blogList', ['$resource','blogMessage',
-    function ($resource,blogMessage) {
-        return $resource(SERVICE_PATH.LIST,{
-            tag:'@tag',
-            author:'@author',
-            keyword:'@keyword',
-            page:1
-        });
+blogServices.factory('blogList', ['$resource', 'blogMessage',
+    function ($resource, blogMessage) {
+        return {
+            get: function (params, page, callback) {
+                params.page = page||1;
+                return $resource(SERVICE_PATH.LIST, {
+                    tag: '@tag',
+                    author: '@author',
+                    keyword: '@keyword',
+                    page: '@page'
+                }).get(params, callback, function (response) {
+                    blogMessage.error(response.status);
+                });
+            }
+        }
     }]);
 
 //Article接口

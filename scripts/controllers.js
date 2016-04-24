@@ -4,33 +4,6 @@
 'use strict';
 
 var blogController = angular.module('blogController',[]);
-
-// blogController.controller('HomeController',['$rootScope','$scope','ArticleList',
-//     function ($rootScope,$scope,ArticleList) {
-//         var getList = function(pageNum){
-//             ArticleList.get({page:pageNum},function (data) {
-//                 $rootScope.title = data.title;
-//                 if(pageNum == 1){
-//                     $scope.top = data.top;
-//                 }
-//                 $scope.articles = data.articles;
-//                 $scope.pagenation = data.pagenation;
-//             });            
-//         }
-//         getList(1);
-//         $scope.next = function(){
-//             var pagenation = $scope.pagenation;
-//             if(pagenation.current < pagenation.max){
-//                 getList(parseInt(pagenation.current+1));
-//             }
-//         }
-//         $scope.previous = function(){
-//             var pagenation = $scope.pagenation;
-//             if(pagenation.current > 1){
-//                 getList(parseInt(pagenation.current-1));
-//             }
-//         }
-//     }]);
     
 blogController.controller('ListController',['$rootScope','$scope','$routeParams','blogList','blogMessage',
     function($rootScope,$scope,$routeParams,blogList,blogMessage){
@@ -58,16 +31,16 @@ blogController.controller('ListController',['$rootScope','$scope','$routeParams'
             //home
             $rootScope.title = $scope.meta = "主页";
         }
-        var getList = function (page=1){
-            data.page = page;
-            $scope.list = blogList.get(data,function(success){
-                $scope.articles = success.articles;
-                $scope.pagenation = success.pagenation;
-            },function(fail){
-                blogMessage.error(fail.status);
+        var getList = function (page){
+            blogList.get(data,page,function(data){
+                $scope.articles = data.articles;
+                $scope.pagenation = data.pagenation;
+                if($routeParams.author&&data.articles&&data.articles[0].author&&data.articles[0].author.name){
+                    $rootScope.title = $scope.meta = "@" + data.articles[0].author.name;
+                }
             });
         }
-        getList();
+        getList();//init
         $scope.nextPage = function(){//上一页
             var pagenation = $scope.pagenation;
             if(pagenation&&(pagenation.current < pagenation.max)){

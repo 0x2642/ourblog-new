@@ -9,12 +9,10 @@ blogFilters.filter('action', function() {
   };
 });
 
-// blogFilters.filter('proper', function () {
-//   return function (input) {
-//     if(/^\w+$/.test(input)){
-//       return input.substring(0,1).toUpperCase+input.substring(1);
-//     }else{
-//       return input;
-//     }
-//   }
-// });
+blogFilters.filter('proper', function () {
+  return function (input) {
+    if(typeof(input)!="string"){return input;}
+    var tmp = input.match(/^(?:[^\w\d])([a-z])\w+$/);
+    return tmp&&input.replace(tmp[1],tmp[1].toUpperCase())||input;
+  }
+});

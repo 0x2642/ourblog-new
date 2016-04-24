@@ -88,14 +88,9 @@ textarea {
 /* ==========================================================================
    Component classes
    ========================================================================== */
-
 a{
     color: #333;
     text-decoration: none;
-}
-a:hover{
-    color: #000;
-    text-decoration: underline;
 }
 button {
     height: 20px;
@@ -129,16 +124,19 @@ input[type='text']{
 }
 
 /* ==========================================================================
-   Common classes
+   Custom classes
    ========================================================================== */
 .header-title h1,
 .header-intro,
 .navbar-list,
 .navbar-link,
-.navbar-desc{
+.navbar-desc,
+.list-header p,
+.item-info h2,
+.item-info p{
     margin: 0;
     padding: 0;
-}
+}/*reset spacing*/
 
 .header{
     height: 280px;
@@ -165,7 +163,6 @@ input[type='text']{
 }
 .header-title a:hover{
     color: #FFF;
-    text-decoration: none;
 }
 .header-title h1,.header-intro{
     margin-left: 20px;
@@ -209,7 +206,6 @@ input[type='text']{
 }
 .navbar-link>a:hover{
     color: #FFF;
-    text-decoration: none;
 }
 .navbar-desc{
     color: #999;
@@ -246,6 +242,12 @@ input[type='text']{
     background-color: #FFF;
 }
 
+.list-header p{
+    text-align: right;
+    color: #999;
+    margin-bottom: 20px;
+    border-bottom: 1px #CCC solid;
+}
 .list-item{
     margin-bottom: 20px;
     max-width: 660px;
@@ -253,7 +255,6 @@ input[type='text']{
 }
 .item-thumb{
     float: left;
-    margin-right: 20px;
     width: 200px;
     height: 120px;
 }
@@ -267,20 +268,52 @@ input[type='text']{
     background-repeat: no-repeat;
     display: -webkit-flex;
     display: flex;
-    margin-right: 16px;
-    border: 1px solid #EEE;
+    border: 1px solid #CCC;
 }
 .item-info{
     margin-left: 210px;
+    line-height: 20px;
 }
-.item-info h2{
-    display: block;
+.info-main h2{
     font-size: 32px;
     line-height: 40px;
     font-weight: bold;
-    margin-bottom: 4px;
 }
-
+.info-main p{
+    color: #999;
+}
+.meta{
+    height: 20px;
+}
+.meta,.meta a{
+    color: #999;
+}
+.meta a:hover{
+    text-decoration: underline;
+}
+.meta p{
+    float: left;
+    margin-right: 10px;
+}
+.info-tags{
+    margin-top: 20px;
+}
+.info-tags a{
+    color: #CCC;
+    font-size: 12px;
+    line-height: 16px;
+    border: 1px #CCC solid;
+    border-radius: 2px;
+    padding: 1px 4px;
+    margin-right: 4px;
+}
+.info-tags a:hover{
+    background-color: #EEE;
+}
+.list-footer{
+    margin-top: 40px;
+    text-align: center;
+}
 
 /* ==========================================================================
    Helper classes
