@@ -1,14 +1,16 @@
-# ourblog-view
-front-end of ourblog based on Angular
-See the whole project [here](https://github.com/0x2642/ourblog)
+# Ourblog-new
+new version of ourblog based on angularjs and nodejs
 
-# Configuration
-1. be sure you have installed nodejs
+# Install
+1. be sure you have installed nodejs and bower
 2. clone the project
 3. run ```npm install```
+4. run ```bower install```
 
-### IntelliSense with Visual Studio Code
-1. ```npm -g install tsd```
-2. ```tsd install```
-3. include "tsd.d.ts" file, like:
-```/// <reference path="../typings/tsd.d.ts" />```
+# Start server
+1. run ```npm start```
+2. visit [http://localhost:3000/](http://localhost:3000/)
+
+# Rich editing support for VS Code
+1. be sure you have installed TypeScript Definition manager as global ```npm -g install tsd```
+2. run ```tsd install```

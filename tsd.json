@@ -5,6 +5,9 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
+    "node/node.d.ts": {
+      "commit": "2d448c0a3152e8871521848c5c2c61ab4e2a2cc9"
+    },
     "angularjs/angular-animate.d.ts": {
       "commit": "dc6d1ebfaa554e85b91846574728930972ca9868"
     },

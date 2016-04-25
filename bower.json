@@ -1,0 +1,13 @@
+{
+    "name": "ourblog-new",
+    "version": "0.0.1",
+    "dependencies": {
+        "jquery": "1.11.3",
+        "angular": "1.5.3",
+        "angular-route": "1.5.3",
+        "angular-animate": "1.5.3",
+        "angular-resource": "1.5.3"
+    },
+    "devDependencies": {
+    }
+}

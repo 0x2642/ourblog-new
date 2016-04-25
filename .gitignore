@@ -34,3 +34,6 @@ node_modules
 
 # .d.ts
 typings
+
+# bower
+bower_components
