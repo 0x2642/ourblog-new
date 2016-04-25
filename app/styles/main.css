@@ -119,12 +119,15 @@ input[type='text']{
     border-radius: 4px;
     padding: 4px 8px;
     background-color: #FFF;
-    color: #333;
+    color: #999;
     border: 0;
+}
+input[type='text']:focus{
+    color: #333;
 }
 
 /* ==========================================================================
-   Custom classes
+   Common classes
    ========================================================================== */
 .header-title h1,
 .header-intro,
@@ -224,6 +227,7 @@ input[type='text']{
     width: 30%;
 }
 #searchInput{
+    width: 240px;
     float: right;
     margin-right: 20px;
     background-color: rgba(255,255,255,0.2);
@@ -241,6 +245,17 @@ input[type='text']{
     padding: 40px;
     background-color: #FFF;
 }
+.footer{
+    color: #FFF;
+    background-color: #000;
+}
+.footer .container{
+    padding: 20px;
+}
+
+/* ==========================================================================
+   List classes
+   ========================================================================== */
 
 .list-header p{
     text-align: right;
@@ -280,18 +295,20 @@ input[type='text']{
     font-weight: bold;
 }
 .info-main p{
-    color: #999;
+    color: #333;
 }
-.meta{
+.metadata{
     height: 20px;
 }
-.meta,.meta a{
+.metadata p,.metadata a{
     color: #999;
 }
-.meta a:hover{
+.metadata a:hover{
     text-decoration: underline;
 }
-.meta p{
+.metadata p{
+    font-size: 12px;
+    line-height: 20px;
     float: left;
     margin-right: 10px;
 }
@@ -308,6 +325,7 @@ input[type='text']{
     margin-right: 4px;
 }
 .info-tags a:hover{
+    color: #999;
     background-color: #EEE;
 }
 .list-footer{
