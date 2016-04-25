@@ -9,9 +9,9 @@
 		<div class="item-info">
 			<div class="info-main">
 				<h2><a ng-href="#/article/{{article.id}}">{{article.title}}</a></h2>
-				<div class="meta clearfix">
-					<p><a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
-					<p>{{article.timestamp|date:"yyyy-MM-dd"}}</p>
+				<div class="metadata clearfix">
+					<p>作者：<a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
+					<p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
 				</div>
 				<p>{{article.description}}</p>
 			</div>
@@ -21,7 +21,10 @@
 		</div>
 	</div>
 </div>
+<div ng-hide="articles" class="list-body">
+	<p>呀，什么都没没有</p>
+</div>
 <div class="list-footer">
-	<button ng-click="previousPage()" ng-hide="(pagenation.current==1)" class="large">上一页</button>
+	<button ng-click="previousPage()" ng-hide="!pagenation||(pagenation.current==1)" class="large">上一页</button>
 	<button ng-click="nextPage()" ng-hide="(pagenation.current==pagenation.max)" class="large">下一页</button>
 </div>
