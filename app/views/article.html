@@ -1,6 +1,18 @@
-<h1>{{title}}</h1>
-<div>{{text}}</div>
+<article>
+    <h2><a ng-href="#/article/{{article.id}}">{{article.title}}</a></h2>
+    <div class="metadata clearfix">
+        <p>作者：<a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
+        <p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
+        <div class="info-tags">
+            <a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
+        </div>
+    </div>
+    <div ng-bind-html="text" class="text"></div>
+</article>
+
 <div>
     <h3><a ng-href="#/author/{{author.id}}">{{author.name}}</a></h3>
     <p>{{author.descrption}}</p>
 </div>
+
+<script src="bower_components/pagedown/Markdown.Converter.js"></script>

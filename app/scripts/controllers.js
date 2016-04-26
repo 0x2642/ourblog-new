@@ -2,10 +2,10 @@
 /// <reference path="services.js" />
 'use strict';
 
-var blogController = angular.module('blogController',[]);
+var blogController = angular.module('blogController',['ngSanitize']);
     
-blogController.controller('ListController',['$rootScope','$scope','$routeParams','blogList','blogMessage',
-    function($rootScope,$scope,$routeParams,blogList,blogMessage){
+blogController.controller('ListController',['$rootScope','$scope','$routeParams','blogList',
+    function($rootScope,$scope,$routeParams,blogList){
         var data = new Object();
         if($routeParams.tag){
             //tag
@@ -54,6 +54,14 @@ blogController.controller('ListController',['$rootScope','$scope','$routeParams'
         }
     }]);
     
+blogController.controller('ArticleController',['$rootScope','$scope','$routeParams','$sce','blogArticle',
+    function($rootScope,$scope,$routeParams,$sce,blogArticle){
+        $scope.article = blogArticle.view($routeParams.id,function(data){
+           $rootScope.title = data.title; 
+           var converter = new Markdown.Converter();
+           $scope.text = $sce.trustAsHtml(converter.makeHtml(data.text));
+        });
+    }]);
 // blogController.controller('ArticleController',['$rootScope','$scope','$location','$routeParams','Article','$log',
 //     function ($rootScope,$scope,$location,$routeParams,Article,$log) {
 //         var action = $routeParams.action;

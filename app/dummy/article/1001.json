@@ -1,0 +1,20 @@
+{
+    "id": 1001,
+    "title": "文章标题1",
+    "description": "文章描述1",
+            "author": {
+                "id": "xykbear",
+                "name": "XYKbear"
+            },
+    "timestamp": 1459346686265,
+            "thumb": "images/thumb.jpg",
+            "tags": [
+                "JavaScript",
+                "code"
+            ],
+            "actions": [
+                "edit",
+                "delete"
+            ],
+    "text": "# Ourblog-new\n new version of ourblog based on angularjs and nodejs\n \n # Install \n 1. be sure you have installed nodejs and bower\n 2. clone the project\n 3. run ```npm install```\n 4. run ```bower install```\n \n # Start server\n 1. run ```npm start```\n 2. visit [http://localhost:3000/](http://localhost:3000/)\n \n # Rich editing support for VS Code\n 1. be sure you have installed TypeScript Definition manager as global ```npm -g install tsd```\n 2. run ```tsd install```"
+}
