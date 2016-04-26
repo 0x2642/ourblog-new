@@ -56,11 +56,14 @@ blogController.controller('ListController',['$rootScope','$scope','$routeParams'
     
 blogController.controller('ArticleController',['$rootScope','$scope','$routeParams','$sce','blogArticle',
     function($rootScope,$scope,$routeParams,$sce,blogArticle){
+        var converter = new Markdown.Converter();
         $scope.article = blogArticle.view($routeParams.id,function(data){
-           $rootScope.title = data.title; 
-           var converter = new Markdown.Converter();
-           $scope.text = $sce.trustAsHtml(converter.makeHtml(data.text));
+            $rootScope.title = data.title; 
+            $scope.text = $sce.trustAsHtml(converter.makeHtml(data.text));
         });
+        $scope.save = function(){
+            blogArticle.save($routeParams.id,$scope.data,function(data){});
+        }
     }]);
 // blogController.controller('ArticleController',['$rootScope','$scope','$location','$routeParams','Article','$log',
 //     function ($rootScope,$scope,$location,$routeParams,Article,$log) {
