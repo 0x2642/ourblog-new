@@ -1,11 +1,12 @@
-<article>
-    <h2><a ng-href="#/article/{{article.id}}">{{article.title}}</a></h2>
+<article class="article">
+    <div class="info-tags">
+        <a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
+    </div>
+    <h1>{{article.title}}</h1>
     <div class="metadata clearfix">
         <p>作者：<a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
         <p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
-        <div class="info-tags">
-            <a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
-        </div>
+        <p ng-repeat="action in article.actions" class="action"><a ng-href="#/article/{{article.id}}/{{action}}">{{action|action}}</a>
     </div>
     <div ng-bind-html="text" class="text"></div>
 </article>

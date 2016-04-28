@@ -313,6 +313,12 @@ input[type='text']:focus{
     float: left;
     margin-right: 10px;
 }
+.metadata .action{
+    display: none;
+}
+.metadata:hover .action{
+    display: block;
+}
 .info-tags{
     margin-top: 20px;
 }
@@ -333,6 +339,8 @@ input[type='text']:focus{
     margin-top: 40px;
     text-align: center;
 }
+
+
 
 /* ==========================================================================
    Helper classes
