@@ -118,11 +118,12 @@ input[type='text']{
     line-height: 32px;
     border-radius: 4px;
     padding: 4px 8px;
-    background-color: #FFF;
+    background-color: #EEE;
     color: #999;
     border: 0;
 }
 input[type='text']:focus{
+    background-color: #FFF;
     color: #333;
 }
 

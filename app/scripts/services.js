@@ -73,13 +73,13 @@ blogServices.factory('blogArticle', ['$resource', 'blogMessage',
             },
             save: function (id, data, callback) {
                 var params = { id: id };
-                return res.view(params, data, callback, function (response) {
+                return res.save(params, data, callback, function (response) {
                     blogMessage.error(response.status);
                 });
             },
             delete: function (id, callback) {
                 var params = { id: id };
-                return res.view(params, callback, function (response) {
+                return res.delete(params, callback, function (response) {
                     blogMessage.error(response.status);
                 });
             }
