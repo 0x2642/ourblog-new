@@ -6,7 +6,7 @@ console.log('mongoURL' + mongoURL);
 // 程序启动后通过mongoose进行连接db的操作
 mongoose.connect(mongoURL, function(err) {
 	if (err) {
-		console.error('connect to %s error: ', config.db, err.message);
+		console.error('connect to %s error: ', err.message);
 		process.exit(1);
 	}
 });
