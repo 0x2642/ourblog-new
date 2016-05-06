@@ -1,7 +1,7 @@
 'use strict';
 
 var SERVICE_PATH = {
-    LIST: "dummy/list/:tag/:author/:page.json",
+    LIST: "api/list?tag=:tag&author=:author&page=:page",
     ARTICLE: "dummy/article/:id.json",
     AUTHOR: "",
     LOGIN: "",

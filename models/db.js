@@ -35,6 +35,6 @@ process.on('SIGNIT', function() {
 });
 
 /********************  Modules import *******************************/
-require('./post');
+require('./article');
 
-exports.Post = mongoose.model('Post');
+exports.Article = mongoose.model('Article');

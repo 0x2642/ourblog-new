@@ -1,11 +1,19 @@
-var PostModel = require('../models/db').Post;
+var ArticleModel = require('../models/db').Article;
+var util = require('../util');
+var PAGE_SIZE=util.Constant.get('PAGE_SIZE');
 
 // 共同方法，根据post的id查找对应的post
-function findThePost(post_id, callback) {
-	PostModel.findOne({
+function getArticleDetail(post_id, callback) {
+	ArticleModel.findOne({
 		_id: post_id
 	}, callback);
 }
+
+
+function getListCount(query,callback){
+	ArticleModel.find(query).count({},callback);
+}
+
 /**
  * 根据关键词，获取文章列表
  * Callback:
@@ -15,18 +23,29 @@ function findThePost(post_id, callback) {
  * @param {Object} option 搜索选项
  * @param {Function} callback 回调函数
  */
-exports.getPostsByQuery = function(query, option, callback) {
-	PostModel.find(query, {}, option, function(err, posts) {
-		if (err) {
-			return callback(err);
-		}
-		if (posts.length === 0) {
-			return callback(null, []);
-		}
-		callback(null, posts);
-	}).sort({
-		'_id': -1
+exports.getArticleList = function(query,fields, option,sort, callback) {
+	var fields = fields || {};
+	var option = option || {"skip":0,"limit":PAGE_SIZE};
+	var sort= sort || {'_id': -1}
+
+	getListCount(query,function(err,count){
+		
+		if(count===0)
+			return callback(null, [],0);
+
+		ArticleModel.find(query, fields, option, function(err, articles) {
+			if (err) {
+				return callback(err);
+			}
+			if (articles.length === 0) {
+				return callback(null, [],count);
+			}
+			callback(null, articles,count);
+		}).sort(sort);
+
 	});
+	
+
 }
 
 /**
@@ -38,13 +57,13 @@ exports.getPostsByQuery = function(query, option, callback) {
  * @param {Function} callback 回调函数
  */
 exports.saveNewPost = function(poster, title, contents, createTime, callback) {
-	var postModel = new PostModel();
-	postModel.poster = poster;
-	postModel.title = title;
-	postModel.contents = contents;
-	postModel.createTime = createTime;
+	var ArticleModel = new PostModel();
+	ArticleModel.poster = poster;
+	ArticleModel.title = title;
+	ArticleModel.contents = contents;
+	ArticleModel.createTime = createTime;
 
-	postModel.save(callback);
+	ArticleModel.save(callback);
 }
 
 /**
@@ -60,7 +79,7 @@ exports.getPostsByEmail = function(email, callback) {
 	if (!email) {
 		callback(null, null);
 	} else {
-		PostModel.find({
+		ArticleModel.find({
 			poster: email
 		}, function(err, posts) {
 			if (err) {
@@ -82,8 +101,8 @@ exports.getPostsByEmail = function(email, callback) {
  * @param {String} id 文章的id
  * @param {Function} callback 回调函数
  */
-exports.getSinglePostById = function(id, callback) {
-	findThePost(id, function(err, post) {
+exports.getSingleArticleById = function(id, callback) {
+	getArticleDetail(id, function(err, post) {
 		if (err) {
 			callback(err);
 		} else {

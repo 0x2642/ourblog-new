@@ -2,103 +2,33 @@ var express = require('express');
 var router = express.Router();
 var dao = require('../dao/indexDAO.js');
 var util = require('../util');
-
+var article=dao.Article
 
 /* GET API */
-router.get('/', function(req, res, next) {
-  res.send('hello world!');
+router.get('/article/:id', function(req, res, next) {
+	id=req.params.id || 1;
+	article.getSingleArticleById(id,function (err,article) {
+		res.send(article);
+	})
+  
 });
 router.get('/list', function(req, res, next) {
 	var page=req.param('page') || 1;
-	var tag=req.param('tag');
-	var keyword=req.param('keyword');
-	var author=req.param('author');
 	var auth=util.Cookies.getCookie(req,'auth');
+	var searchList={"tags":"String","title":"String","author":"String"};
 
-	var list=[{
-				"articles": [{
-			            "id": 1001,
-			            "title": "文章标题1",
-			            "description": "文章描述1",
-			            "author": {
-			                "id": "xykbear",
-			                "name": "XYKbear"
-			            },
-			            "timestamp": 1459346686265,
-			            "thumb": "images/thumb.jpg",
-			            "tags": [
-			                "JavaScript",
-			                "code"
-			            ],
-			            "actions": [
-			                "edit",
-			                "delete"
-			            ]
-			        },
-			        {
-			            "id": 1002,
-			            "title": "文章标题2",
-			            "description": "文章描述2",
-			            "author": {
-			                "id": "xykbear",
-			                "name": "XYKbear"
-			            },
-			            "timestamp": 1459346686265,
-			            "thumb": "images/thumb.jpg",
-			            "tags": [
-			                 "ACG",
-			                 "菟饼"
-			            ],
-			            "actions": []
-			        }
-			    ],
-			    "pagenation": {
-			        "current": 1,
-			        "max": 2
-			    }
-			},
-			{
-				"articles": [{
-		            "id": 1003,
-		            "title": "文章标题3",
-		            "description": "文章描述3",
-		            "author": {
-		                "id": "xykbear",
-		                "name": "XYKbear"
-		            },
-		            "timestamp": 1459346686265,
-		            "thumb": "images/thumb.jpg",
-		            "tags": [
-		                "code",
-		                "PHP"
-		            ],
-		            "actions": [
-		                "edit"
-		            ]
-		        },
-		        {
-		            "id": 1004,
-		            "title": "文章标题4",
-		            "description": "文章描述4",
-		            "author": {
-		                "id": "xykbear",
-		                "name": "XYKbear"
-		            },
-		            "timestamp": 1459346686265,
-		            "thumb": "images/thumb.jpg",
-		            "tags": [
-		                "ACG",
-		                "Steam"
-		            ],
-		            "actions": []
-		        }],
-			    "pagenation": {
-			        "current": 1,
-			        "max": 2
-			    }
-			}]
-
+	for(var key in searchList) {
+		req.param(key)?searchList[key]=eval("/"+util.Strings.filter(req.param(key),searchList[key])+"/"):delete searchList[key];
+	}
+	
+	var pagesize=util.Constant.get('PAGE_SIZE');
 	page=Math.abs(page-1)
-	res.send(list[page]||{});
+	var option={"skip":page*pagesize,"limit":pagesize}
+	console.log(searchList)
+	// list[page]||{}
+	article.getArticleList(searchList,'',option,'',function(err,data,count){
+		var ret={"articles":data,"pagenation":{"current": page+1,"max": Math.ceil(count/pagesize)}}
+		res.send(ret)
+	});
 });
 module.exports = router;
