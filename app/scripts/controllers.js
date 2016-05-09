@@ -59,12 +59,14 @@ blogController.controller('ArticleController', ['$rootScope', '$scope', '$routeP
         // 处理传入参数为实际变量
         var action, id;
         if ($routeParams.p1 == "add") {
+            // 新建文章
             action = $routeParams.p1;
             $rootScope.title = "新建文章";
         } else if (/^\d+$/.test($routeParams.p1)) {
             id = $routeParams.p1;
             action = $routeParams.p2;
             if (action == "delete") {
+                // 删除文章
                 blogArticle.delete(id, function (result) {
                     //TODO
                 })
@@ -72,12 +74,14 @@ blogController.controller('ArticleController', ['$rootScope', '$scope', '$routeP
                 $scope.article = blogArticle.view(id, function (data) {
                     $rootScope.title = data.title || "未找到文章";
                     if (action) {
+                        // 编辑文章
                         if (data && data.actions && data.actions.indexOf(action) >= 0) {
                             $scope.tags = data.tags && data.tags.join(',') || "";
                         } else {
                             $location.path("/");
                         }
                     } else {
+                        // 查看文章
                         var converter = new Markdown.Converter();
                         $scope.text = $sce.trustAsHtml(converter.makeHtml(data.text));
                     }
@@ -93,63 +97,3 @@ blogController.controller('ArticleController', ['$rootScope', '$scope', '$routeP
             });
         }
     }]);
-// blogController.controller('ArticleController',['$rootScope','$scope','$location','$routeParams','Article','$log',
-//     function ($rootScope,$scope,$location,$routeParams,Article,$log) {
-//         var action = $routeParams.action;
-//         var articleId = $routeParams.articleId;
-//         if(articleId == null && (action == "edit" || action == "delete" || action == null)){
-//             $location.path("/home");
-//         }
-//         if(articleId && articleId != "" && /^[A-Za-z0-9]+$/.test(articleId) || action == "add"){
-//             switch(action){
-//                 case "delete" : 
-//                     Article.delete({articleId:articleId},function (success) {
-//                         $location.path("/home");
-//                     },function(error){
-//                         $location.path("/home");
-//                     });
-//                     break;
-//                 case "edit" : 
-//                     Article.edit({articleId:articleId},function(data){
-//                         $rootScope.title = "编辑:"+data.title;
-//                         $scope.articleTitle = data.title;
-//                         $scope.articleText = data.text;
-//                     });
-//                     $scope.save = function(){
-//                         Article.save({articleId:articleId},{title:$scope.articleTitle,text:$scope.articleText},function (data) {
-//                             $location.path("/article/{{data}}");
-//                         },function (error) {
-//                             //exception
-//                         });
-//                     }
-//                     break;
-//                 case "add" :
-//                     $rootScope.title = "新建文章";
-//                     $scope.articleTitle = "新建文章";
-//                     $scope.articleText = "";
-//                     $scope.save = function(){
-//                         Article.save({articleId:""},{title:$scope.articleTitle,text:$scope.articleText},function (data) {
-//                             $location.path("/article/{{data}}");
-//                         },function (error) {
-//                             //exception
-//                         });
-//                     }
-//                     break;
-//                 default : 
-//                     Article.view({articleId:articleId},function(data){
-//                         $rootScope.title = data.title;
-//                         $scope.title = data.title;
-//                         $scope.text = data.text;
-//                         $scope.author = data.author;
-//                     });
-//             };
-//         }else{
-//             $location.path("/home");
-//         }
-//     }])
-
-// blogController.controller('ErrorController',['$rootScope','$scope','$routeParams',
-//     function ($rootScope,$scope,$routeParams) {
-//         $rootScope.title = "出错啦！";
-//         $scope.status = $routeParams.errorCode;
-//     }]);
