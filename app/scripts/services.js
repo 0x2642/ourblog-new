@@ -66,20 +66,20 @@ blogServices.factory('blogArticle', ['$resource', 'blogMessage',
         });
         return {
             view: function (id, callback) {
-                params = { id: id };
+                var params = { id: id };
                 return res.view(params, callback, function (response) {
                     blogMessage.error(response.status);
                 });
             },
             save: function (id, data, callback) {
-                params = { id: id };
-                return res.view(params, data, callback, function (response) {
+                var params = { id: id };
+                return res.save(params, data, callback, function (response) {
                     blogMessage.error(response.status);
                 });
             },
             delete: function (id, callback) {
-                params = { id: id };
-                return res.view(params, callback, function (response) {
+                var params = { id: id };
+                return res.delete(params, callback, function (response) {
                     blogMessage.error(response.status);
                 });
             }

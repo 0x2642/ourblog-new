@@ -12,10 +12,13 @@
 				<div class="metadata clearfix">
 					<p>作者：<a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
 					<p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
+					<p ng-repeat="action in article.actions" class="action">
+						<a ng-href="#/article/{{article.id}}/{{action}}">{{action|action}}</a>
+					</p>
 				</div>
-				<p>{{article.description}}</p>
+				<p class="info-desc">{{article.description}}</p>
 			</div>
-			<div class="info-tags">
+			<div class="tags">
 				<a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
 			</div>
 		</div>

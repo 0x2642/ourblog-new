@@ -92,6 +92,24 @@ a{
     color: #333;
     text-decoration: none;
 }
+p{
+    margin: 0.625em 0;
+}
+h1,h2,h3,h4,h5{
+    margin: 1.25em 0 0 0;
+}
+h1{
+    font-size: 2em;
+    margin-top: 0.625em;
+}
+h3{
+    font-size: 1em;
+    font-weight: bold;
+}
+code{
+    background-color: #EEE;
+    padding: 0 4px;
+}
 button {
     height: 20px;
     line-height: 16px;
@@ -113,16 +131,17 @@ button.large {
     padding: 3px 16px;
 }
 
-input[type='text']{
+input[type='text'],textarea{
     font-size: 24px;
     line-height: 32px;
     border-radius: 4px;
     padding: 4px 8px;
-    background-color: #FFF;
+    background-color: #EEE;
     color: #999;
     border: 0;
 }
-input[type='text']:focus{
+input[type='text']:focus,textarea:focus{
+    background-color: #FFF;
     color: #333;
 }
 
@@ -136,7 +155,8 @@ input[type='text']:focus{
 .navbar-desc,
 .list-header p,
 .item-info h2,
-.item-info p{
+.item-info p,
+.metadata p{
     margin: 0;
     padding: 0;
 }/*reset spacing*/
@@ -203,15 +223,13 @@ input[type='text']:focus{
     text-transform: uppercase;
     line-height: 40px;
     font-size: 32px;
-}
-.navbar-link>a{
     color: #CCC;
 }
-.navbar-link>a:hover{
+.navbar-link:hover{
     color: #FFF;
 }
 .navbar-desc{
-    color: #999;
+    color: #666;
     font-style: italic;
 }
 .header-search{
@@ -266,7 +284,6 @@ input[type='text']:focus{
 .list-item{
     margin-bottom: 20px;
     max-width: 660px;
-    line-height: 17px;
 }
 .item-thumb{
     float: left;
@@ -304,7 +321,7 @@ input[type='text']:focus{
     color: #999;
 }
 .metadata a:hover{
-    text-decoration: underline;
+    text-decoration: none;
 }
 .metadata p{
     font-size: 12px;
@@ -312,10 +329,19 @@ input[type='text']:focus{
     float: left;
     margin-right: 10px;
 }
-.info-tags{
-    margin-top: 20px;
+.metadata .action{
+    display: none;
 }
-.info-tags a{
+.metadata:hover .action{
+    display: block;
+}
+.metadata a:hover{
+    text-decoration: underline;
+}
+.info-desc{
+    height: 40px;
+}
+.tags a{
     color: #CCC;
     font-size: 12px;
     line-height: 16px;
@@ -324,7 +350,7 @@ input[type='text']:focus{
     padding: 1px 4px;
     margin-right: 4px;
 }
-.info-tags a:hover{
+.tags a:hover{
     color: #999;
     background-color: #EEE;
 }
@@ -332,6 +358,10 @@ input[type='text']:focus{
     margin-top: 40px;
     text-align: center;
 }
+.edit-item{
+    margin-top: 1.25em;
+}
+
 
 /* ==========================================================================
    Helper classes
