@@ -24,9 +24,9 @@
 		</div>
 	</div>
 </div>
-<div ng-hide="articles" class="list-body">
-	<p>呀，什么都没没有</p>
-</div>
+
+<div ng-hide="articles" class="notFound">呀，什么都没有</div>
+
 <div class="list-footer">
 	<button ng-click="previousPage()" ng-hide="!pagenation||(pagenation.current==1)" class="large">上一页</button>
 	<button ng-click="nextPage()" ng-hide="(pagenation.current==pagenation.max)" class="large">下一页</button>

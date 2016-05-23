@@ -3,7 +3,7 @@
 var SERVICE_PATH = {
     LIST: "api/list?tag=:tag&author=:author&page=:page",
     ARTICLE: "dummy/article/:id.json",
-    AUTHOR: "",
+    AUTHOR: "dummy/author/:id.json",
     LOGIN: "",
     REGISTRY: ""
 }//API URL
@@ -85,3 +85,18 @@ blogServices.factory('blogArticle', ['$resource', 'blogMessage',
             }
         };
     }]);
+
+//Author接口
+blogServices.factory('blogAuthor', ['$resource', 'blogMessage',
+    function ($resource, blogMessage) {
+        var res = $resource(SERVICE_PATH.AUTHOR, { id: "@id" });
+        return {
+            get: function (id) {
+                var params = { id: id };
+                return res.get(params, null, function (response) {
+                    blogMessage.error(response.status);
+                });
+            }
+        }
+    }
+]);
