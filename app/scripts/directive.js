@@ -2,12 +2,12 @@
 
 var blogDirective = angular.module('blogDirective',[]);
 
-// blogDirective.directive('listitem',function () {
-//     return {
-//         restrict:'E',
-//         scope:{
-//             info:'='
-//         },
-//         templateUrl:'directive/listitem.html'
-//     };
-// });
+blogDirective.directive('author',function () {
+    return {
+        restrict:'E',
+        scope:{
+            uid:'='
+        },
+        templateUrl:'directive/author.html'
+    };
+});

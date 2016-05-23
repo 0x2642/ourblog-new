@@ -1,0 +1,13 @@
+<div ng-controller="AuthorController" ng-show="author.id" class="container clearfix">
+    <div class="authorLeft">
+        <div class="authorAvatar">
+            <a ng-href="#/author/{{author.id}}">
+                <img ng-src="{{author.avatar}}" alt="avatar">
+            </a>
+        </div>
+        <a class="authorLink" ng-href="#/author/{{author.id}}">{{author.name}}</a>
+    </div>
+    <div class="authorRight">
+        <p class="authorDesc">{{author.description}}</p>
+    </div>
+</div>

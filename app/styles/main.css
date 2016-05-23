@@ -258,7 +258,7 @@ input[type='text']:focus,textarea:focus{
     padding-left: 30%;
     background-color: #333;
 }
-.contents .container{
+.contents>.container{
     min-height: 500px;
     padding: 40px;
     background-color: #FFF;
@@ -267,8 +267,11 @@ input[type='text']:focus,textarea:focus{
     color: #FFF;
     background-color: #000;
 }
-.footer .container{
+.footer>.container{
     padding: 20px;
+}
+.notFound{
+    font-weight: bold;
 }
 
 /* ==========================================================================
@@ -362,6 +365,45 @@ input[type='text']:focus,textarea:focus{
     margin-top: 1.25em;
 }
 
+/* ==========================================================================
+   author classes
+   ========================================================================== */
+author>.container{
+    padding: 20px;
+    background-color: #EEE;
+    border-radius: 4px;
+    margin-top: 80px;
+}
+author a:hover{
+    text-decoration: underline;
+}
+.authorLeft{
+    width: 160px;
+    float: left;
+    text-align: center;
+}
+.authorAvatar{
+    display: block;
+    padding: 0 20px 10px 20px;
+}
+.authorAvatar img{
+    width: 120px;
+    height: 120px;
+    border-radius: 60px;
+}
+.authorAvatar img:hover{
+    opacity: 0.8;
+}
+.authorRight{
+    padding-left: 180px;
+    color: #333;
+}
+.authorLink{
+    color: #000;
+    font-size: 16px;
+    line-height: 20px;
+    word-wrap: break-word;
+}
 
 /* ==========================================================================
    Helper classes
