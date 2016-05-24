@@ -1,6 +1,6 @@
 var ArticleModel = require('../models/db').Article;
 var util = require('../util');
-var PAGE_SIZE=util.Constant.get('PAGE_SIZE');
+var PAGE_SIZE = util.Constant.get('PAGE_SIZE');
 
 // 共同方法，根据post的id查找对应的post
 function getArticleDetail(post_id, callback) {
@@ -10,8 +10,8 @@ function getArticleDetail(post_id, callback) {
 }
 
 
-function getListCount(query,callback){
-	ArticleModel.find(query).count({},callback);
+function getListCount(query, callback) {
+	ArticleModel.find(query).count({}, callback);
 }
 
 /**
@@ -23,46 +23,49 @@ function getListCount(query,callback){
  * @param {Object} option 搜索选项
  * @param {Function} callback 回调函数
  */
-exports.getArticleList = function(query,fields, option,sort, callback) {
+exports.getArticleList = function(query, fields, option, sort, callback) {
 	var fields = fields || {};
-	var option = option || {"skip":0,"limit":PAGE_SIZE};
-	var sort= sort || {'_id': -1}
+	var option = option || {
+		"skip": 0,
+		"limit": PAGE_SIZE
+	};
+	var sort = sort || {
+		'_id': -1
+	}
 
-	getListCount(query,function(err,count){
-		
-		if(count===0)
-			return callback(null, [],0);
+	getListCount(query, function(err, count) {
+
+		if (count === 0)
+			return callback(null, [], 0);
 
 		ArticleModel.find(query, fields, option, function(err, articles) {
 			if (err) {
 				return callback(err);
 			}
 			if (articles.length === 0) {
-				return callback(null, [],count);
+				return callback(null, [], count);
 			}
-			callback(null, articles,count);
+			callback(null, articles, count);
 		}).sort(sort);
 
 	});
-	
-
 }
 
 /**
- * 文章存入数据库
+ * 将文章存入数据库
  * @param {String} poster 作者
- * @param {String} title 文章标题
- * @param {String} contents 文章内容
- * @param {Date} createTime 创建时间 
  * @param {Function} callback 回调函数
  */
-exports.saveNewPost = function(poster, title, contents, createTime, callback) {
-	var ArticleModel = new PostModel();
-	ArticleModel.poster = poster;
-	ArticleModel.title = title;
-	ArticleModel.contents = contents;
-	ArticleModel.createTime = createTime;
-
+exports.saveNewArticle = function(artistInfo, callback) {
+	var ArticleModel = new ArticleModel();
+	ArticleModel.author = artistInfo.author;
+	ArticleModel.title = artistInfo.title;
+	ArticleModel.description = artistInfo.description;
+	ArticleModel.content = artistInfo.content;
+	ArticleModel.createTime = artistInfo.createTime;
+	ArticleModel.thumb = artistInfo.thumb;
+	ArticleModel.status = artistInfo.status;
+	ArticleModel.tags = artistInfo.tags;
 	ArticleModel.save(callback);
 }
 
