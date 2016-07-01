@@ -123,6 +123,10 @@ button:hover{
     border-color: #666;
     color: #333;
 }
+button:hover.reverse{
+    border-color: #CCC;
+    color: #FFF;
+}
 button.large {
     height: 40px;
     font-size: 24px;
@@ -272,6 +276,15 @@ input[type='text']:focus,textarea:focus{
 }
 .notFound{
     font-weight: bold;
+}
+.header-user{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.header-user:before{
+    color: #EEE;
+    content: attr(usertext);
 }
 
 /* ==========================================================================
