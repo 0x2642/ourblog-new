@@ -1,5 +1,3 @@
-/// <reference path="app.js" />
-/// <reference path="services.js" />
 'use strict';
 
 var blogController = angular.module('blogController', ['ngSanitize']);
@@ -98,11 +96,32 @@ blogController.controller('ArticleController', ['$rootScope', '$scope', '$routeP
         }
     }]);
 
-blogController.controller("AuthorController",["$scope","blogAuthor",
-    function($scope,blogAuthor){
-        $scope.$watch(function(){return $scope.uid},function(){
-            if($scope.uid){
-                $scope.author = blogAuthor.get($scope.uid);                
+blogController.controller("AuthorController", ["$scope", "blogAuthor",
+    function ($scope, blogAuthor) {
+        $scope.$watch(function () { return $scope.uid }, function () {
+            if ($scope.uid) {
+                $scope.author = blogAuthor.get($scope.uid);
             }
         });
+    }]);
+
+blogController.controller("UserController", ["$scope","$location",
+    function ($scope, $location) {
+        var flag = false;
+        var state = function () {
+            return flag;
+        };
+        $scope.userText = "Hello World";
+        $scope.userActionText = function () {
+            return state() ? "注销" : "登录";
+        };
+        $scope.userAction = function () {
+            if (!state()) {
+                $location.path("/login");
+                flag = true;
+            } else {
+                //logout
+                flag = false;
+            }
+        };
     }]);

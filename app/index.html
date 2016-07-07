@@ -45,6 +45,9 @@
         </div>
         <div class="search-result"></div>
       </div>
+      <div class="header-user" ng-controller="UserController" usertext="{{userText}}">
+        <button ng-click="userAction()" class="reverse">{{userActionText()}}</button>
+      </div>
     </div>
   </header>
 
