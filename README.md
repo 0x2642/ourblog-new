@@ -2,7 +2,7 @@
 new version of ourblog based on angularjs and nodejs
 
 # Install
-1. be sure you have installed nodejs and bower
+1. be sure you have installed nodejs, bower and JSX as global
 2. clone the project
 3. run ```npm install```
 4. run ```bower install```

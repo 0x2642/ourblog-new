@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "build": "babel admin/src --out-dir app/scripts/admin",
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -14,5 +15,14 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "mongoose": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-react": "^6.11.1"
+  },
+  "babel": {
+    "presets": [
+      "react"
+    ]
   }
 }
