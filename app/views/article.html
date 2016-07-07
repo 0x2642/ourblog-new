@@ -6,9 +6,6 @@
     <div class="metadata clearfix">
         <p>作者：<a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
         <p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
-        <p ng-repeat="action in article.actions" class="action">
-            <a ng-href="#/article/{{article.id}}/{{action}}">{{action|action}}</a>
-        </p>
     </div>
     <hr/>
     <div ng-bind-html="text" class="text"></div>

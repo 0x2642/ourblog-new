@@ -3,9 +3,7 @@
 var SERVICE_PATH = {
     LIST: "dummy/list/:tag/:author/:page.json",
     ARTICLE: "dummy/article/:id.json",
-    AUTHOR: "dummy/author/:id.json",
-    LOGIN: "",
-    REGISTRY: ""
+    AUTHOR: "dummy/author/:id.json"
 }//API URL
 
 var blogServices = angular.module('blogServices', ['ngResource']);
@@ -68,18 +66,6 @@ blogServices.factory('blogArticle', ['$resource', 'blogMessage',
             view: function (id, callback) {
                 var params = { id: id };
                 return res.view(params, callback, function (response) {
-                    blogMessage.error(response.status);
-                });
-            },
-            save: function (id, data, callback) {
-                var params = { id: id };
-                return res.save(params, data, callback, function (response) {
-                    blogMessage.error(response.status);
-                });
-            },
-            delete: function (id, callback) {
-                var params = { id: id };
-                return res.delete(params, callback, function (response) {
                     blogMessage.error(response.status);
                 });
             }
