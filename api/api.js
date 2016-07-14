@@ -35,6 +35,7 @@ router.post('/article/:id', function(req, res, next) {
 
 router.get('/list', function(req, res, next) {
 	var page = req.param('page') || 1;
+	var pagesize = req.param('pagesize') || util.Constant.get('PAGE_SIZE');
 	var auth = util.Cookies.getCookie(req, 'auth');
 	var searchList = {
 		"tags": "String",
@@ -46,7 +47,7 @@ router.get('/list', function(req, res, next) {
 		req.param(key) ? searchList[key] = eval("/" + util.Strings.filter(req.param(key), searchList[key]) + "/") : delete searchList[key];
 	}
 
-	var pagesize = util.Constant.get('PAGE_SIZE');
+
 	page = Math.abs(page - 1)
 	var option = {
 		"skip": page * pagesize,
