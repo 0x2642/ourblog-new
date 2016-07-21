@@ -20,7 +20,8 @@ var AuthLogSchame = new Schema({
 	},
 	token:{
 		type:String	  // 用于加密的字符串
-	}
+	},
+	is_tmp:Number
 }, {
 	collection: 'auth_log'
 });

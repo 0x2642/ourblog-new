@@ -14,13 +14,12 @@ exports.getAuthLogByToken = function(token, callback) {
 
 exports.saveAuth = function(user,is_tmp, callback) {
 		var timestamp = new Date().getTime();
-		var token = user.mail + timestamp + (Math.round(Math.random() * 8999) + 1000) + "";
+		var token = user.mail + timestamp + (Math.round(Math.random() * util.Constant.get('RANDOM_MIN_START')) + util.Constant.get('RANDOM_MIN_OFFSET')) + "";
 		var key = util.Config.get('login_secret').APPLY_AUTH_SECRET;
 		token = util.Crypto.sha512(token,key,'hex');
-		console.log(is_tmp);
-		var salt = Math.round(Math.random() * 899999) + 100000;
+		var salt = Math.round(Math.random() * util.Constant.get('RANDOM_START')) + util.Constant.get('RANDOM_OFFSET');
 		var authLogModel = new AuthLogModel();
-		authLogModel.token = token;
+		authLogModel.token = util.Crypto.md5(token);
 		authLogModel.salt=salt;
 		authLogModel.apply_time=timestamp;
 		authLogModel.mail=user.mail;

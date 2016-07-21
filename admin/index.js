@@ -130,7 +130,7 @@ router.post('/confirmAuthorized', function(req, res, next) {
 				}else if(time_now-auth_log.apply_time>=util.Constant.get('APPLY_CERTIFICATE_TIMEOUT')){
 					return res.redirect("/admin/applyAuthorized?msg="+util.Lang.get('ERROR_APPLY_AUTHORIZED_TIMEOUT'))
 				} else {
-					global_create_cert_token=util.Crypto.md5((Math.round(Math.random() * 899999) + 100000+req.body.token));
+					global_create_cert_token=util.Crypto.md5((Math.round(Math.random() * util.Constant.get('RANDOM_START')) + util.Constant.get('RANDOM_OFFSET')+req.body.token));
 					var path="http://"+req.headers.host+"/admin/createCertificate?token="+global_create_cert_token+"&seed="+req.body.seed+"&mail="+auth_log.mail;
 					res.writeHead(200, {
 				      'Content-Type': 'application/force-download',
@@ -171,14 +171,8 @@ router.get('/createCertificate', function(req, res, next) {
 function createCertificate(userObj,seed,code,res){
 	var token_new = util.Crypto.md5 (userObj.name+seed+new Date().getTime()+code+"");
 	user.updateToken(userObj,token_new,function(err){
-		var token=token_new.substring(0,16)+userObj.name+token_new.substring(16);
-		token=util.Crypto.md5(token);
-		var token_list=[];
-		for (var i = 0; i < 8; i++) {
-			token_list.push(util.Crypto.md5(token.substr(i*4,4).substring(0,2)+token_new+token.substr(i*4,4).substring(2)+util.Crypto.md5(userObj.name)));
-		}
-		var text=token_list.join("")
-		var key=util.Crypto.base64(text,util.Config.get('login_secret').LOGIN_CERTIFICATE_SECRET,'base64');
+		var key=calcKey(userObj.name,token_new);
+
 		text="User-Name:"+userObj.name+"\nkey:"+key;
 
 		res.send(text);
@@ -187,19 +181,33 @@ function createCertificate(userObj,seed,code,res){
 }
 
 function verift(user,userkey) {
-	
-	var token=user.token.substring(0,16)+user.name+user.token.substring(16);
-	token=util.Crypto.md5(token);
-	var token_list=[];
-	for (var i = 0; i < 8; i++) {
-		token_list.push(util.Crypto.md5(token.substr(i*4,4).substring(0,2)+user.token+token.substr(i*4,4).substring(2)+util.Crypto.md5(user.name)));
-	}
-	// var key=util.Crypto.base64(token_list.join(""));
-	var key=util.Crypto.base64(token_list.join(""),util.Config.get('login_secret').LOGIN_CERTIFICATE_SECRET,'base64');
-	// console.log(key)
+	var key=calcKey(user.name,user.token);
 	return userkey==key;
 
 }
+
+function calcKey(username,code){
+
+	var CERTIFICATE_KEY_START = util.Constant.get('CERTIFICATE_KEY_START');
+	var CERTIFICATE_KEY_MID = util.Constant.get('CERTIFICATE_KEY_MID');
+	var CERTIFICATE_KEY_GROUP_NUMS = util.Constant.get('CERTIFICATE_KEY_GROUP_NUMS');
+	var CERTIFICATE_KEY_GROUP_START = util.Constant.get('CERTIFICATE_KEY_GROUP_START');
+	var CERTIFICATE_KEY_GROUP_MID = util.Constant.get('CERTIFICATE_KEY_GROUP_MID');
+	var STANDARD_START = util.Constant.get('STANDARD_START');
+
+
+	var token=code.substring(CERTIFICATE_KEY_START,CERTIFICATE_KEY_MID)+username+code.substring(CERTIFICATE_KEY_MID);
+	token=util.Crypto.md5(token);
+	var step=token.length/CERTIFICATE_KEY_GROUP_NUMS;
+	var token_list=[];
+	for (var i = STANDARD_START; i < CERTIFICATE_KEY_GROUP_NUMS; i++) {
+		token_list.push(util.Crypto.md5(token.substr(i*step,step).substring(CERTIFICATE_KEY_GROUP_START,CERTIFICATE_KEY_GROUP_MID)+code+token.substr(i*step,step).substring(CERTIFICATE_KEY_GROUP_MID)+util.Crypto.md5(username)));
+	}
+	// var key=util.Crypto.base64(token_list.join(""));
+	return util.Crypto.base64(token_list.join(""),util.Config.get('login_secret').LOGIN_CERTIFICATE_SECRET,'base64');
+
+}
+
 
 // 等待更新auth操作
 

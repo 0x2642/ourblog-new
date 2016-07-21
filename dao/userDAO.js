@@ -68,6 +68,6 @@ exports.updateToken = function(user,token, callback) {
 
 function createAuth(username,token,timestamp) {
 	var key = util.Config.get('login_secret').LOGIN_AUTH_SECRET;
-	var text = token.substring(0,16)+username+token.substring(16)+timestamp;
+	var text = token.substring(util.Constant.get('CERTIFICATE_KEY_START'),util.Constant.get('CERTIFICATE_KEY_MID'))+username+token.substring(util.Constant.get('CERTIFICATE_KEY_MID'))+timestamp;
 	return util.Crypto.sha512(text, key,'base64');
 }
