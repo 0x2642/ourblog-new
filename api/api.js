@@ -51,7 +51,7 @@ router.get('/list', function(req, res, next) {
 	page = Math.abs(page - 1)
 	var option = {
 		"skip": page * pagesize,
-		"limit": pagesize
+		"limit": parseInt(pagesize)
 	}
 	console.log(searchList)
 		// list[page]||{}

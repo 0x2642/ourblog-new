@@ -36,5 +36,9 @@ process.on('SIGNIT', function() {
 
 /********************  Modules import *******************************/
 require('./article');
+require('./user');
+require('./authLog');
 
 exports.Article = mongoose.model('Article');
+exports.User = mongoose.model('User');
+exports.AuthLog = mongoose.model('AuthLog');

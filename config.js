@@ -1,18 +1,26 @@
 var config = {
 
 	// 远程db地址
-	dbUrl: "mongodb://public:111111@ds034279.mlab.com:34279/ourblog",
+	// dbUrl: "mongodb://public:111111@ds034279.mlab.com:34279/ourblog",
+	dbUrl: "mongodb://root:111111@localhost:34279/ourblog",
+	mail:{
+		host:"smtp.163.com",
+		secureConnection:false,
+		port: 25, // port for secure SMTP
+		auth: {
+			user: "ourblog_test@163.com",
+			pass: "iwnhqunluvahwzsf"
+		}		
 
-	// 是否只允许
-	allow_sign_up: true, 
-
-	cookieSecrete: 'ourblog',
-
-	// 默认为开发模式
+	},
 	debug: true,
-
-	// session 配置
-	session_secret: 'ourblog'
+	login_secret:{
+		LOGIN_CERTIFICATE_SECRET:"fX8fpROFeC5JvNpJiofMjhRiGCBnUaKf",
+		LOGIN_CERTIFICATE_TMP_SECRET:"teYkyJZgJaMULTE52OGSGKjTCR6GpQDZ",
+		LOGIN_AUTH_SECRET:"9tzxzScrQYQNZdFOv0cX1eRXLLaiLY2a",
+		APPLY_AUTH_SECRET:"TS2k5BA9W41IaVLvuZIrXHzhN4QtMW2n",
+		APPLY_AUTH_TMP_SECRET:"YLrPUZxy9DgvzVjSW4BlhDZzR8ZpdJtS",
+	}
 }
 
 module.exports = config;

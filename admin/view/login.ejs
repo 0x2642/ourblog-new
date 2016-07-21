@@ -1,0 +1,75 @@
+<html lang="zh-CN"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title><%= title %>  </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../styles/admin.css" rel="stylesheet">
+	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  </head>
+
+  <body class="login-body">
+
+    <div class="container">
+
+      <form class="form-signin" method="post" action="/admin/login"  enctype="multipart/form-data" onsubmit="return checkForm()">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <% if (msg!='') { %>  
+        <div class="alert alert-danger" role="alert"><%= msg %></div>
+        <% } %> 
+        <label for="fileCertificate" class="sr-only">Certificate</label>
+        <input type="text" id="fileCertificate" readonly class="form-control" placeholder="Certificate" required="">
+        <input type="file" id="certificate" class="form-control hide"  name="certificate" value="" />
+        <div class="checkbox">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+    </div> <!-- /container -->
+    <script>
+    	$('#fileCertificate').click(function () {
+    		$('#certificate').click();
+    	});
+    	$('#certificate').change(function(){
+    		var file_path = $(this).val()
+    		if(!checkExt(file_path)){
+    			alert("Don't allow file type");
+    			return false;
+    		}
+    		var pos=Math.max(file_path.lastIndexOf('/'),file_path.lastIndexOf('\\'))
+    		$('#fileCertificate').val($(this).val().substring(pos+1))
+    	})
+
+    	function checkExt(file_path){
+    		var file_ext = file_path.substring(file_path.indexOf("."));
+    		var ext_allow = ['.cert']
+    		if(ext_allow.indexOf(file_ext)){
+    			return false;
+    		}
+
+			return true;    		
+    	}
+
+    	function checkForm(){
+    		var file_path = $('#certificate').val()
+    		var flag=true;
+    		if(!checkExt(file_path)){
+    			alert("Don't allow file type");
+    			flag = false;
+    		}
+
+    		return flag
+
+    	}
+    </script>
+</body>
+<div>
+</div>
+</html>
