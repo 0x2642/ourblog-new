@@ -46,3 +46,11 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.edit_input{
+  margin-bottom: 10px;
+}
+
+.list-draft{
+  color: blue;
+}

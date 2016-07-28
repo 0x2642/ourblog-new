@@ -39,6 +39,16 @@ exports.getSingleUserByName = function(name, callback) {
 	})
 }
 
+exports.getSingleUserByAuth = function(auth, callback) {
+	UserModel.findOne({
+		auth: auth
+	}, function(err, user) {
+		if (err) {
+			return callback(err);
+		}
+		callback(null, user);
+	})
+}
 
 exports.updateAuth = function(user, callback) {
 		var timestamp=new Date().getTime();

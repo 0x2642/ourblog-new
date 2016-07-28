@@ -167,6 +167,11 @@ router.get('/createCertificate', function(req, res, next) {
 	}
 });
 
+router.get('/articleedit', function(req, res, next) {
+	var id=req.query.id||0;
+	var status=util.Lang.get('ARTICLE_STATUS');
+	res.render(path.join(__dirname+'/view/articleedit.ejs'),{title: 'Umiumiu',id:id,status:status});
+});
 
 function createCertificate(userObj,seed,code,res){
 	var token_new = util.Crypto.md5 (userObj.name+seed+new Date().getTime()+code+"");
@@ -201,10 +206,11 @@ function calcKey(username,code){
 	var step=token.length/CERTIFICATE_KEY_GROUP_NUMS;
 	var token_list=[];
 	for (var i = STANDARD_START; i < CERTIFICATE_KEY_GROUP_NUMS; i++) {
-		token_list.push(util.Crypto.md5(token.substr(i*step,step).substring(CERTIFICATE_KEY_GROUP_START,CERTIFICATE_KEY_GROUP_MID)+code+token.substr(i*step,step).substring(CERTIFICATE_KEY_GROUP_MID)+util.Crypto.md5(username)));
+		var sha_key=util.Crypto.sha512(util.Crypto.md5(token.substr(i*step,step).substring(CERTIFICATE_KEY_GROUP_START,CERTIFICATE_KEY_GROUP_MID)+code+token.substr(i*step,step).substring(CERTIFICATE_KEY_GROUP_MID)+util.Crypto.md5(username)),util.Config.get('login_secret').LOGIN_CERTIFICATE_SECRET,'hex');
+		token_list.push(sha_key);
 	}
-	// var key=util.Crypto.base64(token_list.join(""));
-	return util.Crypto.base64(token_list.join(""),util.Config.get('login_secret').LOGIN_CERTIFICATE_SECRET,'base64');
+
+	return util.Crypto.base64(token_list.join(""));
 
 }
 
@@ -216,8 +222,8 @@ function afterLogin(res,userObj) {
 	user.updateAuth(userObj,function(err,auth){
 
 		if (!err) {
-			util.Cookies.setCookie(res,'user',userObj.name);
-			util.Cookies.setCookie(res,'auth',auth);
+			util.Cookies.setCookie(res,'user',userObj.name,{ expires: new Date(Date.now() + util.Constant.get('LOGIN_TIMEOUT'))});
+			util.Cookies.setCookie(res,'auth',auth,{ expires: new Date(Date.now()+ util.Constant.get('LOGIN_TIMEOUT'))});
 			return res.redirect("/admin");
 		} else {
 			return res.redirect("/admin/login?msg="+util.Lang.get('ERROR_LOGIN_FAIL'));

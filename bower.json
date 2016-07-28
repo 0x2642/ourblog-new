@@ -10,7 +10,8 @@
     "angular-sanitize": "1.5.3",
     "pagedown": "^1.1.0",
     "react": "^15.2.0",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "editor.md": "^1.5.0"
   },
   "devDependencies": {}
 }

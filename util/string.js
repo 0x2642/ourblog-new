@@ -22,3 +22,6 @@ exports.filter = function(val,type) {
 	return eval(func)(val)
 }
 
+exports.sendError2JSON = function(msg,code) {
+	return {error_code:code,msg:msg}
+}

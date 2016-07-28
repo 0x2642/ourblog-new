@@ -1,7 +1,7 @@
 
 var Index = React.createClass({
 	getInitialState: function() {
-    	return {data: [],pagenation:[],showpage:false};
+    	return {data: [],pagenation:[],showpage:false,statusColor:{}};
   	},
   	componentDidMount: function() {
     $.ajax({
@@ -27,13 +27,15 @@ var Index = React.createClass({
 	          <h1 className="page-header">Dashboard</h1>
 	          <DashBoard />
 	          <h2 class="sub-header">Section title</h2>
-	          <ArticleList data={this.state.data} showpage={this.state.showpage} pagenation={this.state.pagenation} />
+	          <ArticleList data={this.state.data} showpage={this.state.showpage} pagenation={this.state.pagenation} statusColor={this.props.statusColor} />
 			</div>
 		);
 	}
 });
 
+var statusColor={"-1":"list-delete","0":"list-draft","1":"list-release"};
+
 ReactDOM.render(
-  <Index url="/api/list?pagesize=10" showpage="0" />,
+  <Index url="/api/list?pagesize=10&is_auth=1" showpage="0" statusColor={statusColor} />,
   document.getElementById('container')
 );

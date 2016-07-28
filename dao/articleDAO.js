@@ -51,23 +51,6 @@ exports.getArticleList = function(query, fields, option, sort, callback) {
 	});
 }
 
-/**
- * 将文章存入数据库
- * @param {String} poster 作者
- * @param {Function} callback 回调函数
- */
-exports.saveNewArticle = function(artistInfo, callback) {
-	var ArticleModel = new ArticleModel();
-	ArticleModel.author = artistInfo.author;
-	ArticleModel.title = artistInfo.title;
-	ArticleModel.description = artistInfo.description;
-	ArticleModel.content = artistInfo.content;
-	ArticleModel.createTime = artistInfo.createTime;
-	ArticleModel.thumb = artistInfo.thumb;
-	ArticleModel.status = artistInfo.status;
-	ArticleModel.tags = artistInfo.tags;
-	ArticleModel.save(callback);
-}
 
 /**
  * 根据用户Email获取用户所有文章列表
@@ -77,13 +60,13 @@ exports.saveNewArticle = function(artistInfo, callback) {
  * @param {String} email email用户所有的文章
  * @param {Function} callback 回调函数
  */
-exports.getPostsByEmail = function(email, callback) {
+exports.getArticleByEmail = function(email, callback) {
 	// 异常Case考虑：如果不存在email, 则返回空
 	if (!email) {
 		callback(null, null);
 	} else {
 		ArticleModel.find({
-			poster: email
+			mail: email
 		}, function(err, posts) {
 			if (err) {
 				return callback(err);
@@ -114,32 +97,6 @@ exports.getSingleArticleById = function(id, callback) {
 	});
 }
 
-/**
- * 修改一篇文章
- * Callback:
- * - err, 数据库错误
- * @param {String} newTitle 文章的新title
- * @param {String} newContents 文章的新newContents
- * @param {Function} callback 回调函数
- */
-exports.updatePostById = function(id, newTitle, newContents, callback) {
-	findThePost(id, function(err, post) {
-		if (err) {
-			callback(err);
-		}
-
-		post.title = newTitle;
-		post.contents = newContents;
-
-		post.save(function(err) {
-			if (err) {
-				callback(err);
-			} else {
-				callback(null);
-			}
-		});
-	});
-}
 
 /**
  * 删除一篇文章
@@ -148,12 +105,13 @@ exports.updatePostById = function(id, newTitle, newContents, callback) {
  * @param {String} id 文章的序号
  * @param {Function} callback 回调函数
  */
-exports.removePostById = function(id, callback) {
-	findThePost(id, function(err, post) {
+exports.del = function(id, callback) {
+	getArticleDetail(id, function(err, article) {
 		if (err) {
 			callback(err);
 		}
-		post.remove(function(err) {
+		article.status = util.Constant.get('ARTICLE_STATUS_DELETE');
+		article.save(function(err) {
 			if (err) {
 				callback(err);
 			} else {
@@ -161,4 +119,45 @@ exports.removePostById = function(id, callback) {
 			}
 		});
 	})
+}
+
+
+exports.save = function(artistInfo,callback) {
+
+	if (artistInfo['_id']) {
+		getArticleDetail(artistInfo['_id'], function(err, article) {
+			if (err) {
+				callback(err);
+			}
+
+			article.title = artistInfo.title;
+			article.description = artistInfo.description;
+			article.thumb = artistInfo.thumb;
+			article.status = artistInfo.status;
+			article.title = artistInfo.title;
+			article.tags = artistInfo.tags;
+			article.content = artistInfo.content;
+
+			article.save(function(err) {
+				if (err) {
+					callback(err);
+				} else {
+					callback(null);
+				}
+			});
+		});
+	} else {
+		var articleModel = new ArticleModel();
+		articleModel.author = artistInfo.author;
+		articleModel.title = artistInfo.title;
+		articleModel.description = artistInfo.description;
+		articleModel.content = artistInfo.content;
+		articleModel.createTime = artistInfo.createTime;
+		articleModel.thumb = artistInfo.thumb;
+		articleModel.status = artistInfo.status;
+		articleModel.tags = artistInfo.tags;
+		articleModel.save(callback);
+	}
+
+
 }
