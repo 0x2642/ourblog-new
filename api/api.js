@@ -35,13 +35,16 @@ router.post('/article', function(req, res, next) {
 			}else{
 				author={'id':user['_id'].toString(),'name':user['name']};
 				post_info['author']=author;
-				Article.save(post_info,function(err){
-					if (err) {
-						res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'))
-					}else{
-						res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'))
-					}
-				})
+
+				checkUser(post_info,user,res,function(err){
+					Article.save(post_info,function(err){
+						if (err) {
+							res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'))
+						}else{
+							res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'))
+						}
+					})					
+				});
 			}
 		})
 	} else {
@@ -84,7 +87,8 @@ router.get('/list', function(req, res, next) {
 					if (time_now-user.login_time > util.Constant.get('LOGIN_TIMEOUT')) {
 						res.send(getErrorString('ERROR_LOGIN_USER_TIMEOUT'))
 					} else {
-						searchList['author.id']=user._id+""
+						if(!user['is_admin'] || user['is_admin']!=1)
+							searchList['author.id']=user._id+""
 						searchList['status']={"$gte":util.Constant.get('ARTICLE_STATUS_DRAFT')}
 						console.log(searchList)
 						getArticleList(searchList,option,page,pagesize,res)
@@ -111,13 +115,21 @@ router.post('/del', function(req, res, next) {
 			if(err){
 				res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
 			}else{
-				Article.del(id,function(err){
-					if (err) {
-						res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'))
-					}else{
-						res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'))
-					}
+				author={'id':user['_id'].toString(),'name':user['name']};
+				var post_info={};
+				post_info['author']=author;
+				post_info['_id']=id;
+
+				checkUser(post_info,user,res,function(err){
+					Article.del(id,function(err){
+						if (err) {
+							res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'))
+						}else{
+							res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'))
+						}
+					})					
 				})
+
 			}
 		})
 	} else {
@@ -138,6 +150,30 @@ function getArticleList(searchList,option,page,pagesize,res){
 		}
 		res.send(ret)
 	});
+}
+
+function checkUser(post_info,user,res,callback){
+
+	if (post_info['_id'] && (!user['is_admin'] || user['is_admin']!=1)) {
+
+		Article.getSingleArticleById(post_info['_id'],function(err,article){
+			if (err) {
+				res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'))
+			} else {
+				if (article!==null) {
+					if (article['author'].id == post_info['author'].id) {
+						callback(null)
+					} else {
+						res.send(getErrorString('ERROR_ARTICLE_AUTHORIZED_EDIT_FAIL'))
+					}
+				} else {
+					res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'))
+				}
+			}
+		})
+	}else{
+		callback(null)
+	}
 }
 
 function getErrorString(err_name) {

@@ -37,6 +37,6 @@ var Index = React.createClass({
 var statusColor={"-1":"list-delete","0":"list-draft","1":"list-release"};
 
 ReactDOM.render(
-  <Index url="/api/list?pagesize=3&is_auth=1" showpage="1" statusColor={statusColor} />,
+  <Index url="/api/list?pagesize=10&is_auth=1" showpage="1" statusColor={statusColor} />,
   document.getElementById('container')
 );

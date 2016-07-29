@@ -7,6 +7,13 @@ exports.get=function(name){
 					'1':'发布',
 				},
 
+				"NAV_LIST":{
+					"INDEX":"Index",
+					"ARTICLE":"Article",
+					"USER":"User",
+					"EXPORT":"Export",
+				},
+
 
 				"SUCCESS_LOGIN":"登录成功",
 				"SUCCESS_ARTICLE_SAVE":"文章保存成功",
@@ -23,6 +30,7 @@ exports.get=function(name){
 				"ERROR_APPLY_AUTHORIZED_TIMEOUT":"申请授权超时",
 				"ERROR_ARTICLE_NOT_FOUND":"文章未找到",
 				"ERROR_ARTICLE_SAVE_FAIL":"文章更新失败",
+				"ERROR_ARTICLE_AUTHORIZED_EDIT_FAIL":"该文章未有修改授权",
 
 
 				"MAIL_APPLY_AUTHORIZED_SUBJECT":"您正在申请授权",

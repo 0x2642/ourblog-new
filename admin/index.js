@@ -35,10 +35,14 @@ router.use(function (req, res, next) {
 
 
 router.get('/', function(req, res, next) {
-	res.render(path.join(__dirname+'/view/index.ejs'),{title: 'jade'});
+	var current_nav=util.Lang.get('NAV_LIST').INDEX;
+	util.Cookies.setCookie(res,'current_nav',current_nav);
+	res.render(path.join(__dirname+'/view/index.ejs'),{title: 'jade',current_nav:current_nav});
 });
 router.get('/articlelist', function(req, res, next) {
-	res.render(path.join(__dirname+'/view/articlelist.ejs'),{title: 'Umiumiu'});
+	var current_nav=util.Lang.get('NAV_LIST').ARTICLE;
+	util.Cookies.setCookie(res,'current_nav',current_nav);
+	res.render(path.join(__dirname+'/view/articlelist.ejs'),{title: 'Umiumiu',current_nav:current_nav});
 });
 
 router.get('/login',function(req, res, next){
@@ -170,7 +174,16 @@ router.get('/createCertificate', function(req, res, next) {
 router.get('/articleedit', function(req, res, next) {
 	var id=req.query.id||0;
 	var status=util.Lang.get('ARTICLE_STATUS');
-	res.render(path.join(__dirname+'/view/articleedit.ejs'),{title: 'Umiumiu',id:id,status:status});
+	var current_nav=util.Lang.get('NAV_LIST').ARTICLE;
+	util.Cookies.setCookie(res,'current_nav',current_nav);
+	res.render(path.join(__dirname+'/view/articleedit.ejs'),{title: 'Umiumiu',id:id,status:status,current_nav:current_nav});
+});
+
+router.get('/logout', function(req, res, next) {
+	util.Cookies.delCookie(res,'current_nav');
+	util.Cookies.delCookie(res,'user');
+	util.Cookies.delCookie(res,'auth');
+	return res.redirect("/admin/login")
 });
 
 function createCertificate(userObj,seed,code,res){
@@ -222,6 +235,7 @@ function afterLogin(res,userObj) {
 	user.updateAuth(userObj,function(err,auth){
 
 		if (!err) {
+			util.Cookies.setCookie(res,'current_nav',util.Lang.get('NAV_LIST').INDEX);
 			util.Cookies.setCookie(res,'user',userObj.name,{ expires: new Date(Date.now() + util.Constant.get('LOGIN_TIMEOUT'))});
 			util.Cookies.setCookie(res,'auth',auth,{ expires: new Date(Date.now()+ util.Constant.get('LOGIN_TIMEOUT'))});
 			return res.redirect("/admin");

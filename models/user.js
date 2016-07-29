@@ -30,6 +30,9 @@ var UserSchame = new Schema({
 	},
 	auth:{
 		type:String   // 用于登录后的授权字符串
+	},
+	is_admin:{
+		type:String	  // 是否具有管理员权限
 	}
 	// status: Number,
 	// tags:Number
