@@ -37,3 +37,6 @@ typings
 
 # bower
 bower_components
+
+＃ Visual Studio Code
+.vscode
