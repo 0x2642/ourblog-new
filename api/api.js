@@ -138,6 +138,92 @@ router.post('/del', function(req, res, next) {
 	
 });
 
+router.get('/user_list', function(req, res, next) {
+	var page = req.query.page || 1;
+	var pagesize = req.query.pagesize || util.Constant.get('PAGE_SIZE');
+
+	var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
+
+	page = Math.abs(page - 1)
+	var option = {
+		"skip": page * pagesize,
+		"limit": parseInt(pagesize)
+	}
+
+	if (auth) {
+		User.getSingleUserByAuth(auth,function(err,user){
+			if (err) {
+				res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
+			} else {
+				if (user.is_admin && user.is_admin==1) {
+					User.getUserList({status:"1"},'',option,'',function(err,data,count){
+						var ret = {
+							"users": data,
+							"pagenation": {
+								"current": page + 1,
+								"max": Math.ceil(count / pagesize)
+							}
+						}
+						res.send(ret)
+					})
+				} else {
+					res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
+				}
+			}
+		})
+	}else{
+		res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
+	}
+})
+
+router.get('/user/:id', function(req, res, next) {
+	id = req.params.id || 1;
+	User.getSingleUserById(id, function(err, user) {
+		if (err) {
+			res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'))
+		} else {
+			if (user!==null) {
+				var del_list=['token','auth','login_time'];
+				for (var i = del_list.length - 1; i >= 0; i--) {
+					if(user[del_list[i]])
+						user[del_list[i]]=undefined;
+				}
+				res.send(user);
+			} else {
+				res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'))
+			}
+		}
+
+		
+	})
+});
+
+router.post('/user', function(req, res, next) {
+	var post_info = req.body
+	var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
+	if (auth) {
+		User.getSingleUserByAuth(auth,function(err,user){
+			if(err){
+				res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
+			}else{
+				if (!user.is_admin || user.is_admin!=1) {
+					res.send(getErrorString('ERROR_USER_AUTHORIZED_EDIT_FAIL'))
+				} else {
+					User.save(post_info,function(err){
+						if (err) {
+							res.send(getErrorString('ERROR_USER_SAVE_FAIL'))
+						}else{
+							res.send(getSuccessString('SUCCESS_USER_SAVE'))
+						}
+					});
+				}
+			}
+		})
+	} else {
+		res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
+	}
+	
+});
 
 function getArticleList(searchList,option,page,pagesize,res){
 	Article.getArticleList(searchList, '', option, '', function(err, data, count) {

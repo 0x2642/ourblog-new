@@ -186,6 +186,20 @@ router.get('/logout', function(req, res, next) {
 	return res.redirect("/admin/login")
 });
 
+router.get('/userlist', function(req, res, next) {
+	var current_nav=util.Lang.get('NAV_LIST').USER;
+	util.Cookies.setCookie(res,'current_nav',current_nav);
+	res.render(path.join(__dirname+'/view/userlist.ejs'),{title: 'Umiumiu',current_nav:current_nav});
+});
+
+router.get('/useredit', function(req, res, next) {
+	var id=req.query.id||0;
+	var current_nav=util.Lang.get('NAV_LIST').USER;
+	util.Cookies.setCookie(res,'current_nav',current_nav);
+	res.render(path.join(__dirname+'/view/useredit.ejs'),{title: 'Umiumiu',id:id,current_nav:current_nav});
+});
+
+
 function createCertificate(userObj,seed,code,res){
 	var token_new = util.Crypto.md5 (userObj.name+seed+new Date().getTime()+code+"");
 	user.updateToken(userObj,token_new,function(err){

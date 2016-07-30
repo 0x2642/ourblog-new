@@ -23,7 +23,7 @@ var UserSchame = new Schema({
 		type: String  // 最后登录时间
 	},
 	status:{
-		type:Number
+		type:String
 	},
 	token:{
 		type:String	  // 用于加密的字符串

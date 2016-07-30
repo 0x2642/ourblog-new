@@ -17,6 +17,7 @@ exports.get=function(name){
 
 				"SUCCESS_LOGIN":"登录成功",
 				"SUCCESS_ARTICLE_SAVE":"文章保存成功",
+				"SUCCESS_USER_SAVE":"用户保存成功",
 
 				"ERROR_LOGIN_USER_NOT_EXIST":"用户不存在",
 				"ERROR_LOGIN_CERTIFICATE_ILLEGAL":"证书非法",
@@ -31,6 +32,9 @@ exports.get=function(name){
 				"ERROR_ARTICLE_NOT_FOUND":"文章未找到",
 				"ERROR_ARTICLE_SAVE_FAIL":"文章更新失败",
 				"ERROR_ARTICLE_AUTHORIZED_EDIT_FAIL":"该文章未有修改授权",
+				"ERROR_USER_NOT_FOUND":"用户未找到",
+				"ERROR_USER_SAVE_FAIL":"用户更新失败",
+				"ERROR_USER_AUTHORIZED_EDIT_FAIL":"该用户未有修改授权",				
 
 
 				"MAIL_APPLY_AUTHORIZED_SUBJECT":"您正在申请授权",
