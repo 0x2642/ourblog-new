@@ -23,8 +23,6 @@ var app = angular.module('ourblog', [
   //   }
   // });
 
-  $urlRouterProvider.otherwise('home');
-
   var listView = {
     'content': {
       controller: 'ListController',
@@ -32,15 +30,12 @@ var app = angular.module('ourblog', [
     }
   }
 
+  $urlRouterProvider.otherwise('/home');
+
   $stateProvider
     .state('home', {
-      url: '/',
-      views: {
-        'main': {
-          controller: 'HomeController',
-          templateUrl: 'views/main.html'
-        }
-      }
+      url: '/home',
+      views: listView
     })
     .state('tag', {
       url: '/tag／:tid',
@@ -62,7 +57,5 @@ var app = angular.module('ourblog', [
           templateUrl: 'views/article.html'
         }
       }
-    })
-
-
+    });
 });
