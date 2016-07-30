@@ -23,12 +23,13 @@ var Index = React.createClass({
   },
 	render:function(){
 		return (
+      <div>
 			<div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	          <h1 className="page-header">Dashboard</h1>
 	          <DashBoard />
-	          <h2 class="sub-header">Section title</h2>
-	          <ArticleList data={this.state.data} showpage={this.state.showpage} pagenation={this.state.pagenation} statusColor={this.props.statusColor} />
 			</div>
+      <ArticleList data={this.state.data} showpage={this.state.showpage} pagenation={this.state.pagenation} statusColor={this.props.statusColor} />
+      </div>
 		);
 	}
 });

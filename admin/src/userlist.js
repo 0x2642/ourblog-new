@@ -20,7 +20,7 @@ var compoments_data={
   "data":[],
   "option":6
 };
-var Index = React.createClass({
+var UserList = React.createClass({
 	getInitialState: function() {
     	return {data: compoments_data,pagenation:[],showpage:false};
   	},
@@ -82,6 +82,6 @@ var Index = React.createClass({
 var statusColor={"-1":"list-delete","0":"list-draft","1":"list-release"};
 
 ReactDOM.render(
-  <Index url="/api/user_list?pagesize=10" showpage="1" statusColor={statusColor} />,
+  <UserList url="/api/user_list?pagesize=10" showpage="1" statusColor={statusColor} />,
   document.getElementById('container')
 );

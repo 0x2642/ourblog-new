@@ -167,7 +167,16 @@ router.get('/user_list', function(req, res, next) {
 						res.send(ret)
 					})
 				} else {
-					res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
+					User.getUserList({status:"1",_id:user._id},'',option,'',function(err,data,count){
+						var ret = {
+							"users": data,
+							"pagenation": {
+								"current": page + 1,
+								"max": Math.ceil(count / pagesize)
+							}
+						}
+						res.send(ret)
+					})
 				}
 			}
 		})
@@ -207,7 +216,17 @@ router.post('/user', function(req, res, next) {
 				res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
 			}else{
 				if (!user.is_admin || user.is_admin!=1) {
-					res.send(getErrorString('ERROR_USER_AUTHORIZED_EDIT_FAIL'))
+					if (user._id!=post_info._id) {
+						res.send(getErrorString('ERROR_USER_AUTHORIZED_EDIT_FAIL'))
+					} else {
+						User.save(post_info,function(err){
+							if (err) {
+								res.send(getErrorString('ERROR_USER_SAVE_FAIL'))
+							}else{
+								res.send(getSuccessString('SUCCESS_USER_SAVE'))
+							}
+						});
+					}
 				} else {
 					User.save(post_info,function(err){
 						if (err) {
@@ -217,6 +236,45 @@ router.post('/user', function(req, res, next) {
 						}
 					});
 				}
+			}
+		})
+	} else {
+		res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
+	}
+	
+});
+
+router.post('/user_del', function(req, res, next) {
+	var id = req.body.id
+	console.log(id)
+	var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
+	if (auth) {
+		User.getSingleUserByAuth(auth,function(err,user){
+			if(err){
+				res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'))
+			}else{
+				if (!user.is_admin || user.is_admin!=1) {
+					if (user._id!=id) {
+						res.send(getErrorString('ERROR_USER_AUTHORIZED_EDIT_FAIL'))
+					} else {
+						User.del(id,function(err){
+							if (err) {
+								res.send(getErrorString('ERROR_USER_SAVE_FAIL'))
+							}else{
+								res.send(getSuccessString('SUCCESS_USER_SAVE'))
+							}
+						});
+					}
+				} else {
+					User.del(id,function(err){
+						if (err) {
+							res.send(getErrorString('ERROR_USER_SAVE_FAIL'))
+						}else{
+							res.send(getSuccessString('SUCCESS_USER_SAVE'))
+						}
+					});
+				}
+
 			}
 		})
 	} else {

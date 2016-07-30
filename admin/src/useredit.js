@@ -35,21 +35,7 @@ var compoments_data=[
 			}			
 		]
 	},	
-	{
-		type:"select",
-		name:"is_admin",
-		title:"isAdmin",
-		option:[
-			{
-				name:"否",
-				value:"0"
-			},
-			{
-				name:"是",
-				value:"1"
-			}			
-		]
-	},			
+		
 ];
 
 

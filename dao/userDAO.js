@@ -127,12 +127,12 @@ exports.getUserList = function(query, fields, option, sort, callback) {
  * @param {Function} callback 回调函数
  */
 exports.del = function(id, callback) {
-	getArticleDetail(id, function(err, article) {
+	getUserDetail(id, function(err, user) {
 		if (err) {
 			callback(err);
 		}
-		article.status = util.Constant.get('ARTICLE_STATUS_DELETE');
-		article.save(function(err) {
+		user.status = util.Constant.get('ARTICLE_STATUS_DELETE');
+		user.save(function(err) {
 			if (err) {
 				callback(err);
 			} else {
