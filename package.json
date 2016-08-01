@@ -14,7 +14,10 @@
     "express": "~4.13.1",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
-    "mongoose": "*"
+    "mongoose": "*",
+    "nodemailer": "*",
+    "request": "*",
+    "formidable": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
