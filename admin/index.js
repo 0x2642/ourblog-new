@@ -15,7 +15,8 @@ var global_create_cert_token = '';
 
 router.use(function(req, res, next) {
 	var url = req.originalUrl;
-	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized", "createCertificate", "/admin_dashboard", "/admin_grouplist"];
+	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized", 
+	"createCertificate", "/admin_dashboard", "/admin_grouplist", "/admin_addadmin"];
 	var allow_flag = true;
 	for (var i = exclude.length - 1; i >= 0; i--) {
 		if (url.indexOf(exclude[i]) < 0 && !util.Cookies.getCookie(req, 'user')) {
@@ -257,6 +258,15 @@ router.get('/admin_grouplist', function(req, res, next) {
 		msg = '';
 	}
 	res.render(path.join(__dirname + '/view/admin_grouplist.ejs'), 
+		adminViewTextElement(msg));
+});
+
+router.get('/admin_addadmin', function(req, res, next) {
+	var msg = req.query.msg;
+	if (req.query.msg == undefined || req.query.msg == null) {
+		msg = '';
+	}
+	res.render(path.join(__dirname + '/view/admin_addadmin.ejs'), 
 		adminViewTextElement(msg));
 });
 
