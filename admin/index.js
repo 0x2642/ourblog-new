@@ -15,7 +15,7 @@ var global_create_cert_token = '';
 
 router.use(function(req, res, next) {
 	var url = req.originalUrl;
-	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized", "createCertificate", "/dashboard"];
+	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized", "createCertificate", "/admin_dashboard", "/admin_grouplist"];
 	var allow_flag = true;
 	for (var i = exclude.length - 1; i >= 0; i--) {
 		if (url.indexOf(exclude[i]) < 0 && !util.Cookies.getCookie(req, 'user')) {
@@ -242,22 +242,40 @@ router.get('/useredit', function(req, res, next) {
 	});
 });
 
-router.get('/dashboard', function(req, res, next) {
+router.get('/admin_dashboard', function(req, res, next) {
 	var msg = req.query.msg;
 	if (req.query.msg == undefined || req.query.msg == null) {
 		msg = '';
 	}
-	res.render(path.join(__dirname + '/view/dashboard.ejs'), {
-		title: strings.getPageTitle('STR_ADMIN_01_01_01'),
-		msg: msg
-	});
+	res.render(path.join(__dirname + '/view/admin_dashboard.ejs'), 
+		adminViewTextElement(msg));
 });
 
+router.get('/admin_grouplist', function(req, res, next) {
+	var msg = req.query.msg;
+	if (req.query.msg == undefined || req.query.msg == null) {
+		msg = '';
+	}
+	res.render(path.join(__dirname + '/view/admin_grouplist.ejs'), 
+		adminViewTextElement(msg));
+});
+
+function adminViewTextElement(msg) {
+	return {
+		title: strings.getPageTitle('STR_ADMIN_01_01_01'),
+		sidebar1: strings.getPageTitle('STR_ADMIN_01_02_01'),
+		sidebar2: strings.getPageTitle('STR_ADMIN_01_03_01'),
+		sidebar3: strings.getPageTitle('STR_ADMIN_01_04_01'),
+		sidebar3_1: strings.getPageTitle('STR_ADMIN_01_04_02'),
+		sidebar3_2: strings.getPageTitle('STR_ADMIN_01_04_03'),
+		sidebar3_3: strings.getPageTitle('STR_ADMIN_01_04_04'),
+		msg: msg
+	}
+}
 
 function logger(loggerContent) {
 	console.log("Admin --> index.js -->" + loggerContent);
 }
-
 
 function createCertificate(userObj, seed, code, res) {
 	var token_new = util.Crypto.md5(userObj.name + seed + new Date().getTime() + code + "");
