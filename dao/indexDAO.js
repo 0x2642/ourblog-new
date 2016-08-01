@@ -7,3 +7,4 @@
 exports.Article = require('./articleDAO');
 exports.User = require('./userDAO');
 exports.AuthLog = require('./authLogDAO');
+exports.Admin = require('./adminDAO');

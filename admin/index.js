@@ -8,6 +8,7 @@ var fs = require("fs");
 var dao = require('../dao/indexDAO.js');
 var user = dao.User;
 var authLog = dao.AuthLog;
+var admin = dao.Admin;
 var util = require('../util');
 var strings = require('./strings.js');
 
@@ -268,6 +269,44 @@ router.get('/admin_addadmin', function(req, res, next) {
 	}
 	res.render(path.join(__dirname + '/view/admin_addadmin.ejs'), 
 		adminViewTextElement(msg));
+});
+
+router.post('/admin_addadmin', function(req, res, next) {
+	console.log('aaaaaaaaaaaaaaa');
+	var username = req.body.username;
+	var password = req.body.password;
+	var email = req.body.email;
+	var add_time = new Date().getTime();
+
+	//检查用户名是否已经存在 
+	admin.getAdminByEmail(email, function(err, user) {
+		if (err) {
+			logger('Get user error');
+			return res.redirect('/admin_addadmin');
+		}
+		if (user) {
+			logger('用户已存在');
+			return res.redirect('/admin_addadmin'); //返回注册页
+		}
+
+		var newUser = {
+			username: username,
+			password: password,
+			email: email,
+			add_time: add_time,
+			level: 1
+		}
+		//如果不存在则新增用户
+		admin.setNewAdmin(newUser, function(err) {
+			if (err) {
+				logger('Save new user error' + err);
+				return res.redirect('/admin_addadmin'); //注册失败返回主册页
+			}
+			//req.session.user = user; //用户信息存入 session
+			logger('Regestor a new user success');
+			res.redirect('/admin_dashboard'); //注册成功后返回主页
+		});
+	});
 });
 
 function adminViewTextElement(msg) {
