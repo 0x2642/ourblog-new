@@ -247,46 +247,24 @@ router.get('/useredit', function(req, res, next) {
 });
 
 router.get('/admin_dashboard', function(req, res, next) {
-	var msg = req.query.msg;
-	if (req.query.msg == undefined || req.query.msg == null) {
-		msg = '';
-	}
 	res.render(path.join(__dirname + '/view/admin_dashboard.ejs'),
-		adminViewTextElement(msg));
+		adminViewTextElement());
 });
 
 router.get('/admin_grouplist', function(req, res, next) {
-	var msg = req.query.msg;
-	if (req.query.msg == undefined || req.query.msg == null) {
-		msg = '';
-	}
-
 	admin.getAdminAll(null, null, null, null, function(err, admins) {
 		if (err) {
 			admins = [];
 		}
 		logger('grouplist length: ' + admins.length);
-		res.render(path.join(__dirname + '/view/admin_grouplist.ejs'), {
-			title: strings.getPageTitle('STR_ADMIN_01_01_01'),
-			sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
-			sidebar_grouplist: strings.getPageTitle('STR_ADMIN_01_03_01'),
-			sidebar_group_ctl: strings.getPageTitle('STR_ADMIN_01_04_01'),
-			sidebar_group_add: strings.getPageTitle('STR_ADMIN_01_04_02'),
-			sidebar_group_delete: strings.getPageTitle('STR_ADMIN_01_04_03'),
-			sidebar_group_edit: strings.getPageTitle('STR_ADMIN_01_04_04'),
-			msg: msg,
-			admins: admins
-		});
+		res.render(path.join(__dirname + '/view/admin_grouplist.ejs'), 
+			adminViewTextElement('', admins));
 	});
 });
 
 router.get('/admin_addadmin', function(req, res, next) {
-	var msg = req.query.msg;
-	if (req.query.msg == undefined || req.query.msg == null) {
-		msg = '';
-	}
 	res.render(path.join(__dirname + '/view/admin_addadmin.ejs'),
-		adminViewTextElement(msg));
+		adminViewTextElement());
 });
 
 router.post('/admin_addadmin', function(req, res, next) {
@@ -296,6 +274,7 @@ router.post('/admin_addadmin', function(req, res, next) {
 	var add_time = new Date().getTime();
 	var level = 0;
 	var ep = new EventProxy();
+	ep.fail(next);
 
 	var radios = req.body.optionsRadios;
 	if (equals(radios.toString(), 'option1')) {
@@ -308,16 +287,8 @@ router.post('/admin_addadmin', function(req, res, next) {
 
 	ep.on('save_fail', function(errmsg) {
 		res.status(200);
-		res.render(path.join(__dirname + '/view/admin_error.ejs'), {
-			title: strings.getPageTitle('STR_ADMIN_01_01_01'),
-			sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
-			sidebar_grouplist: strings.getPageTitle('STR_ADMIN_01_03_01'),
-			sidebar_group_ctl: strings.getPageTitle('STR_ADMIN_01_04_01'),
-			sidebar_group_add: strings.getPageTitle('STR_ADMIN_01_04_02'),
-			sidebar_group_delete: strings.getPageTitle('STR_ADMIN_01_04_03'),
-			sidebar_group_edit: strings.getPageTitle('STR_ADMIN_01_04_04'),
-			msg: errmsg
-		});
+		res.render(path.join(__dirname + '/view/admin_error.ejs'), 
+			adminViewTextElement(errmsg));
 	});
 
 	//检查用户名是否已经存在 
@@ -356,7 +327,9 @@ router.post('/admin_addadmin', function(req, res, next) {
 	});
 });
 
-function adminViewTextElement(msg) {
+function adminViewTextElement(msg, admins) {
+	var msg = msg || '';
+	var admins = admins || [];
 	return {
 		title: strings.getPageTitle('STR_ADMIN_01_01_01'),
 		sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
@@ -365,7 +338,8 @@ function adminViewTextElement(msg) {
 		sidebar_group_add: strings.getPageTitle('STR_ADMIN_01_04_02'),
 		sidebar_group_delete: strings.getPageTitle('STR_ADMIN_01_04_03'),
 		sidebar_group_edit: strings.getPageTitle('STR_ADMIN_01_04_04'),
-		msg: msg
+		msg: msg,
+		admins: admins
 	}
 }
 
