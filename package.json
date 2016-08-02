@@ -17,7 +17,8 @@
     "mongoose": "*",
     "nodemailer": "*",
     "request": "*",
-    "formidable": "*"
+    "formidable": "*",
+    "eventproxy": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",

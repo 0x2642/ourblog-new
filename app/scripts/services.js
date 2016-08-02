@@ -2,7 +2,7 @@
 
 var SERVICE_PATH = {
     LIST: "api/list?tag=:tag&author=:author&page=:page",
-    ARTICLE: "dummy/article/:id.json",
+    ARTICLE: "api/article/:id",
     AUTHOR: "dummy/author/:id.json",
     LOGIN: "",
     REGISTRY: ""

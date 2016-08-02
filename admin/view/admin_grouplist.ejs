@@ -25,31 +25,17 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="odd gradeX">
-									<td>Billy Herrington</td>
-									<td>FarkQ@4399.com</td>
-									<td>0</td>
-								</tr>
-								<tr class="even gradeC">
-									<td>Ren Blade</td>
-									<td>Fucking@12306.com</td>
-									<td>1</td>
-								</tr>
-								<tr class="odd gradeA">
-									<td>Xiang Woman</td>
-									<td>poi@hehe.com</td>
-									<td>1</td>
-								</tr>
-								<tr class="even gradeA">
-									<td>Cartoo</td>
-									<td>xix@qq.com</td>
-									<td>2</td>
-								</tr>
-								<tr class="odd gradeA">
-									<td>Flower J</td>
-									<td>oo@heheh.com</td>
-									<td>3</td>
-								</tr>
+								<% admins.forEach(function(admin, idx) { %>
+									<%  if (idx % 2 == 0) { %>
+										<tr class="even gradeX">
+									<% } else { %>
+										<tr class="odd gradeC">
+									<% } %>
+										<td> <%= admin.username %> </td>
+										<td> <%= admin.email %> </td>
+										<td> <%= admin.level %> </td>
+									</tr>
+								<% }) %>
 							</tbody>
 						</table>
 					</div>

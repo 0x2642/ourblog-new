@@ -11,13 +11,15 @@ var authLog = dao.AuthLog;
 var admin = dao.Admin;
 var util = require('../util');
 var strings = require('./strings.js');
+var EventProxy = require('eventproxy');
 
 var global_create_cert_token = '';
 
 router.use(function(req, res, next) {
 	var url = req.originalUrl;
-	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized", 
-	"createCertificate", "/admin_dashboard", "/admin_grouplist", "/admin_addadmin"];
+	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized",
+		"createCertificate", "/admin_dashboard", "/admin_grouplist", "/admin_addadmin", "/admin_error"
+	];
 	var allow_flag = true;
 	for (var i = exclude.length - 1; i >= 0; i--) {
 		if (url.indexOf(exclude[i]) < 0 && !util.Cookies.getCookie(req, 'user')) {
@@ -249,7 +251,7 @@ router.get('/admin_dashboard', function(req, res, next) {
 	if (req.query.msg == undefined || req.query.msg == null) {
 		msg = '';
 	}
-	res.render(path.join(__dirname + '/view/admin_dashboard.ejs'), 
+	res.render(path.join(__dirname + '/view/admin_dashboard.ejs'),
 		adminViewTextElement(msg));
 });
 
@@ -258,8 +260,24 @@ router.get('/admin_grouplist', function(req, res, next) {
 	if (req.query.msg == undefined || req.query.msg == null) {
 		msg = '';
 	}
-	res.render(path.join(__dirname + '/view/admin_grouplist.ejs'), 
-		adminViewTextElement(msg));
+
+	admin.getAdminAll(null, null, null, null, function(err, admins) {
+		if (err) {
+			admins = [];
+		}
+		logger('grouplist length: ' + admins.length);
+		res.render(path.join(__dirname + '/view/admin_grouplist.ejs'), {
+			title: strings.getPageTitle('STR_ADMIN_01_01_01'),
+			sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
+			sidebar_grouplist: strings.getPageTitle('STR_ADMIN_01_03_01'),
+			sidebar_group_ctl: strings.getPageTitle('STR_ADMIN_01_04_01'),
+			sidebar_group_add: strings.getPageTitle('STR_ADMIN_01_04_02'),
+			sidebar_group_delete: strings.getPageTitle('STR_ADMIN_01_04_03'),
+			sidebar_group_edit: strings.getPageTitle('STR_ADMIN_01_04_04'),
+			msg: msg,
+			admins: admins
+		});
+	});
 });
 
 router.get('/admin_addadmin', function(req, res, next) {
@@ -267,26 +285,54 @@ router.get('/admin_addadmin', function(req, res, next) {
 	if (req.query.msg == undefined || req.query.msg == null) {
 		msg = '';
 	}
-	res.render(path.join(__dirname + '/view/admin_addadmin.ejs'), 
+	res.render(path.join(__dirname + '/view/admin_addadmin.ejs'),
 		adminViewTextElement(msg));
 });
 
 router.post('/admin_addadmin', function(req, res, next) {
-	console.log('aaaaaaaaaaaaaaa');
 	var username = req.body.username;
 	var password = req.body.password;
 	var email = req.body.email;
 	var add_time = new Date().getTime();
+	var level = 0;
+	var ep = new EventProxy();
+
+	var radios = req.body.optionsRadios;
+	if (equals(radios.toString(), 'option1')) {
+		level = 1; // 1级管理员
+	} else if (equals(radios.toString(), 'option2')) {
+		level = 2; // 2级管理员
+	} else if (equals(radios.toString(), 'option3')) {
+		level = 0; // 普通会员
+	}
+
+	ep.on('save_fail', function(errmsg) {
+		res.status(200);
+		res.render(path.join(__dirname + '/view/admin_error.ejs'), {
+			title: strings.getPageTitle('STR_ADMIN_01_01_01'),
+			sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
+			sidebar_grouplist: strings.getPageTitle('STR_ADMIN_01_03_01'),
+			sidebar_group_ctl: strings.getPageTitle('STR_ADMIN_01_04_01'),
+			sidebar_group_add: strings.getPageTitle('STR_ADMIN_01_04_02'),
+			sidebar_group_delete: strings.getPageTitle('STR_ADMIN_01_04_03'),
+			sidebar_group_edit: strings.getPageTitle('STR_ADMIN_01_04_04'),
+			msg: errmsg
+		});
+	});
 
 	//检查用户名是否已经存在 
 	admin.getAdminByEmail(email, function(err, user) {
 		if (err) {
-			logger('Get user error');
-			return res.redirect('/admin_addadmin');
+			// 通过Email获取用户信息失败
+			logger(strings.getPageTitle('STR_ADMIN_ERR_01'));
+			ep.emit('save_fail', strings.getPageTitle('STR_ADMIN_ERR_01'));
+			return;
 		}
 		if (user) {
-			logger('用户已存在');
-			return res.redirect('/admin_addadmin'); //返回注册页
+			// 用户已存在
+			logger(strings.getPageTitle('STR_ADMIN_ERR_02'));
+			ep.emit('save_fail', strings.getPageTitle('STR_ADMIN_ERR_02'));
+			return;
 		}
 
 		var newUser = {
@@ -294,17 +340,18 @@ router.post('/admin_addadmin', function(req, res, next) {
 			password: password,
 			email: email,
 			add_time: add_time,
-			level: 1
+			level: level
 		}
+
 		//如果不存在则新增用户
 		admin.setNewAdmin(newUser, function(err) {
 			if (err) {
-				logger('Save new user error' + err);
-				return res.redirect('/admin_addadmin'); //注册失败返回主册页
+				// 保存新用户失败
+				logger(strings.getPageTitle('STR_ADMIN_ERR_03'));
+				ep.emit('save_fail', strings.getPageTitle('STR_ADMIN_ERR_03'));
 			}
-			//req.session.user = user; //用户信息存入 session
 			logger('Regestor a new user success');
-			res.redirect('/admin_dashboard'); //注册成功后返回主页
+			res.redirect('/admin/admin_dashboard'); //注册成功后返回主页
 		});
 	});
 });
@@ -312,18 +359,25 @@ router.post('/admin_addadmin', function(req, res, next) {
 function adminViewTextElement(msg) {
 	return {
 		title: strings.getPageTitle('STR_ADMIN_01_01_01'),
-		sidebar1: strings.getPageTitle('STR_ADMIN_01_02_01'),
-		sidebar2: strings.getPageTitle('STR_ADMIN_01_03_01'),
-		sidebar3: strings.getPageTitle('STR_ADMIN_01_04_01'),
-		sidebar3_1: strings.getPageTitle('STR_ADMIN_01_04_02'),
-		sidebar3_2: strings.getPageTitle('STR_ADMIN_01_04_03'),
-		sidebar3_3: strings.getPageTitle('STR_ADMIN_01_04_04'),
+		sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
+		sidebar_grouplist: strings.getPageTitle('STR_ADMIN_01_03_01'),
+		sidebar_group_ctl: strings.getPageTitle('STR_ADMIN_01_04_01'),
+		sidebar_group_add: strings.getPageTitle('STR_ADMIN_01_04_02'),
+		sidebar_group_delete: strings.getPageTitle('STR_ADMIN_01_04_03'),
+		sidebar_group_edit: strings.getPageTitle('STR_ADMIN_01_04_04'),
 		msg: msg
 	}
 }
 
 function logger(loggerContent) {
 	console.log("Admin --> index.js -->" + loggerContent);
+}
+
+function equals(str1, str2) {
+	if (str1 == str2) {
+		return true;
+	}
+	return false;
 }
 
 function createCertificate(userObj, seed, code, res) {
