@@ -65,4 +65,15 @@ exports.setNewAdmin = function(newAdmin, callback) {
 }
 
 
+exports.deleteAllAdmins = function(callback) {
+	AdminModel.remove(function(err) {
+		if (err) {
+			callback(err);
+		} else {
+			console.log("delete success");
+		}
+	})
+}
+
+
 
