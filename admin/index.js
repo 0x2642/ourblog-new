@@ -253,7 +253,8 @@ router.get('/admin_dashboard', adminController.dashboardIndex);
 router.get('/admin_grouplist', adminController.groupListIndex);
 
 router.get('/admin_deladmin', adminController.removeAdminIndex);
-router.post('/admin_deladmin', adminController.removeAdmin);
+router.post('/admin_deladmin', adminController.removeAdminAll);
+router.post('/admin_deladmin/:email', adminController.removeAdminAtX);
 
 router.get('/admin_addadmin', adminController.addAdminIndex);
 router.post('/admin_addadmin', adminController.addAdmin);
@@ -262,13 +263,6 @@ router.post('/admin_addadmin', adminController.addAdmin);
 
 function logger(loggerContent) {
 	console.log("Admin --> index.js -->" + loggerContent);
-}
-
-function equals(str1, str2) {
-	if (str1 == str2) {
-		return true;
-	}
-	return false;
 }
 
 function createCertificate(userObj, seed, code, res) {

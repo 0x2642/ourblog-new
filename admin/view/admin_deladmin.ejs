@@ -22,6 +22,7 @@
 									<th>AddClasser</th>
 									<th>Email</th>
 									<th>Add Level</th>
+									<th>Operation</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -34,6 +35,11 @@
 										<td> <%= admin.username %> </td>
 										<td> <%= admin.email %> </td>
 										<td> <%= admin.level %> </td>
+										<td> 
+											<form method="post" action="/admin/admin_deladmin/<%= admin.email %>">
+												<button type="submit" class="btn btn-primary">Delete</button>
+											</form>
+										</td>
 									</tr>
 								<% }) %>
 							</tbody>
@@ -47,7 +53,6 @@
 		<!-- /.col-lg-12 -->
 	</div>
 	<form method="post">
-		<button type="submit" class="btn btn-primary">Delete All</button>
+		<button id="del_all" type="submit" class="btn btn-primary">Delete All</button>
 	</form>
-	
 <% include ./layout/dashboard_footer.ejs %>

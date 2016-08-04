@@ -38,7 +38,7 @@ exports.getAdminAll = function(query, fields, option, sort, callback) {
 	var mSort = sort || {
 		'_id': -1
 	}
-	AdminModel.find(query, mFields, mFption, function(err, admins){
+	AdminModel.find(query, mFields, mFption, function(err, admins) {
 		if (err) {
 			return callback(err);
 		}
@@ -64,16 +64,20 @@ exports.setNewAdmin = function(newAdmin, callback) {
 	mAdminModel.save(callback);
 }
 
-
+/**
+ * Delete all admins 
+ * @param {Function} callback callback function
+ */
 exports.deleteAllAdmins = function(callback) {
-	AdminModel.remove(function(err) {
-		if (err) {
-			callback(err);
-		} else {
-			console.log("delete success");
-		}
-	})
+	AdminModel.remove(callback);
 }
 
-
-
+/**
+ * Delete one admins by mail 
+ * @param {Function} callback callback function
+ */
+exports.deleteCertainAdmins = function(email, callback) {
+	AdminModel.remove({
+		email: email
+	}, callback);
+}

@@ -103,7 +103,7 @@ exports.addAdmin = function(req, res, next) {
 	});
 }
 
-exports.removeAdmin = function(req, res, next) {
+exports.removeAdminAll = function(req, res, next) {
 	var ep = new EventProxy();
 	ep.fail(next);
 
@@ -119,7 +119,28 @@ exports.removeAdmin = function(req, res, next) {
 			ep.emit('delete_fail', strings.getPageTitle('STR_ADMIN_ERR_04'));
 		}
 		logger('Delete all users success');
-		res.redirect('/admin/admin_grouplist');
+		res.redirect('/admin/admin_dashboard');
+	});
+}
+
+exports.removeAdminAtX = function(req, res, next) {
+	var ep = new EventProxy();
+	var email = req.params.email;
+	ep.fail(next);
+
+	ep.on('delete_fail', function(errMsg) {
+		res.status(200);
+		res.render(path.join(getViewPath() + 'view/admin_error.ejs'),
+			adminViewTextElement(errmsg));
+	});
+
+	admin.deleteCertainAdmins(email, function(err) {
+		if (err) {
+			logger(strings.getPageTitle('STR_ADMIN_ERR_04'));
+			ep.emit('delete_fail', strings.getPageTitle('STR_ADMIN_ERR_04'));
+		}
+		logger('Delete email: '+ email + ' users success');
+		res.redirect('/admin/admin_dashboard');
 	});
 }
 
