@@ -1,10 +1,10 @@
 <article class="article" ng-show="article.id">
     <div class="tags">
-        <a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
+        <a ng-repeat="tag in article.tags" ui-sref="tag({tid:tag})">{{tag}}</a>
     </div>
     <h1>{{article.title}}</h1>
     <div class="metadata clearfix">
-        <p>作者：<a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
+        <p>作者：<a ui-sref="author({uid: article.author.id})">{{article.author.name}}</a></p>
         <p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
     </div>
     <hr/>

@@ -1,5 +1,5 @@
 <div class="list-header">
-	<p class="reset">{{meta|proper}}</p>
+	<p class="reset">{{meta}}</p>
 </div>
 <div class="list-body">
 	<div class="list-item" ng-repeat="article in articles">
@@ -8,15 +8,15 @@
 		</div>
 		<div class="item-info">
 			<div class="info-main">
-				<h2><a ng-href="#/article/{{article.id}}">{{article.title}}</a></h2>
+				<h2><a ui-sref="article({aid: article.id})">{{article.title}}</a></h2>
 				<div class="metadata clearfix">
-					<p>作者：<a ng-href="#/author/{{article.author.id}}">{{article.author.name}}</a></p>
+					<p>作者：<a ui-sref="author({uid: article.author.id})">{{article.author.name}}</a></p>
 					<p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
 				</div>
 				<p class="info-desc">{{article.description}}</p>
 			</div>
 			<div class="tags">
-				<a ng-repeat="tag in article.tags" ng-href="#/tag/{{tag}}">{{tag}}</a>
+				<a ng-repeat="tag in article.tags" ui-sref="tag({tid:tag})">{{tag}}</a>
 			</div>
 		</div>
 	</div>

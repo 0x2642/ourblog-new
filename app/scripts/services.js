@@ -67,15 +67,6 @@
                 params: {
                     id: "@id"
                 }
-            },
-            save: {
-                method: "POST"
-            },
-            delete: {
-                method: "DELETE",
-                params: {
-                    id: "@id"
-                }
             }
         });
         return {

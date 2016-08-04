@@ -11,9 +11,12 @@
 
   .config(function($stateProvider, $urlRouterProvider) {
 
-    // $urlRouterProvider.interceptors.push(function($injector, $q) {
+    $urlRouterProvider.otherwise('/');
+
+    //TODO: why it doesn't work?
+    // $urlRouterProvider.deferIntercept(function($injector, $q) {
     //   return {
-    //     responseError: function(response) {
+    //     responseError: function (response) {
     //       console.log('response error');
     //       var $state = $injector.get('state');
     //       if (response.state === 404 && $state.current !== 'home') {
@@ -21,7 +24,7 @@
     //       }
     //       return $q.reject(response);
     //     }
-    //   }
+    //   };
     // });
 
     var listView = {
@@ -31,15 +34,13 @@
       }
     };
 
-    $urlRouterProvider.otherwise('/');
-
     $stateProvider
       .state('home', {
         url: '/',
         views: listView
       })
       .state('tag', {
-        url: '/tag／:tid',
+        url: '/tag/:tid',
         views: listView
       })
       .state('author', {
