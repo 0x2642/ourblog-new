@@ -277,15 +277,6 @@ input[type='text']:focus,textarea:focus{
 .notFound{
     font-weight: bold;
 }
-.header-user{
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-.header-user:before{
-    color: #EEE;
-    content: attr(usertext);
-}
 
 /* ==========================================================================
    List classes
@@ -345,12 +336,6 @@ input[type='text']:focus,textarea:focus{
     float: left;
     margin-right: 10px;
 }
-.metadata .action{
-    display: none;
-}
-.metadata:hover .action{
-    display: block;
-}
 .metadata a:hover{
     text-decoration: underline;
 }
@@ -373,9 +358,6 @@ input[type='text']:focus,textarea:focus{
 .list-footer{
     margin-top: 40px;
     text-align: center;
-}
-.edit-item{
-    margin-top: 1.25em;
 }
 
 /* ==========================================================================

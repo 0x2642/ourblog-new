@@ -4,10 +4,10 @@
   "dependencies": {
     "jquery": "1.11.3",
     "angular": "1.5.3",
-    "angular-route": "1.5.3",
     "angular-animate": "1.5.3",
     "angular-resource": "1.5.3",
     "angular-sanitize": "1.5.3",
+    "angular-ui-router": "^0.3.1",
     "pagedown": "^1.1.0",
     "react": "^15.2.0",
     "bootstrap": "^3.3.6",
