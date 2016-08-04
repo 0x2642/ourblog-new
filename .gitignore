@@ -40,3 +40,6 @@ bower_components
 
 ＃ Visual Studio Code
 .vscode
+
+# react build
+app/scripts/admin

@@ -37,6 +37,9 @@
     },
     "angularjs/angular-sanitize.d.ts": {
       "commit": "dc6d1ebfaa554e85b91846574728930972ca9868"
+    },
+    "react/react.d.ts": {
+      "commit": "3f97b234196b36a4cc9218e75c6d7e7e01dc8ac1"
     }
   }
 }

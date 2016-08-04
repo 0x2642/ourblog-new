@@ -4,4 +4,7 @@
  * 1 exports.XXX = require({path})
  * 2 添加xxxDAO.js文件 所有的数据与数据库操作都在dao中写
  */
-exports.Post = require('./postDAO');
+exports.Article = require('./articleDAO');
+exports.User = require('./userDAO');
+exports.AuthLog = require('./authLogDAO');
+exports.Admin = require('./adminDAO');

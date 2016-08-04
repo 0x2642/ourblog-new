@@ -2,10 +2,12 @@
     'use strict';
 
     var SERVICE_PATH = {
-        LIST: "dummy/list/:tag/:author/:page.json",
-        ARTICLE: "dummy/article/:id.json",
-        AUTHOR: "dummy/author/:id.json"
-    }; //API URL
+        LIST: "api/list?tag=:tag&author=:author&page=:page",
+        ARTICLE: "api/article/:id",
+        AUTHOR: "dummy/author/:id.json",
+        LOGIN: "",
+        REGISTRY: ""
+    };//API URL
 
     var blogServices = angular.module('blogServices', ['ngResource']);
 

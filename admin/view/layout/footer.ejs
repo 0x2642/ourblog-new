@@ -1,0 +1,30 @@
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../bower_components/bootstrap/dist/js/ie10-viewport-bug-workaround.js"></script>
+  
+
+</body>
+<div>
+  
+</div>
+<script>
+    var current_nav="<%= current_nav %>"
+    $(document).ready(function(){
+        $('#sidebar li').each(function(i,e){
+            if($(e).text()==current_nav){
+                $(e).addClass('active').siblings().removeClass('active')
+                return true;
+            }
+        })
+    })
+</script>
+</html>

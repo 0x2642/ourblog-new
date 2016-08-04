@@ -6,7 +6,7 @@ console.log('mongoURL' + mongoURL);
 // 程序启动后通过mongoose进行连接db的操作
 mongoose.connect(mongoURL, function(err) {
 	if (err) {
-		console.error('connect to %s error: ', config.db, err.message);
+		console.error('connect to %s error: ', err.message);
 		process.exit(1);
 	}
 });
@@ -35,6 +35,12 @@ process.on('SIGNIT', function() {
 });
 
 /********************  Modules import *******************************/
-require('./post');
+require('./article');
+require('./user');
+require('./authLog');
+require('./admin')
 
-exports.Post = mongoose.model('Post');
+exports.Article = mongoose.model('Article');
+exports.User = mongoose.model('User');
+exports.AuthLog = mongoose.model('AuthLog');
+exports.Admin = mongoose.model('Admin');
