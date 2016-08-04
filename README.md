@@ -15,3 +15,12 @@ new version of ourblog based on angularjs and nodejs
 # Rich editing support for VS Code
 1. be sure you have installed TypeScript Definition manager as global ```npm -g install tsd```
 2. run ```tsd install```
+
+================
+
+## Coding Guide:
+* Using **2 space** as indent.
+* Using **Single quotes** in js file and **Double quotes** in HTML file.
+* Follow *JShint* tip and check it before commit.
+* Don't forget to format code before commit.……
+* Nothing more.

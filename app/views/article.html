@@ -1,11 +1,11 @@
-<article class="article" ng-show="article.id">
+<article class="article" ng-show="article._id">
     <div class="tags">
         <a ng-repeat="tag in article.tags" ui-sref="tag({tid:tag})">{{tag}}</a>
     </div>
     <h1>{{article.title}}</h1>
     <div class="metadata clearfix">
         <p>作者：<a ui-sref="author({uid: article.author.id})">{{article.author.name}}</a></p>
-        <p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
+        <p>时间：{{article.createTime|date:"yyyy-MM-dd"}}</p>
     </div>
     <hr/>
     <div ng-bind-html="text" class="text"></div>
@@ -13,6 +13,6 @@
 
 <author uid="article.author.id" ng-show="article.id"></author>
 
-<div ng-hide="article.id" class="notFound {{article.$resolved?'':'hidden'}}">呀，什么都没有</div>
+<div ng-hide="article._id" class="notFound {{article.$resolved?'':'hidden'}}">呀，什么都没有</div>
 
 <script src="bower_components/pagedown/Markdown.Converter.js"></script>

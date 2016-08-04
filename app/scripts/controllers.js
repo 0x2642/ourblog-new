@@ -79,7 +79,7 @@
       // var converter = new Markdown.Converter();
       // $scope.text = $sce.trustAsHtml(converter.makeHtml(data.text));
       // TODO: integrate after merged into master
-      $scope.text = $sce.trustAsHtml(data.text);
+      $scope.text = $sce.trustAsHtml(data.content);
     });
   })
 
