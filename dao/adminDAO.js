@@ -61,6 +61,9 @@ exports.setNewAdmin = function(newAdmin, callback) {
 	mAdminModel.email = newAdmin.email;
 	mAdminModel.add_time = newAdmin.add_time;
 	mAdminModel.level = newAdmin.level;
+	mAdminModel.exp = 0;
+	mAdminModel.comments = [];
+	mAdminModel.is_online = false;
 	mAdminModel.save(callback);
 }
 
@@ -79,5 +82,21 @@ exports.deleteAllAdmins = function(callback) {
 exports.deleteCertainAdmins = function(email, callback) {
 	AdminModel.remove({
 		email: email
+	}, callback);
+}
+
+/**
+ * Update one admin's comment 
+ * @param {Function} callback callback function
+ */
+exports.updateCommnets = function(admin, callback) {
+	var email = admin.email;
+	var commnets = admin.commnets;
+	AdminModel.update({
+		email: email
+	}, {
+		$set: {
+			commnets: commnets
+		}
 	}, callback);
 }

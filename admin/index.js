@@ -13,6 +13,7 @@ var util = require('../util');
 var strings = require('./strings.js');
 var EventProxy = require('eventproxy');
 var adminController = require('./controllers/AdminController.js');
+var subAdminController = require('./controllers/SubAdminController.js');
 
 var global_create_cert_token = '';
 
@@ -20,7 +21,7 @@ router.use(function(req, res, next) {
 	var url = req.originalUrl;
 	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized",
 		"createCertificate", "/admin_dashboard", "/admin_grouplist", "/admin_addadmin", "/admin_error",
-		"/admin_deladmin"	
+		"/admin_deladmin", "/subadmin_dashboard", "/subadmin_message"	
 	];
 	var allow_flag = true;
 	for (var i = exclude.length - 1; i >= 0; i--) {
@@ -258,6 +259,12 @@ router.post('/admin_deladmin/:email', adminController.removeAdminAtX);
 
 router.get('/admin_addadmin', adminController.addAdminIndex);
 router.post('/admin_addadmin', adminController.addAdmin);
+
+
+router.get('/subadmin_dashboard', subAdminController.dashboardIndex);
+
+router.get('/subadmin_message', subAdminController.messageLeaveIndex);
+router.post('/subadmin_message', subAdminController.messageSubmit);
 
 
 

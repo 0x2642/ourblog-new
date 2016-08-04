@@ -22,6 +22,8 @@
 									<th>AddClasser</th>
 									<th>Email</th>
 									<th>Add Level</th>
+									<th>Add Exp</th>
+									<th>OnLine</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -34,6 +36,12 @@
 										<td> <%= admin.username %> </td>
 										<td> <%= admin.email %> </td>
 										<td> <%= admin.level %> </td>
+										<td> <%= admin.exp %> </td>
+										<% if (admin.is_online)  { %>
+											<td> Online </td>
+										<% } else { %>
+											<td> Offline </td>
+										<% } %>
 									</tr>
 								<% }) %>
 							</tbody>
