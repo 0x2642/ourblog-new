@@ -53,29 +53,19 @@
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>Ren Blade</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>妈的这人上班刷微博,不饱和，工作绝对不饱和！</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>Xiang Nvzhuang</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>为什么会这样呢</div>
-                            </a>
-                        </li>
+                        <%  admins.forEach(function(admin){ %>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <strong><%= admin.username %></strong>
+                                        <span class="pull-right text-muted">
+                                            <em>Yesterday</em>
+                                        </span>
+                                    </div>
+                                    <div><%= admin.comments[admin.comments.length - 1] %></div>
+                                </a>
+                            </li>
+                        <% }) %>
                         <li class="divider"></li>
                         <li>
                             <a class="text-center" href="#">

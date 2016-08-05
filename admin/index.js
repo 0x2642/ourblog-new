@@ -21,7 +21,7 @@ router.use(function(req, res, next) {
 	var url = req.originalUrl;
 	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized",
 		"createCertificate", "/admin_dashboard", "/admin_grouplist", "/admin_addadmin", "/admin_error",
-		"/admin_deladmin", "/subadmin_dashboard", "/subadmin_message"	
+		"/admin_deladmin", "/subadmin_dashboard", "/subadmin_message", "subadmin_message_list"	
 	];
 	var allow_flag = true;
 	for (var i = exclude.length - 1; i >= 0; i--) {
@@ -265,6 +265,8 @@ router.get('/subadmin_dashboard', subAdminController.dashboardIndex);
 
 router.get('/subadmin_message', subAdminController.messageLeaveIndex);
 router.post('/subadmin_message', subAdminController.messageSubmit);
+
+router.get('/subadmin_message_list', subAdminController.messageListIdx);
 
 
 

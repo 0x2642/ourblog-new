@@ -2,7 +2,7 @@ var EventProxy = require('eventproxy');
 var strings = require('../strings.js');
 var path = require("path");
 var Dao = require('../../dao/indexDAO.js');
-var admin = Dao.Admin;
+var adminCtl = Dao.Admin;
 
 exports.dashboardIndex = function(req, res, next) {
 	res.render(path.join(getViewPath() + 'view/subadmin/subadmin_dashboard.ejs'),
@@ -14,11 +14,9 @@ exports.messageLeaveIndex = function(req, res, next) {
 		adminViewTextElement());
 }
 
-exports.messageSubmit = function(req, res, next) {
-	var message = req.body.message;
+exports.messageListIdx = function(req, res, next) {
 	var ep = new EventProxy();
 	ep.fail(next);
-	logger('message: ' + message);
 
 	ep.on('fail', function(errmsg) {
 		res.status(200);
@@ -26,19 +24,47 @@ exports.messageSubmit = function(req, res, next) {
 			adminViewTextElement(errmsg));
 	});
 
-	admin.getAdminByEmail('4399@qq.com', function(err, user){
+	adminCtl.getAdminByEmail('4399@qq.com', function(err, admin) {
 		if (err) {
 			logger('Get admin by email error');
 			ep.emit('fail', 'get admin by email fail');
 		} else {
-			user.comments.push(message);
-			admin.updateCommnets(user, function(err) {
+			res.render(path.join(getViewPath() + 'view/subadmin/subadmin_message_list.ejs'), {
+				title: strings.getPageTitle('STR_ADMIN_01_01_01'),
+				sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
+				admin: admin
+			});
+		}
+	});
+}
+
+exports.messageSubmit = function(req, res, next) {
+	var message = req.body.message;
+	var target_email = '4399@qq.com';  // May change to session
+	var ep = new EventProxy();
+	ep.fail(next);
+
+	ep.on('fail', function(errmsg) {
+		res.status(200);
+		res.render(path.join(getViewPath() + 'view/admin_error.ejs'),
+			adminViewTextElement(errmsg));
+	});
+
+	adminCtl.getAdminByEmail(target_email, function(err, admin) {
+		if (err) {
+			logger('Get admin by email error');
+			ep.emit('fail', 'get admin by email fail');
+		} else {
+			var new_comments = admin.comments;
+			new_comments.push(message);
+			logger('new commnets: ' + new_comments.toString());
+			adminCtl.updateCommnets(target_email, new_comments, function(err) {
 				if (err) {
 					logger('Update comment fail');
 					ep.emit('fail', 'update comment fail');
 				}
 				res.redirect('/admin/subadmin_dashboard');
-			})
+			});
 		}
 	});
 }

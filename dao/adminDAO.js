@@ -89,14 +89,12 @@ exports.deleteCertainAdmins = function(email, callback) {
  * Update one admin's comment 
  * @param {Function} callback callback function
  */
-exports.updateCommnets = function(admin, callback) {
-	var email = admin.email;
-	var commnets = admin.commnets;
-	AdminModel.update({
+exports.updateCommnets = function(email, comments, callback) {
+	AdminModel.findOneAndUpdate({
 		email: email
 	}, {
 		$set: {
-			commnets: commnets
+			comments: comments
 		}
 	}, callback);
 }
