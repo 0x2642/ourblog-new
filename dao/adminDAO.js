@@ -98,3 +98,7 @@ exports.updateCommnets = function(email, comments, callback) {
 		}
 	}, callback);
 }
+
+exports.updateAuth = function() {
+	
+}

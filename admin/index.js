@@ -21,11 +21,11 @@ router.use(function(req, res, next) {
 	var url = req.originalUrl;
 	var exclude = ["/login", "/applyAuthorized", "/applyTmpAuthorized", "/confirmAuthorized",
 		"createCertificate", "/admin_dashboard", "/admin_grouplist", "/admin_addadmin", "/admin_error",
-		"/admin_deladmin", "/subadmin_dashboard", "/subadmin_message", "subadmin_message_list"	
+		"/admin_deladmin",  "/useredit"	
 	];
 	var allow_flag = true;
 	for (var i = exclude.length - 1; i >= 0; i--) {
-		if (url.indexOf(exclude[i]) < 0 && !util.Cookies.getCookie(req, 'user')) {
+		if (url.indexOf(exclude[i]) < 0 && !util.Cookies.getCookie(req, 'sub_admin')) {
 			allow_flag = false;
 		} else {
 			allow_flag = true;
@@ -59,46 +59,36 @@ router.get('/articlelist', function(req, res, next) {
 	});
 });
 
-router.get('/login', function(req, res, next) {
-	var msg = ''
-	if (req.query.msg != undefined && req.query.msg != null) {
-		msg = req.query.msg
-	}
 
-	res.render(path.join(__dirname + '/view/login.ejs'), {
-		title: 'Umiumiu',
-		msg: msg
-	});
-});
 
-router.post('/login', function(req, res, next) {
-	var form = new formidable.IncomingForm();
-	form.parse(req, function(error, fields, files) {
-		try {
-			var data = fs.readFileSync(files.certificate.path, "utf-8");
-			data = data.replace(/\r\n|\r/g, "\n").split('\n')
-			if (data.length < util.Constant.get('LOGIN_CERTIFICATE_LENGTH')) {
-				return res.redirect("/admin/login?msg=" + util.Lang.get('ERROR_LOGIN_CERTIFICATE_ILLEGAL'));
-			}
-			var username = data[0].substring(data[0].indexOf(':') + 1)
-			var userkey = data[1].substring(data[1].indexOf(':') + 1)
-			user.getSingleUserByName(username, function(err, user) {
-				if (user == null) {
-					return res.redirect("/admin/login?msg=" + util.Lang.get('ERROR_LOGIN_USER_NOT_EXIST'))
-				}
-				if (verift(user, userkey)) {
-					afterLogin(res, user);
-				} else {
-					return res.redirect("/admin/login?msg=" + util.Lang.get('ERROR_LOGIN_USER_VERIFT_FAIL'))
-				}
-			})
-		} catch (err) {
-			res.send("The file upload fail!");
-		}
+// router.post('/login', function(req, res, next) {
+// 	var form = new formidable.IncomingForm();
+// 	form.parse(req, function(error, fields, files) {
+// 		try {
+// 			var data = fs.readFileSync(files.certificate.path, "utf-8");
+// 			data = data.replace(/\r\n|\r/g, "\n").split('\n')
+// 			if (data.length < util.Constant.get('LOGIN_CERTIFICATE_LENGTH')) {
+// 				return res.redirect("/admin/login?msg=" + util.Lang.get('ERROR_LOGIN_CERTIFICATE_ILLEGAL'));
+// 			}
+// 			var username = data[0].substring(data[0].indexOf(':') + 1)
+// 			var userkey = data[1].substring(data[1].indexOf(':') + 1)
+// 			user.getSingleUserByName(username, function(err, user) {
+// 				if (user == null) {
+// 					return res.redirect("/admin/login?msg=" + util.Lang.get('ERROR_LOGIN_USER_NOT_EXIST'))
+// 				}
+// 				if (verift(user, userkey)) {
+// 					afterLogin(res, user);
+// 				} else {
+// 					return res.redirect("/admin/login?msg=" + util.Lang.get('ERROR_LOGIN_USER_VERIFT_FAIL'))
+// 				}
+// 			})
+// 		} catch (err) {
+// 			res.send("The file upload fail!");
+// 		}
 
-	});
+// 	});
 
-});
+// });
 
 router.get('/applyAuthorized', function(req, res, next) {
 	var msg = req.query.msg;
@@ -248,6 +238,10 @@ router.get('/useredit', function(req, res, next) {
 		current_nav: current_nav
 	});
 });
+
+
+router.get('/login', adminController.loginNormalIndex);
+router.post('/login', adminController.adminLogin);
 
 router.get('/admin_dashboard', adminController.dashboardIndex);
 

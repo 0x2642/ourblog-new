@@ -2,11 +2,20 @@ var EventProxy = require('eventproxy');
 var strings = require('../strings.js');
 var path = require("path");
 var Dao = require('../../dao/indexDAO.js');
-var admin = Dao.Admin;
-var utils = require('../../util/crypto');
+var adminCtl = Dao.Admin;
+var util = require('../../util')
+var crypto = require('../../util/crypto');
+var cookies = require('../../util/cookies');
+var consts = require('../../util/constant');
+
+exports.loginNormalIndex = function(req, res, next) {
+	res.render(path.join(getViewPath() + 'view/admin/admin_login_normal.ejs'), {
+		title: strings.getPageTitle('STR_ADMIN_01_01_01')
+	});
+}
 
 exports.dashboardIndex = function(req, res, next) {
-	admin.getAdminAll(null, null, null, null, function(err, admins) {
+	adminCtl.getAdminAll(null, null, null, null, function(err, admins) {
 		if (err) {
 			admins = [];
 		}
@@ -22,7 +31,7 @@ exports.addAdminIndex = function(req, res, next) {
 }
 
 exports.groupListIndex = function(req, res, next) {
-	admin.getAdminAll(null, null, null, null, function(err, admins) {
+	adminCtl.getAdminAll(null, null, null, null, function(err, admins) {
 		if (err) {
 			admins = [];
 		}
@@ -33,7 +42,7 @@ exports.groupListIndex = function(req, res, next) {
 }
 
 exports.removeAdminIndex = function(req, res, next) {
-	admin.getAdminAll(null, null, null, null, function(err, admins) {
+	adminCtl.getAdminAll(null, null, null, null, function(err, admins) {
 		if (err) {
 			admins = [];
 		}
@@ -68,7 +77,7 @@ exports.addAdmin = function(req, res, next) {
 	});
 
 	//检查用户名是否已经存在 
-	admin.getAdminByEmail(email, function(err, user) {
+	adminCtl.getAdminByEmail(email, function(err, user) {
 		if (err) {
 			// 通过Email获取用户信息失败
 			logger(strings.getPageTitle('STR_ADMIN_ERR_01'));
@@ -84,14 +93,14 @@ exports.addAdmin = function(req, res, next) {
 
 		var newUser = {
 			username: username,
-			password: utils.md5(password),
+			password: crypto.md5(password),
 			email: email,
 			add_time: add_time,
 			level: level
 		}
 
 		//如果不存在则新增用户
-		admin.setNewAdmin(newUser, function(err) {
+		adminCtl.setNewAdmin(newUser, function(err) {
 			if (err) {
 				// 保存新用户失败
 				logger(strings.getPageTitle('STR_ADMIN_ERR_03'));
@@ -113,7 +122,7 @@ exports.removeAdminAll = function(req, res, next) {
 			adminViewTextElement(errmsg));
 	});
 
-	admin.deleteAllAdmins(function(err) {
+	adminCtl.deleteAllAdmins(function(err) {
 		if (err) {
 			logger(strings.getPageTitle('STR_ADMIN_ERR_04'));
 			ep.emit('delete_fail', strings.getPageTitle('STR_ADMIN_ERR_04'));
@@ -134,13 +143,46 @@ exports.removeAdminAtX = function(req, res, next) {
 			adminViewTextElement(errmsg));
 	});
 
-	admin.deleteCertainAdmins(email, function(err) {
+	adminCtl.deleteCertainAdmins(email, function(err) {
 		if (err) {
 			logger(strings.getPageTitle('STR_ADMIN_ERR_04'));
 			ep.emit('delete_fail', strings.getPageTitle('STR_ADMIN_ERR_04'));
 		}
-		logger('Delete email: '+ email + ' users success');
+		logger('Delete email: ' + email + ' users success');
 		res.redirect('/admin/admin_dashboard');
+	});
+}
+
+exports.adminLogin = function(req, res, next) {
+	var email = req.body.email;
+	var password = crypto.md5(req.body.pwd);
+	var ep = new EventProxy();
+	ep.fail(next);
+
+	logger('password: ' + password);
+
+	ep.on('login_fail', function(msg) {
+		res.status(200);
+		res.render(path.join(getViewPath() + 'view/admin_error.ejs'),
+			adminViewTextElement(errmsg));
+	});
+
+	adminCtl.getAdminByEmail(email, function(err, admin) {
+		if (err) {
+			logger('email not found');
+			ep.emit('login_fail', "Login fail");
+		} else {
+			if (admin.password != password) {
+				logger('password do not match');
+				ep.emit('login_fail', 'Login Fail');
+			} else {
+				logger('login success');
+				util.Cookies.setCookie(res, 'sub_admin', admin, {
+					expires: new Date(Date.now() + consts.get('LOGIN_TIMEOUT'))
+				});
+				res.redirect('/admin/subadmin_dashboard');
+			}
+		}
 	});
 }
 
