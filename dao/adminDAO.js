@@ -99,6 +99,18 @@ exports.updateCommnets = function(email, comments, callback) {
 	}, callback);
 }
 
-exports.updateAuth = function() {
-	
+/**
+ * Update one admin's status 
+ * @param {Function} callback callback function
+ */
+exports.updateAdminStatus = function(email, key, value, callback) {
+	var keyi = key;
+	console.log(typeof(keyi));
+	AdminModel.findOneAndUpdate({
+		email: email
+	}, {
+		$set: {
+			keyi: value
+		}
+	}, callback);
 }

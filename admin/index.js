@@ -241,7 +241,7 @@ router.get('/useredit', function(req, res, next) {
 
 
 router.get('/login', adminController.loginNormalIndex);
-router.post('/login', adminController.adminLogin);
+router.post('/login', subAdminController.subAdminLogin);
 
 router.get('/admin_dashboard', adminController.dashboardIndex);
 
@@ -261,6 +261,8 @@ router.get('/subadmin_message', subAdminController.messageLeaveIndex);
 router.post('/subadmin_message', subAdminController.messageSubmit);
 
 router.get('/subadmin_message_list', subAdminController.messageListIdx);
+
+router.get('/logout', subAdminController.subadminLogout);
 
 
 

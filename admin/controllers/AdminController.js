@@ -3,8 +3,7 @@ var strings = require('../strings.js');
 var path = require("path");
 var Dao = require('../../dao/indexDAO.js');
 var adminCtl = Dao.Admin;
-var util = require('../../util')
-var crypto = require('../../util/crypto');
+var util = require('../../util');
 var cookies = require('../../util/cookies');
 var consts = require('../../util/constant');
 
@@ -153,38 +152,7 @@ exports.removeAdminAtX = function(req, res, next) {
 	});
 }
 
-exports.adminLogin = function(req, res, next) {
-	var email = req.body.email;
-	var password = crypto.md5(req.body.pwd);
-	var ep = new EventProxy();
-	ep.fail(next);
 
-	logger('password: ' + password);
-
-	ep.on('login_fail', function(msg) {
-		res.status(200);
-		res.render(path.join(getViewPath() + 'view/admin_error.ejs'),
-			adminViewTextElement(errmsg));
-	});
-
-	adminCtl.getAdminByEmail(email, function(err, admin) {
-		if (err) {
-			logger('email not found');
-			ep.emit('login_fail', "Login fail");
-		} else {
-			if (admin.password != password) {
-				logger('password do not match');
-				ep.emit('login_fail', 'Login Fail');
-			} else {
-				logger('login success');
-				util.Cookies.setCookie(res, 'sub_admin', admin, {
-					expires: new Date(Date.now() + consts.get('LOGIN_TIMEOUT'))
-				});
-				res.redirect('/admin/subadmin_dashboard');
-			}
-		}
-	});
-}
 
 function adminViewTextElement(msg, admins) {
 	var msg = msg || '';
