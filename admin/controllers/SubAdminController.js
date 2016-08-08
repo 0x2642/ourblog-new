@@ -28,6 +28,17 @@ exports.subAdminLogin = function(req, res, next) {
 }
 
 function renderRequest(req, res, next, target_view, type) {
+	if (type == 'sub_admin_login') {
+		logger('Begin to login subAdmin');
+		subAdminLoginRequest(req, res, next);
+		return;
+	}
+
+	if (null == util.Cookies.getCookie(req, 'sub_admin')) {
+		res.redirect('/admin/subadmin_dashboard');
+		return;
+	}
+
 	var cur_admin_email = util.Cookies.getCookie(req, 'sub_admin').email;
 	var ep = new EventProxy();
 	ep.fail(next);
@@ -48,8 +59,6 @@ function renderRequest(req, res, next, target_view, type) {
 					indexRenderRequest(res, admin, target_view);
 				} else if (type == 'msg_submit') {
 					messageSubmitRequest(req, res, next, admin);
-				} else if (type == 'sub_admin_login') {
-					subAdminLoginRequest(req, res, next, admin);
 				} else {
 					// TODO Nothing
 				}
@@ -84,7 +93,8 @@ function messageSubmitRequest(req, res, next, admin) {
 
 	new_comments.push(message);
 	logger('new commnets: ' + new_comments.toString());
-	adminCtl.updateCommnets(email, new_comments, function(err) {
+
+	adminCtl.updateAdminStatus(email, 'comments', new_comments, function(err) {
 		if (err) {
 			logger('Update comment fail');
 			ep.emit('update_fail', strings.getPageTitle('STR_ADMIN_ERR_06'));
@@ -93,8 +103,9 @@ function messageSubmitRequest(req, res, next, admin) {
 	});
 }
 
-function subAdminLoginRequest(req, res, next, admin) {
+function subAdminLoginRequest(req, res, next) {
 	var mPassword = crypto.md5(req.body.pwd);
+	var mEmail = req.body.email;
 	var ep = new EventProxy();
 	ep.fail(next);
 
@@ -104,21 +115,53 @@ function subAdminLoginRequest(req, res, next, admin) {
 		});
 	});
 
-	if (admin.password != mPassword) {
-		logger('password do not match');
-		ep.emit('login_fail', strings.getPageTitle('STR_ADMIN_ERR_07'));
-	} else {
-		logger('login success');
-		util.Cookies.setCookie(res, 'sub_admin', admin, {
-			expires: new Date(Date.now() + consts.get('LOGIN_TIMEOUT'))
-		});
-		res.redirect('/admin/subadmin_dashboard');
-	}
+	adminCtl.getAdminByEmail(mEmail, function(err, subadmin) {
+		if (err) {
+			logger('find subadmin fail');
+			ep.emit('login_fail', strings.getPageTitle('STR_ADMIN_ERR_01'));
+		} else {
+			if (subadmin.password != mPassword) {
+				logger('password do not match');
+				ep.emit('login_fail', strings.getPageTitle('STR_ADMIN_ERR_07'));
+			} else {
+				logger('login success');
+				// Set subadmin info into cookies
+				util.Cookies.setCookie(res, 'sub_admin', subadmin, {
+					expires: new Date(Date.now() + consts.get('LOGIN_TIMEOUT'))
+				});
+				adminCtl.updateOnline(subadmin.email, true, function(err) {
+					if (err) {
+						logger('Update is_online fail');
+						ep.emit('update_fail', strings.getPageTitle('STR_ADMIN_ERR_06'));
+					} else {
+						res.redirect('/admin/subadmin_dashboard');
+					}
+				});
+			}
+		}
+	});
 }
 
 exports.subadminLogout = function(req, res, next) {
-	util.Cookies.delCookie(res, delCookie);
-	res.redirect('/admin/login');
+	var cur_admin_email = util.Cookies.getCookie(req, 'sub_admin').email;
+	var ep = new EventProxy();
+	ep.fail(next);
+
+	ep.on('update_fail', function(errmsg) {
+		res.render(path.join(getViewPath() + 'view/admin_error.ejs'), {
+			err_msg: errmsg
+		});
+	});
+
+	adminCtl.updateOnline(subadmin.email, false, function(err) {
+		if (err) {
+			logger('Update is_online fail');
+			ep.emit('update_fail', strings.getPageTitle('STR_ADMIN_ERR_06'));
+		} else {
+			util.Cookies.delCookie(res, delCookie);
+			res.redirect('/admin/login');
+		}
+	});
 }
 
 function logger(loggerContent) {

@@ -18,9 +18,16 @@ exports.dashboardIndex = function(req, res, next) {
 		if (err) {
 			admins = [];
 		}
+		var online_numbers = 0;
+		admins.forEach(function(admin, idx) {
+			console.log('admin' + idx + ' is online:' + admin.is_online);
+			if (admin.is_online) {
+				online_numbers++;
+			}
+		})
 		logger('grouplist length: ' + admins.length);
 		res.render(path.join(getViewPath() + 'view/admin_dashboard.ejs'),
-			adminViewTextElement('', admins));
+			adminViewTextElement('', admins, online_numbers));
 	});
 }
 
@@ -154,9 +161,10 @@ exports.removeAdminAtX = function(req, res, next) {
 
 
 
-function adminViewTextElement(msg, admins) {
+function adminViewTextElement(msg, admins, online_num) {
 	var msg = msg || '';
 	var admins = admins || [];
+	var online_num = online_num || 0;
 	return {
 		title: strings.getPageTitle('STR_ADMIN_01_01_01'),
 		sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
@@ -166,7 +174,8 @@ function adminViewTextElement(msg, admins) {
 		sidebar_group_delete: strings.getPageTitle('STR_ADMIN_01_04_03'),
 		sidebar_group_edit: strings.getPageTitle('STR_ADMIN_01_04_04'),
 		msg: msg,
-		admins: admins
+		admins: admins, 
+		online_num: online_num
 	}
 }
 

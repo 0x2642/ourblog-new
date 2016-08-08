@@ -89,12 +89,12 @@ exports.deleteCertainAdmins = function(email, callback) {
  * Update one admin's comment 
  * @param {Function} callback callback function
  */
-exports.updateCommnets = function(email, comments, callback) {
+exports.updateOnline = function(email, bol, callback) {
 	AdminModel.findOneAndUpdate({
 		email: email
 	}, {
 		$set: {
-			comments: comments
+			is_online: bol
 		}
 	}, callback);
 }
