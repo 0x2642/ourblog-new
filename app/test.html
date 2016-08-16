@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="myServiceModule">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Test</title>
+  <meta name="description" content="Blog of Team 0x2642">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="styles/normalize.css">
+</head>
+
+<body>
+
+  <div id="simple" ng-controller="MyController">
+    <button ng-click="callNotify();">NOTIFY</button>
+  </div>
+  <div id="simple" ng-controller="MyController1">
+    <button ng-click="callNotify();">NOTIFY</button>
+  </div>
+
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script>
+    angular
+    .module('myServiceModule', [])
+    .controller('MyController', ['$scope', 'notify', 'notify1', function($scope, notify, notify1) {
+      $scope.callNotify = function() {
+        notify();
+        notify1.note();
+      };
+    }])
+    .controller('MyController1', ['$scope', 'notify', 'notify1', function($scope, notify, notify1) {
+      $scope.callNotify = function() {
+        notify();
+        notify1();
+      };
+    }])
+    .factory('notify', function($window){
+      var count = 0;
+      this.test = "ddd";
+      return function() {
+        count++;
+        if (count === 3) {
+          console.log('notify');
+          count = 0;
+        }
+      };
+    })
+    .service('notify1',function($window){
+      var count = this.count = 0;
+      this.note = function(){
+        count++;
+        if(count === 3){
+          console.log('notify1');
+          count = 0;
+        }
+      };
+    });
+  </script>
+</body>
+
+</html>

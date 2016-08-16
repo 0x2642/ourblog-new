@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var mongoURL = require('../config').dbUrl;
+var mongoURL = require('../util/config').getAll().dbUrl;
 
 /************************** DB Connection ******************************/
 console.log('mongoURL' + mongoURL);
