@@ -3,49 +3,49 @@ var Schema = mongoose.Schema;
 
 
 var AdminSchame = new Schema({
-	
-	// Admin user name
-	username: {
-		type: String  
-	},
 
-	// Admin user password
-	password: {
-		type: String  
-	},
-	
-	// Admin email
-	email: {
-		type: String  
-	},
-	
-	// Admin registor time
-	add_time: {
-		type: Date
-	},
+  // Admin user name
+  username: {
+    type: String
+  },
 
-	// Admin authority
-	level: {
-		type: Number
-	},
+  // Admin user password
+  password: {
+    type: String
+  },
 
-	// AddClass exp
-	exp: {          
-		type: Number
-	},
+  // Admin email
+  email: {
+    type: String
+  },
 
-	// Admin's comments
-	comments: {
-		type: [String]
-	},
+  // Admin registor time
+  add_time: {
+    type: Date
+  },
 
-	// Is admin online
-	is_online: {
-		type: Boolean
-	}
-	
+  // Admin authority
+  level: {
+    type: Number
+  },
+
+  // AddClass exp
+  exp: {
+    type: Number
+  },
+
+  // Admin's comments
+  comments: {
+    type: [String]
+  },
+
+  // Is admin online
+  is_online: {
+    type: Boolean
+  }
+
 }, {
-	collection: 'admin'
+  collection: 'admin'
 });
 
 mongoose.model('Admin', AdminSchame);

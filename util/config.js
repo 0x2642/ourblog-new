@@ -1,9 +1,9 @@
 var config = require('../config.js');
 
 exports.get = function(conf) {
-	return config[conf];
-}
+  return config[conf];
+};
 
-exports.set = function(conf,value) {
-	
-}
+exports.set = function(conf, value) {
+
+};
