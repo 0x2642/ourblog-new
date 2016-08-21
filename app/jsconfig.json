@@ -5,9 +5,7 @@
     "target": "ES5"
   },
   "exclude": [
-    "app",
-    "node_modules",
-    "jspm_packages",
+    "bower_components",
     "tmp",
     "temp"
   ]

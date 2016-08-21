@@ -12,9 +12,14 @@ new version of ourblog based on angularjs and nodejs
 2. run ```npm start``` to start server
 3. visit [http://localhost:3000/](http://localhost:3000/)
 
-# Rich editing support for VS Code
-1. be sure you have installed TypeScript Definition manager as global ```npm -g install tsd```
-2. run ```tsd install```
+# IntelliSense support for Visual Studio Code
+1. be sure you have installed TypeScript Definition manager as global ```npm -g install typings```
+2. setup for back-end code: ```typing install```
+3. setup for front-end code:
+```bash
+cd app
+typing install
+```
 
 ================
 
