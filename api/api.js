@@ -5,9 +5,17 @@ var util = require('../util');
 var Article = dao.Article;
 var User = dao.User;
 
-/* GET API */
-router.get('/article/:id', function(req, res, next) {
-  id = req.params.id || 1;
+//article API
+router.route('/article/:articleId')
+
+.all(function(req, res, next) {
+  //TODO something for all action,like exist check
+  console.log(req.params.articleId);
+  next();
+})
+
+.get(function(req, res, next) {
+  id = req.params.articleId || 1;
   Article.getSingleArticleById(id, function(err, article) {
     if (err) {
       res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
@@ -18,12 +26,10 @@ router.get('/article/:id', function(req, res, next) {
         res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
       }
     }
-
-
   });
-});
+})
 
-router.post('/article', function(req, res, next) {
+.post(function(req, res, next) {
   var post_info = req.body;
   var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
   post_info.tags = post_info.tags.replace(/,|，/g, ",").split(',');
@@ -53,9 +59,47 @@ router.post('/article', function(req, res, next) {
   } else {
     res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
   }
+})
 
+.put(function(req, res, next) {
+  //TODO
+  next(new Error('not implemented'));
+})
+
+.delete(function(req, res, next) {
+  var id = req.params.articleId;
+  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
+  if (auth) {
+    User.getSingleUserByAuth(auth, function(err, user) {
+      if (err) {
+        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+      } else {
+        author = {
+          'id': user._id.toString(),
+          'name': user.name
+        };
+        var post_info = {};
+        post_info.author = author;
+        post_info._id = id;
+
+        checkUser(post_info, user, res, function(err) {
+          Article.del(id, function(err) {
+            if (err) {
+              res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'));
+            } else {
+              res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'));
+            }
+          });
+        });
+
+      }
+    });
+  } else {
+    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+  }
 });
 
+//list API
 router.get('/list', function(req, res, next) {
   var page = req.query.page || 1;
   var pagesize = req.query.pagesize || util.Constant.get('PAGE_SIZE');
@@ -111,7 +155,75 @@ router.get('/list', function(req, res, next) {
 
 });
 
-router.post('/del', function(req, res, next) {
+//user API
+router.route('/user/:userId')
+
+.all(function(req, res, next) {
+  console.log(req.params.userId);
+  next();
+})
+
+.get(function(req, res, next) {
+  id = req.params.userId || 1;
+  User.getSingleUserById(id, function(err, user) {
+    if (err) {
+      res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
+    } else {
+      if (user !== null) {
+        var del_list = ['token', 'auth', 'login_time'];
+        for (var i = del_list.length - 1; i >= 0; i--) {
+          if (user[del_list[i]])
+            user[del_list[i]] = undefined;
+        }
+        res.send(user);
+      } else {
+        res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
+      }
+    }
+  });
+})
+
+.post(function(req, res, next) {
+  var post_info = req.body;
+  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
+  if (auth) {
+    User.getSingleUserByAuth(auth, function(err, user) {
+      if (err) {
+        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+      } else {
+        if (!user.is_admin || user.is_admin != 1) {
+          if (user._id != post_info._id) {
+            res.send(getErrorString('ERROR_USER_AUTHORIZED_EDIT_FAIL'));
+          } else {
+            User.save(post_info, function(err) {
+              if (err) {
+                res.send(getErrorString('ERROR_USER_SAVE_FAIL'));
+              } else {
+                res.send(getSuccessString('SUCCESS_USER_SAVE'));
+              }
+            });
+          }
+        } else {
+          User.save(post_info, function(err) {
+            if (err) {
+              res.send(getErrorString('ERROR_USER_SAVE_FAIL'));
+            } else {
+              res.send(getSuccessString('SUCCESS_USER_SAVE'));
+            }
+          });
+        }
+      }
+    });
+  } else {
+    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+  }
+})
+
+.put(function(req, res, next) {
+  //TODO
+})
+
+.delete(function(req, res, next) {
   var id = req.body.id;
   console.log(id);
   var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
@@ -120,30 +232,33 @@ router.post('/del', function(req, res, next) {
       if (err) {
         res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
       } else {
-        author = {
-          'id': user._id.toString(),
-          'name': user.name
-        };
-        var post_info = {};
-        post_info.author = author;
-        post_info._id = id;
-
-        checkUser(post_info, user, res, function(err) {
-          Article.del(id, function(err) {
+        if (!user.is_admin || user.is_admin != 1) {
+          if (user._id != id) {
+            res.send(getErrorString('ERROR_USER_AUTHORIZED_EDIT_FAIL'));
+          } else {
+            User.del(id, function(err) {
+              if (err) {
+                res.send(getErrorString('ERROR_USER_SAVE_FAIL'));
+              } else {
+                res.send(getSuccessString('SUCCESS_USER_SAVE'));
+              }
+            });
+          }
+        } else {
+          User.del(id, function(err) {
             if (err) {
-              res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'));
+              res.send(getErrorString('ERROR_USER_SAVE_FAIL'));
             } else {
-              res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'));
+              res.send(getSuccessString('SUCCESS_USER_SAVE'));
             }
           });
-        });
+        }
 
       }
     });
   } else {
     res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
   }
-
 });
 
 router.get('/user_list', function(req, res, next) {
@@ -198,103 +313,28 @@ router.get('/user_list', function(req, res, next) {
   }
 });
 
-router.get('/user/:id', function(req, res, next) {
-  id = req.params.id || 1;
-  User.getSingleUserById(id, function(err, user) {
-    if (err) {
-      res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
-    } else {
-      if (user !== null) {
-        var del_list = ['token', 'auth', 'login_time'];
-        for (var i = del_list.length - 1; i >= 0; i--) {
-          if (user[del_list[i]])
-            user[del_list[i]] = undefined;
-        }
-        res.send(user);
-      } else {
-        res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
-      }
-    }
+//common
 
 
-  });
-});
 
-router.post('/user', function(req, res, next) {
-  var post_info = req.body;
-  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
-  if (auth) {
-    User.getSingleUserByAuth(auth, function(err, user) {
-      if (err) {
-        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-      } else {
-        if (!user.is_admin || user.is_admin != 1) {
-          if (user._id != post_info._id) {
-            res.send(getErrorString('ERROR_USER_AUTHORIZED_EDIT_FAIL'));
-          } else {
-            User.save(post_info, function(err) {
-              if (err) {
-                res.send(getErrorString('ERROR_USER_SAVE_FAIL'));
-              } else {
-                res.send(getSuccessString('SUCCESS_USER_SAVE'));
-              }
-            });
-          }
-        } else {
-          User.save(post_info, function(err) {
-            if (err) {
-              res.send(getErrorString('ERROR_USER_SAVE_FAIL'));
-            } else {
-              res.send(getSuccessString('SUCCESS_USER_SAVE'));
-            }
-          });
-        }
-      }
-    });
-  } else {
-    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-  }
+/////////////////////////重构的分割线//////////////////////////
 
-});
+/* GET API */
+router.get('/article/:id', function(req, res, next) {});
 
-router.post('/user_del', function(req, res, next) {
-  var id = req.body.id;
-  console.log(id);
-  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
-  if (auth) {
-    User.getSingleUserByAuth(auth, function(err, user) {
-      if (err) {
-        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-      } else {
-        if (!user.is_admin || user.is_admin != 1) {
-          if (user._id != id) {
-            res.send(getErrorString('ERROR_USER_AUTHORIZED_EDIT_FAIL'));
-          } else {
-            User.del(id, function(err) {
-              if (err) {
-                res.send(getErrorString('ERROR_USER_SAVE_FAIL'));
-              } else {
-                res.send(getSuccessString('SUCCESS_USER_SAVE'));
-              }
-            });
-          }
-        } else {
-          User.del(id, function(err) {
-            if (err) {
-              res.send(getErrorString('ERROR_USER_SAVE_FAIL'));
-            } else {
-              res.send(getSuccessString('SUCCESS_USER_SAVE'));
-            }
-          });
-        }
+router.post('/article', function(req, res, next) {});
 
-      }
-    });
-  } else {
-    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-  }
+router.get('/list', function(req, res, next) {});
 
-});
+router.post('/del', function(req, res, next) {});
+
+router.get('/user_list', function(req, res, next) {});
+
+router.get('/user/:id', function(req, res, next) {});
+
+router.post('/user', function(req, res, next) {});
+
+router.post('/user_del', function(req, res, next) {});
 
 function getArticleList(searchList, option, page, pagesize, res) {
   Article.getArticleList(searchList, '', option, '', function(err, data, count) {
