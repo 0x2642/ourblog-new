@@ -13,13 +13,17 @@ router.get('/article/list', function(req, res, next) {
   var is_auth = req.query.is_auth || 0;
 
   var searchList = {
-    "tags": "String",
-    "title": "String",
-    "author": "String"
+    'tag': 'String',
+    'author': 'String',
+    'keyword': 'String',
   };
 
   for (var key in searchList) {
-    req.param(key) ? searchList[key] = eval("/" + util.Strings.filter(req.param(key), searchList[key]) + "/") : delete searchList[key];
+    if (req.param(key)) {
+      searchList[key] = new RegExp(util.Strings.filter(req.param(key), searchList[key]));
+    } else {
+      delete searchList[key];
+    }
   }
 
   page = Math.abs(page - 1);

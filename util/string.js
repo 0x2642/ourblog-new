@@ -1,24 +1,23 @@
-function filterString(val) {
-  return val.replace(/<[^>]+>/g, "").replace(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g, "");
-}
+var filterFunctions = {
+  'String': function(val) {
+    return val.replace(/<[^>]+>/g, "").replace(/[^\w\u4e00-\u9fa5\u0800-\u4e00]/g, "");
+  },
+  'Integer': function(val) {
+    val = parseInt(val);
+    return isNaN(val) ? 0 : val;
+  },
+  'Float': function(val) {
+    val = parseFloat(val);
+    return isNaN(val) ? 0.0 : val;
+  },
+  'Pass': function(val) {
+    return val;
+  },
 
-function filterInteger(val) {
-  val = parseInt(val);
-  return isNaN(val) ? 0 : val;
-}
-
-function filterFloat(val) {
-  val = parseFloat(val);
-  return isNaN(val) ? 0.0 : val;
-}
-
-function filterPass(val) {
-  return val;
-}
+};
 
 exports.filter = function(val, type) {
-  var func = "filter" + type;
-  return eval(func)(val);
+  return filterFunctions[type](val);
 };
 
 exports.sendError2JSON = function(msg, code) {
