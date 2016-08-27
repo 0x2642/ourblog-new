@@ -5,102 +5,8 @@ var util = require('../util');
 var Article = dao.Article;
 var User = dao.User;
 
-//article API
-router.route('/article/:articleId')
-
-.all(function(req, res, next) {
-  //TODO something for all action,like exist check
-  console.log(req.params.articleId);
-  next();
-})
-
-.get(function(req, res, next) {
-  id = req.params.articleId || 1;
-  Article.getSingleArticleById(id, function(err, article) {
-    if (err) {
-      res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
-    } else {
-      if (article !== null) {
-        res.send(article);
-      } else {
-        res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
-      }
-    }
-  });
-})
-
-.post(function(req, res, next) {
-  var post_info = req.body;
-  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
-  post_info.tags = post_info.tags.replace(/,|，/g, ",").split(',');
-  post_info.content = post_info['content-markdown-doc'];
-  if (auth) {
-    User.getSingleUserByAuth(auth, function(err, user) {
-      if (err) {
-        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-      } else {
-        author = {
-          'id': user._id.toString(),
-          'name': user.name
-        };
-        post_info.author = author;
-
-        checkUser(post_info, user, res, function(err) {
-          Article.save(post_info, function(err) {
-            if (err) {
-              res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'));
-            } else {
-              res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'));
-            }
-          });
-        });
-      }
-    });
-  } else {
-    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-  }
-})
-
-.put(function(req, res, next) {
-  //TODO
-  next(new Error('not implemented'));
-})
-
-.delete(function(req, res, next) {
-  var id = req.params.articleId;
-  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
-  if (auth) {
-    User.getSingleUserByAuth(auth, function(err, user) {
-      if (err) {
-        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-      } else {
-        author = {
-          'id': user._id.toString(),
-          'name': user.name
-        };
-        var post_info = {};
-        post_info.author = author;
-        post_info._id = id;
-
-        checkUser(post_info, user, res, function(err) {
-          Article.del(id, function(err) {
-            if (err) {
-              res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'));
-            } else {
-              res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'));
-            }
-          });
-        });
-
-      }
-    });
-  } else {
-    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-  }
-});
-
-//list API
-router.get('/list', function(req, res, next) {
+//article list API
+router.get('/article/list', function(req, res, next) {
   var page = req.query.page || 1;
   var pagesize = req.query.pagesize || util.Constant.get('PAGE_SIZE');
   var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
@@ -153,6 +59,155 @@ router.get('/list', function(req, res, next) {
     getArticleList(searchList, option, page, pagesize, res);
   }
 
+});
+
+//article API
+router.route('/article/:articleId')
+
+.all(function(req, res, next) {
+  //TODO something for all action,like exist check
+  console.log(req.params.articleId);
+  req.articleId = req.params.articleId || -1; //TODO more check needed
+  next();
+})
+
+.get(function(req, res, next) {
+  id = req.articleId;
+  Article.getSingleArticleById(id, function(err, article) {
+    if (err) {
+      res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
+    } else {
+      if (article !== null) {
+        res.send(article);
+      } else {
+        res.send(getErrorString('ERROR_ARTICLE_NOT_FOUND'));
+      }
+    }
+  });
+})
+
+.post(function(req, res, next) {
+  var post_info = req.body;
+  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
+  post_info.tags = post_info.tags.replace(/,|，/g, ",").split(',');
+  post_info.content = post_info['content-markdown-doc'];
+  if (auth) {
+    User.getSingleUserByAuth(auth, function(err, user) {
+      if (err) {
+        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+      } else {
+        author = {
+          'id': user._id.toString(),
+          'name': user.name
+        };
+        post_info.author = author;
+
+        checkUser(post_info, user, res, function(err) {
+          Article.save(post_info, function(err) {
+            if (err) {
+              res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'));
+            } else {
+              res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'));
+            }
+          });
+        });
+      }
+    });
+  } else {
+    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+  }
+})
+
+.put(function(req, res, next) {
+  //TODO
+  next(new Error('not implemented'));
+})
+
+.delete(function(req, res, next) {
+  var id = req.articleId;
+  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
+  if (auth) {
+    User.getSingleUserByAuth(auth, function(err, user) {
+      if (err) {
+        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+      } else {
+        author = {
+          'id': user._id.toString(),
+          'name': user.name
+        };
+        var post_info = {};
+        post_info.author = author;
+        post_info._id = id;
+
+        checkUser(post_info, user, res, function(err) {
+          Article.del(id, function(err) {
+            if (err) {
+              res.send(getErrorString('ERROR_ARTICLE_SAVE_FAIL'));
+            } else {
+              res.send(getSuccessString('SUCCESS_ARTICLE_SAVE'));
+            }
+          });
+        });
+
+      }
+    });
+  } else {
+    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+  }
+});
+
+
+//user list api
+router.get('/user/list', function(req, res, next) {
+  var page = req.query.page || 1;
+  var pagesize = req.query.pagesize || util.Constant.get('PAGE_SIZE');
+
+  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
+
+  page = Math.abs(page - 1);
+  var option = {
+    "skip": page * pagesize,
+    "limit": parseInt(pagesize)
+  };
+
+  if (auth) {
+    User.getSingleUserByAuth(auth, function(err, user) {
+      if (err) {
+        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+      } else {
+        if (user.is_admin && user.is_admin == 1) {
+          User.getUserList({
+            status: "1"
+          }, '', option, '', function(err, data, count) {
+            var ret = {
+              "users": data,
+              "pagenation": {
+                "current": page + 1,
+                "max": Math.ceil(count / pagesize)
+              }
+            };
+            res.send(ret);
+          });
+        } else {
+          User.getUserList({
+            status: "1",
+            _id: user._id
+          }, '', option, '', function(err, data, count) {
+            var ret = {
+              "users": data,
+              "pagenation": {
+                "current": page + 1,
+                "max": Math.ceil(count / pagesize)
+              }
+            };
+            res.send(ret);
+          });
+        }
+      }
+    });
+  } else {
+    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
+  }
 });
 
 //user API
@@ -261,81 +316,15 @@ router.route('/user/:userId')
   }
 });
 
-router.get('/user_list', function(req, res, next) {
-  var page = req.query.page || 1;
-  var pagesize = req.query.pagesize || util.Constant.get('PAGE_SIZE');
+//author API
+router.route('/author/:userId')
 
-  var auth = req.query.auth || util.Cookies.getCookie(req, 'auth');
-
-  page = Math.abs(page - 1);
-  var option = {
-    "skip": page * pagesize,
-    "limit": parseInt(pagesize)
-  };
-
-  if (auth) {
-    User.getSingleUserByAuth(auth, function(err, user) {
-      if (err) {
-        res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-      } else {
-        if (user.is_admin && user.is_admin == 1) {
-          User.getUserList({
-            status: "1"
-          }, '', option, '', function(err, data, count) {
-            var ret = {
-              "users": data,
-              "pagenation": {
-                "current": page + 1,
-                "max": Math.ceil(count / pagesize)
-              }
-            };
-            res.send(ret);
-          });
-        } else {
-          User.getUserList({
-            status: "1",
-            _id: user._id
-          }, '', option, '', function(err, data, count) {
-            var ret = {
-              "users": data,
-              "pagenation": {
-                "current": page + 1,
-                "max": Math.ceil(count / pagesize)
-              }
-            };
-            res.send(ret);
-          });
-        }
-      }
-    });
-  } else {
-    res.send(getErrorString('ERROR_LOGIN_USER_VERIFT_FAIL'));
-  }
+.get(function(req, res, next) {
+  //TODO
+  next(new Error('not implemented'));
 });
 
 //common
-
-
-
-/////////////////////////重构的分割线//////////////////////////
-
-/* GET API */
-router.get('/article/:id', function(req, res, next) {});
-
-router.post('/article', function(req, res, next) {});
-
-router.get('/list', function(req, res, next) {});
-
-router.post('/del', function(req, res, next) {});
-
-router.get('/user_list', function(req, res, next) {});
-
-router.get('/user/:id', function(req, res, next) {});
-
-router.post('/user', function(req, res, next) {});
-
-router.post('/user_del', function(req, res, next) {});
-
 function getArticleList(searchList, option, page, pagesize, res) {
   Article.getArticleList(searchList, '', option, '', function(err, data, count) {
     var ret = {
