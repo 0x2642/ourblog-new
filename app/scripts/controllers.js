@@ -75,11 +75,17 @@
   .controller('ArticleController', function($scope, $stateParams, $sce, blogArticle) {
     $scope.article = blogArticle.view($stateParams.aid, function(data) {
       $scope.updateTitle(data.title || "未找到文章");
-      // 查看文章
-      // var converter = new Markdown.Converter();
-      // $scope.text = $sce.trustAsHtml(converter.makeHtml(data.text));
-      // TODO: integrate after merged into master
-      $scope.text = $sce.trustAsHtml(data.content);
+
+      $scope.mdView = editormd && editormd.markdownToHTML("md-view", {
+        markdown: data.content,
+        htmlDecode: "style,script,iframe", // you can filter tags decode
+        emoji: true,
+        taskList: true,
+        tex: true, // 默认不解析
+        flowChart: true, // 默认不解析
+        sequenceDiagram: true, // 默认不解析
+      });
+
     });
   })
 

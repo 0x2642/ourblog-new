@@ -1,25 +1,31 @@
 /*! HTML5 Boilerplate v5.3.0 | MIT License | https://html5boilerplate.com/ */
 
+
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
 
+
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-html,body{
-    padding: 0;
-    margin: 0;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
 }
+
 html {
-    color: #000;
-    font-size: 16px;
-    font-family: "Microsoft Yahei",verdana;
-    line-height: 1.25;
-    background-color: #EDEDED;
+  color: #000;
+  font-size: 16px;
+  font-family: "Microsoft Yahei", verdana;
+  line-height: 1.25;
+  background-color: #EDEDED;
 }
+
 
 /*
  * Remove text-shadow in selection highlight:
@@ -30,27 +36,29 @@ html {
  */
 
 ::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  background: #b3d4fc;
+  text-shadow: none;
 }
 
 ::selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  background: #b3d4fc;
+  text-shadow: none;
 }
+
 
 /*
  * A better looking default horizontal rule
  */
 
 hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
 }
+
 
 /*
  * Remove the gap between audio, canvas, iframes,
@@ -64,94 +72,116 @@ iframe,
 img,
 svg,
 video {
-    vertical-align: middle;
+  vertical-align: middle;
 }
+
 
 /*
  * Remove default fieldset styles.
  */
 
 fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
+
 
 /*
  * Allow only vertical resizing of textareas.
  */
 
 textarea {
-    resize: vertical;
+  resize: vertical;
 }
+
 
 /* ==========================================================================
    Component classes
    ========================================================================== */
-a{
-    color: #333;
-    text-decoration: none;
-}
-p{
-    margin: 0.625em 0;
-}
-h1,h2,h3,h4,h5{
-    margin: 1.25em 0 0 0;
-}
-h1{
-    font-size: 2em;
-    margin-top: 0.625em;
-}
-h3{
-    font-size: 1em;
-    font-weight: bold;
-}
-code{
-    background-color: #EEE;
-    padding: 0 4px;
-}
-button {
-    height: 20px;
-    line-height: 16px;
-    border: 1px solid #999;
-    border-radius: 2px;
-    background-color: inherit;
-    font-size: 12px;
-    color: #999;
-}
-button:hover{
-    border-color: #666;
-    color: #333;
-}
-button:hover.reverse{
-    border-color: #CCC;
-    color: #FFF;
-}
-button.large {
-    height: 40px;
-    font-size: 24px;
-    line-height: 32px;
-    border-radius: 4px;
-    padding: 3px 16px;
+
+a {
+  color: #333;
+  text-decoration: none;
 }
 
-input[type='text'],textarea{
-    font-size: 24px;
-    line-height: 32px;
-    border-radius: 4px;
-    padding: 4px 8px;
-    background-color: #EEE;
-    color: #999;
-    border: 0;
+p {
+  margin: 0.625em 0;
 }
-input[type='text']:focus,textarea:focus{
-    background-color: #FFF;
-    color: #333;
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 1.25em 0 0 0;
 }
+
+h1 {
+  font-size: 2em;
+  margin-top: 0.625em;
+}
+
+h3 {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+code {
+  background-color: #EEE;
+  padding: 0 4px;
+}
+
+button {
+  height: 20px;
+  line-height: 16px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  background-color: inherit;
+  font-size: 12px;
+  color: #999;
+}
+
+button:hover {
+  border-color: #666;
+  color: #333;
+}
+
+button:hover.reverse {
+  border-color: #CCC;
+  color: #FFF;
+}
+
+button.large {
+  height: 40px;
+  font-size: 24px;
+  line-height: 32px;
+  border-radius: 4px;
+  padding: 3px 16px;
+}
+
+input[type='text'],
+textarea {
+  font-size: 24px;
+  line-height: 32px;
+  border-radius: 4px;
+  padding: 4px 8px;
+  background-color: #EEE;
+  color: #999;
+  border: 0;
+}
+
+input[type='text']:focus,
+textarea:focus {
+  background-color: #FFF;
+  color: #333;
+}
+
 
 /* ==========================================================================
    Common classes
    ========================================================================== */
+
 .header-title h1,
 .header-intro,
 .navbar-list,
@@ -160,257 +190,317 @@ input[type='text']:focus,textarea:focus{
 .list-header p,
 .item-info h2,
 .item-info p,
-.metadata p{
-    margin: 0;
-    padding: 0;
-}/*reset spacing*/
-
-.header{
-    height: 280px;
-    background: url('https://ss1.bdstatic.com/kvoZeXSm1A5BphGlnYG/skin/12.jpg?2') fixed #000033;
-}
-.header-logo{
-    height: 120px;
-    float: left;
-    padding: 80px 0;
-    background-color: rgba(0,0,0,0.6);
-    width: 30%;
-}
-.header-logo>img{
-    float: right;
-    padding-right: 20px;
-}
-.header-title{
-    float: left;
-    padding: 80px 0;
-    width: 70%;
-}
-.header-title a{
-    color: #FFF;
-}
-.header-title a:hover{
-    color: #FFF;
-}
-.header-title h1,.header-intro{
-    margin-left: 20px;
-}
-.header-title h1{
-    font-size: 64px;
-    line-height: 80px;
-}
-.header-intro{
-    color: #999;
-    font-size: 32px;
-    line-height: 40px
-}
-.navbar{
-    float: left;
-    padding: 40px 0;
-    width: 30%;
-    height: 100%;
-}
-.navbar-list{
-    margin-right: 40px;
-    float: right;
-}
-.navbar-item{
-    list-style: none;
-    text-align: right;
-    min-width: 200px;
-    height: 80px;
-    border-bottom: 1px solid #666;
-    margin-bottom: 20px;
-    padding-right: 10px;
-}
-.navbar-link{
-    font-style: normal;
-    text-transform: uppercase;
-    line-height: 40px;
-    font-size: 32px;
-    color: #CCC;
-}
-.navbar-link:hover{
-    color: #FFF;
-}
-.navbar-desc{
-    color: #666;
-    font-style: italic;
-}
-.header-search{
-    width: 100%;
-    height: 40px;
-    padding-top: 220px;
-    padding-bottom: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.search-input{
-    width: 30%;
-}
-#searchInput{
-    width: 240px;
-    float: right;
-    margin-right: 20px;
-    background-color: rgba(255,255,255,0.2);
-}
-#searchInput:focus{
-    background-color: #FFF;
+.metadata p {
+  margin: 0;
+  padding: 0;
 }
 
-.contents{
-    padding-left: 30%;
-    background-color: #333;
+
+/*reset spacing*/
+
+.header {
+  height: 280px;
+  background: url('https://ss1.bdstatic.com/kvoZeXSm1A5BphGlnYG/skin/12.jpg?2') fixed #000033;
 }
-.contents>.container{
-    min-height: 500px;
-    padding: 40px;
-    background-color: #FFF;
+
+.header-logo {
+  height: 120px;
+  float: left;
+  padding: 80px 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 30%;
 }
-.footer{
-    color: #FFF;
-    background-color: #000;
+
+.header-logo>img {
+  float: right;
+  padding-right: 20px;
 }
-.footer>.container{
-    padding: 20px;
+
+.header-title {
+  float: left;
+  padding: 80px 0;
+  width: 70%;
 }
-.notFound{
-    font-weight: bold;
+
+.header-title a {
+  color: #FFF;
 }
+
+.header-title a:hover {
+  color: #FFF;
+}
+
+.header-title h1,
+.header-intro {
+  margin-left: 20px;
+}
+
+.header-title h1 {
+  font-size: 64px;
+  line-height: 80px;
+}
+
+.header-intro {
+  color: #999;
+  font-size: 32px;
+  line-height: 40px
+}
+
+.navbar {
+  float: left;
+  padding: 40px 0;
+  width: 30%;
+  height: 100%;
+}
+
+.navbar-list {
+  margin-right: 40px;
+  float: right;
+}
+
+.navbar-item {
+  list-style: none;
+  text-align: right;
+  min-width: 200px;
+  height: 80px;
+  border-bottom: 1px solid #666;
+  margin-bottom: 20px;
+  padding-right: 10px;
+}
+
+.navbar-link {
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: 40px;
+  font-size: 32px;
+  color: #CCC;
+}
+
+.navbar-link:hover {
+  color: #FFF;
+}
+
+.navbar-desc {
+  color: #666;
+  font-style: italic;
+}
+
+.header-search {
+  width: 100%;
+  height: 40px;
+  padding-top: 220px;
+  padding-bottom: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.search-input {
+  width: 30%;
+}
+
+#searchInput {
+  width: 240px;
+  float: right;
+  margin-right: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#searchInput:focus {
+  background-color: #FFF;
+}
+
+.contents {
+  padding-left: 30%;
+  background-color: #333;
+}
+
+.contents>.container {
+  min-height: 500px;
+  padding: 40px;
+  background-color: #FFF;
+}
+
+.footer {
+  color: #FFF;
+  background-color: #000;
+}
+
+.footer>.container {
+  padding: 20px;
+}
+
+.notFound {
+  font-weight: bold;
+}
+
+.markdown {
+  padding: 0;
+  padding-bottom: 20px;
+}
+
 
 /* ==========================================================================
    List classes
    ========================================================================== */
 
-.list-header p{
-    text-align: right;
-    color: #999;
-    margin-bottom: 20px;
-    border-bottom: 1px #CCC solid;
+.list-header p {
+  text-align: right;
+  color: #999;
+  margin-bottom: 20px;
+  border-bottom: 1px #CCC solid;
 }
-.list-item{
-    margin-bottom: 20px;
-    max-width: 660px;
+
+.list-item {
+  margin-bottom: 20px;
+  max-width: 660px;
 }
-.item-thumb{
-    float: left;
-    width: 200px;
-    height: 120px;
+
+.item-thumb {
+  float: left;
+  width: 200px;
+  height: 120px;
 }
-.thumb-image{
-    width: 199px;
-    height: 119px;
-    overflow: hidden;
-    background-position: 50% 25%;
-    -webkit-background-size: cover;
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: -webkit-flex;
-    display: flex;
-    border: 1px solid #CCC;
+
+.thumb-image {
+  width: 199px;
+  height: 119px;
+  overflow: hidden;
+  background-position: 50% 25%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: -webkit-flex;
+  display: flex;
+  border: 1px solid #CCC;
 }
-.item-info{
-    margin-left: 210px;
-    line-height: 20px;
+
+.item-info {
+  margin-left: 210px;
+  line-height: 20px;
 }
-.info-main h2{
-    font-size: 32px;
-    line-height: 40px;
-    font-weight: bold;
+
+.info-main h2 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: bold;
 }
-.info-main p{
-    color: #333;
+
+.info-main p {
+  color: #333;
 }
-.metadata{
-    height: 20px;
+
+.metadata {
+  height: 20px;
 }
-.metadata p,.metadata a{
-    color: #999;
+
+.metadata p,
+.metadata a {
+  color: #999;
 }
-.metadata a:hover{
-    text-decoration: none;
+
+.metadata a:hover {
+  text-decoration: none;
 }
-.metadata p{
-    font-size: 12px;
-    line-height: 20px;
-    float: left;
-    margin-right: 10px;
+
+.metadata p {
+  font-size: 12px;
+  line-height: 20px;
+  float: left;
+  margin-right: 10px;
 }
-.metadata a:hover{
-    text-decoration: underline;
+
+.metadata a:hover {
+  text-decoration: underline;
 }
-.info-desc{
-    height: 40px;
+
+.info-desc {
+  height: 40px;
 }
-.tags a{
-    color: #CCC;
-    font-size: 12px;
-    line-height: 16px;
-    border: 1px #CCC solid;
-    border-radius: 2px;
-    padding: 1px 4px;
-    margin-right: 4px;
+
+.tags a {
+  color: #CCC;
+  font-size: 12px;
+  line-height: 16px;
+  border: 1px #CCC solid;
+  border-radius: 2px;
+  padding: 1px 4px;
+  margin-right: 4px;
 }
-.tags a:hover{
-    color: #999;
-    background-color: #EEE;
+
+.tags a:hover {
+  color: #999;
+  background-color: #EEE;
 }
-.list-footer{
-    margin-top: 40px;
-    text-align: center;
+
+.list-footer {
+  margin-top: 40px;
+  text-align: center;
 }
+
 
 /* ==========================================================================
    author classes
    ========================================================================== */
-author>.container{
-    padding: 20px;
-    background-color: #EEE;
-    border-radius: 4px;
-    margin-top: 80px;
+
+author>.container {
+  padding: 20px;
+  background-color: #EEE;
+  border-radius: 4px;
+  margin-top: 80px;
 }
-author a:hover{
-    text-decoration: underline;
+
+author a:hover {
+  text-decoration: underline;
 }
-.authorLeft{
-    width: 160px;
-    float: left;
-    text-align: center;
+
+.authorLeft {
+  width: 160px;
+  float: left;
+  text-align: center;
 }
-.authorAvatar{
-    display: block;
-    padding: 0 20px 10px 20px;
+
+.authorAvatar {
+  display: block;
+  padding: 0 20px 10px 20px;
 }
-.authorAvatar img{
-    width: 120px;
-    height: 120px;
-    border-radius: 60px;
+
+.authorAvatar img {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
 }
-.authorAvatar img:hover{
-    opacity: 0.8;
+
+.authorAvatar img:hover {
+  opacity: 0.8;
 }
-.authorRight{
-    padding-left: 180px;
-    color: #333;
+
+.authorRight {
+  padding-left: 180px;
+  color: #333;
 }
-.authorLink{
-    color: #000;
-    font-size: 16px;
-    line-height: 20px;
-    word-wrap: break-word;
+
+.authorLink {
+  color: #000;
+  font-size: 16px;
+  line-height: 20px;
+  word-wrap: break-word;
 }
+
 
 /* ==========================================================================
    Helper classes
    ========================================================================== */
+
 
 /*
  * Hide visually and from screen readers
  */
 
 .hidden {
-    display: none !important;
+  display: none !important;
 }
+
 
 /*
  * Hide only visually, but have it available for screen readers:
@@ -418,15 +508,16 @@ author a:hover{
  */
 
 .visuallyhidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
+
 
 /*
  * Extends the .visuallyhidden class to allow the element
@@ -436,21 +527,23 @@ author a:hover{
 
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
-    clip: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-    width: auto;
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
 }
+
 
 /*
  * Hide visually and from screen readers, but maintain layout
  */
 
 .invisible {
-    visibility: hidden;
+  visibility: hidden;
 }
+
 
 /*
  * Clearfix: contain floats
@@ -466,28 +559,32 @@ author a:hover{
 
 .clearfix:before,
 .clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
 }
 
 .clearfix:after {
-    clear: both;
+  clear: both;
 }
+
 
 /* ==========================================================================
    Responsive classes
    ========================================================================== */
 
 @media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
+  /* Style adjustments for viewports that meet the condition */
 }
 
 @media print,
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 1.25dppx),
-       (min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
 }
+
 
 /* ==========================================================================
    Print styles.
@@ -496,74 +593,63 @@ author a:hover{
    ========================================================================== */
 
 @media print {
-    *,
-    *:before,
-    *:after,
-    *:first-letter,
-    *:first-line {
-        background: transparent !important;
-        color: #000 !important; /* Black prints faster:
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  *:first-line {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster:
                                    http://www.sanbeiji.com/archives/953 */
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
-
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
-
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
-
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
-
-    /*
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  /*
      * Don't show links that are fragment identifiers,
      * or use the `javascript:` pseudo protocol
      */
-
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
-    }
-
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
-
-    /*
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  /*
      * Printing Tables:
      * http://css-discuss.incutio.com/wiki/Printing_Tables
      */
-
-    thead {
-        display: table-header-group;
-    }
-
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
-
-    img {
-        max-width: 100% !important;
-    }
-
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
-
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
+  thead {
+    display: table-header-group;
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  img {
+    max-width: 100% !important;
+  }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
 }
