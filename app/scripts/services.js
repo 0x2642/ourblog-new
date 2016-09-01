@@ -43,9 +43,10 @@
   // });
 
   //List接口
-  blogServices.factory('blogList', function($resource) {
+  blogServices.factory('blogList', function($resource, nProgress) {
     return {
       get: function(params, page, callback) {
+        nProgress.start();
         params.page = page || 1;
         return $resource(SERVICE_PATH.LIST, {
           tag: '@tag',
@@ -54,6 +55,7 @@
           page: '@page'
         }).get(params, callback, function(response) {
           // blogMessage.error(response.status);
+          nProgress.done();
         });
       }
     };
@@ -96,5 +98,23 @@
         });
       }
     };
+  });
+
+  //NProgress插件封装
+  blogServices.factory('nProgress', function() {
+    var start = function() {
+      NProgress.start();
+    };
+
+    var done = function() {
+      NProgress.done();
+      NProgress.remove();
+    };
+
+    return {
+      start: start,
+      done: done
+    };
+
   });
 }());
