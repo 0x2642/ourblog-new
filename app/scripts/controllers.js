@@ -8,7 +8,7 @@
     //TODO: Initialize View
 
     $scope.updateTitle = function(newTitle) {
-      $scope.pageTitle = newTitle;
+      $scope.pageTitle = newTitle + ' - 0x2642 Blog';
       return newTitle;
     };
 
