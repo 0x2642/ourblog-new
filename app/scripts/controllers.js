@@ -8,7 +8,7 @@
     //TODO: Initialize View
 
     $scope.updateTitle = function(newTitle) {
-      $scope.pageTitle = newTitle;
+      $scope.pageTitle = newTitle + ' - 0x2642 Blog';
       return newTitle;
     };
 
@@ -21,7 +21,7 @@
     };
   })
 
-  .controller('ListController', function($scope, $stateParams, blogList) {
+  .controller('ListController', function($scope, $stateParams, blogAPI, nProgress) {
 
     var params = {};
     if ($stateParams.tid) {
@@ -48,13 +48,19 @@
       $scope.meta = $scope.updateTitle("主页");
     }
     var getList = function(page) {
-      blogList.get(params, page, function(data) {
-        $scope.articles = data.articles;
-        $scope.pagenation = data.pagenation;
-        if ($stateParams.uid && data.articles && data.articles[0].author && data.articles[0].author.name) {
-          $scope.meta = $scope.updateTitle("@" + data.articles[0].author.name);
-        }
-      });
+      nProgress.start();
+      blogAPI.getArticleList(params, page)
+        .then(function(data) {
+          $scope.articles = data.articles;
+          $scope.pagenation = data.pagenation;
+          if ($stateParams.uid && data.articles && data.articles[0].author && data.articles[0].author.name) {
+            $scope.meta = $scope.updateTitle("@" + data.articles[0].author.name);
+          }
+          return data;
+        })
+        .finally(function() {
+          nProgress.done();
+        });
     };
     getList(); //init
 
@@ -72,29 +78,39 @@
     };
   })
 
-  .controller('ArticleController', function($scope, $stateParams, $sce, blogArticle) {
-    $scope.article = blogArticle.view($stateParams.aid, function(data) {
-      $scope.updateTitle(data.title || "未找到文章");
-
-      $scope.mdView = editormd && editormd.markdownToHTML("md-view", {
-        markdown: data.content,
-        htmlDecode: "style,script,iframe", // you can filter tags decode
-        emoji: true,
-        taskList: true,
-        tex: true, // 默认不解析
-        flowChart: true, // 默认不解析
-        sequenceDiagram: true, // 默认不解析
+  .controller('ArticleController', function($scope, $stateParams, blogAPI, nProgress) {
+    nProgress.start();
+    blogAPI.getArticle($stateParams.aid)
+      .then(function(data) {
+        if (data) {
+          $scope.article = data;
+          $scope.updateTitle(data.title);
+          $scope.mdView = editormd && editormd.markdownToHTML("md-view", {
+            markdown: data.content,
+            htmlDecode: "style,script,iframe", // you can filter tags decode
+            emoji: true,
+            taskList: true,
+            tex: true, // 默认不解析
+            flowChart: true, // 默认不解析
+            sequenceDiagram: true, // 默认不解析
+          });
+        }
+        return data;
+      })
+      .finally(function() {
+        nProgress.done();
       });
-
-    });
   })
 
-  .controller("AuthorController", function($scope, blogAuthor) {
+  .controller("AuthorController", function($scope, blogAPI) {
     $scope.$watch(function() {
       return $scope.uid;
     }, function() {
       if ($scope.uid) {
-        $scope.author = blogAuthor.get($scope.uid);
+        blogAPI.getAuthor($scope.uid)
+          .then(function(data) {
+            $scope.author = data;
+          });
       }
     });
   });

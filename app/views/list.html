@@ -1,30 +1,30 @@
-<div class="list-header">
-	<p class="reset">{{meta}}</p>
-</div>
-<div class="list-body">
-	<div class="list-item" ng-repeat="article in articles">
-		<div class="item-thumb">
-			<div class="thumb-image" style="display: block;opacity: 1;background-image:url('{{article.thumb}}')"></div>
-		</div>
-		<div class="item-info">
-			<div class="info-main">
-				<h2><a ui-sref="article({aid: article._id})">{{article.title}}</a></h2>
-				<div class="metadata clearfix">
-					<p>作者：<a ui-sref="author({uid: article.author.id})">{{article.author.name}}</a></p>
-					<p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
-				</div>
-				<p class="info-desc">{{article.description}}</p>
-			</div>
-			<div class="tags">
-				<a ng-repeat="tag in article.tags" ui-sref="tag({tid:tag})">{{tag}}</a>
-			</div>
-		</div>
-	</div>
-</div>
+<div class="wrapper" ng-if="articles">
+  <div class="list-header">
+    <p class="reset">{{meta}}</p>
+  </div>
+  <div class="list-body">
+    <div class="list-item" ng-repeat="article in articles">
+      <div class="item-thumb">
+        <div class="thumb-image" style="display: block;opacity: 1;background-image:url('{{article.thumb}}')"></div>
+      </div>
+      <div class="item-info">
+        <div class="info-main">
+          <h2><a ui-sref="article({aid: article._id})">{{article.title}}</a></h2>
+          <div class="metadata clearfix">
+            <p>作者：<a ui-sref="author({uid: article.author.id})">{{article.author.name}}</a></p>
+            <p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
+          </div>
+          <p class="info-desc">{{article.description}}</p>
+        </div>
+        <div class="tags">
+          <a ng-repeat="tag in article.tags" ui-sref="tag({tid:tag})">{{tag}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div ng-hide="articles" class="notFound">呀，什么都没有</div>
-
-<div class="list-footer">
-	<button ng-click="previousPage()" ng-hide="!pagenation||(pagenation.current==1)" class="large">上一页</button>
-	<button ng-click="nextPage()" ng-hide="(pagenation.current==pagenation.max)" class="large">下一页</button>
+  <div class="list-footer" ng-if="pagenation.max>1">
+    <button ng-click="previousPage()" ng-hide="!pagenation||(pagenation.current==1)" class="large">上一页</button>
+    <button ng-click="nextPage()" ng-hide="(pagenation.current==pagenation.max)" class="large">下一页</button>
+  </div>
 </div>

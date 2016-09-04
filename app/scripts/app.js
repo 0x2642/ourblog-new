@@ -9,6 +9,13 @@
     'blogFilters'
   ])
 
+  .run(function() {
+    NProgress.configure({
+      showSpinner: false,
+      minimum: 0.1
+    });
+  })
+
   .config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');

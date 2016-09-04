@@ -339,6 +339,11 @@ textarea:focus {
   padding-bottom: 20px;
 }
 
+#nprogress .bar {
+  background: #F00;
+  box-shadow: 0 1px 2px 0 #F00;
+}
+
 
 /* ==========================================================================
    List classes
