@@ -1,4 +1,4 @@
-<article class="article" ng-show="article._id">
+<article class="article" ng-if="article._id">
   <div class="tags">
     <a ng-repeat="tag in article.tags" ui-sref="tag({tid:tag})">{{tag}}</a>
   </div>
@@ -11,6 +11,4 @@
   <div id="md-view" class="markdown"></div>
 </article>
 
-<author uid="article.author.id" ng-show="article.id"></author>
-
-<div ng-hide="article._id" class="notFound {{article.$resolved?'':'hidden'}}">呀，什么都没有</div>
+<author uid="article.author.id" ng-if="article.id"></author>

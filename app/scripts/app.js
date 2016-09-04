@@ -11,7 +11,8 @@
 
   .run(function() {
     NProgress.configure({
-      showSpinner: false
+      showSpinner: false,
+      minimum: 0.1
     });
   })
 
