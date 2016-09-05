@@ -20,20 +20,6 @@
 
     $urlRouterProvider.otherwise('/');
 
-    //TODO: why it doesn't work?
-    // $urlRouterProvider.deferIntercept(function($injector, $q) {
-    //   return {
-    //     responseError: function (response) {
-    //       console.log('response error');
-    //       var $state = $injector.get('state');
-    //       if (response.state === 404 && $state.current !== 'home') {
-    //         $state.go('^');
-    //       }
-    //       return $q.reject(response);
-    //     }
-    //   };
-    // });
-
     var listView = {
       'content': {
         controller: 'ListController',

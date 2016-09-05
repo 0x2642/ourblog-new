@@ -26,26 +26,26 @@
     var params = {};
     if ($stateParams.tid) {
       //tag
-      $scope.meta = $scope.updateTitle("#" + $stateParams.tid);
+      $scope.meta = $scope.updateTitle('#' + $stateParams.tid);
       params.tag = $stateParams.tid;
     } else if ($stateParams.uid) {
       //author
-      $scope.meta = $scope.updateTitle("@" + $stateParams.uid);
+      $scope.meta = $scope.updateTitle('@' + $stateParams.uid);
       params.author = $stateParams.uid;
     } else if ($stateParams.text) {
       //search
-      $scope.updateTitle("搜索结果");
-      $scope.meta = "搜索：" + $stateParams.text;
+      $scope.updateTitle('搜索结果');
+      $scope.meta = '搜索：' + $stateParams.text;
       var arr;
       arr = $stateParams.text.match(/(?:tag:|#)(\w+\b)/i); //匹配标签
-      params.tag = arr && arr[1] || "";
+      params.tag = arr && arr[1] || '';
       arr = $stateParams.text.match(/(?:^|\s+)([\w\u4e00-\u9fa5\u0800-\u4e00]+)(?:\s+|$)/i); //匹配关键词（中日英数）
-      params.keyword = arr && arr[1] || "";
+      params.keyword = arr && arr[1] || '';
       arr = $stateParams.text.match(/(?:author:|@)(\w+\b)/i); //匹配作者
-      params.author = arr && arr[1] || "";
+      params.author = arr && arr[1] || '';
     } else {
       //home
-      $scope.meta = $scope.updateTitle("主页");
+      $scope.meta = $scope.updateTitle('主页');
     }
     var getList = function(page) {
       nProgress.start();
@@ -54,7 +54,7 @@
           $scope.articles = data.articles;
           $scope.pagenation = data.pagenation;
           if ($stateParams.uid && data.articles && data.articles[0].author && data.articles[0].author.name) {
-            $scope.meta = $scope.updateTitle("@" + data.articles[0].author.name);
+            $scope.meta = $scope.updateTitle('@' + data.articles[0].author.name);
           }
           return data;
         })
@@ -85,9 +85,9 @@
         if (data) {
           $scope.article = data;
           $scope.updateTitle(data.title);
-          $scope.mdView = editormd && editormd.markdownToHTML("md-view", {
+          $scope.mdView = editormd && editormd.markdownToHTML('md-view', {
             markdown: data.content,
-            htmlDecode: "style,script,iframe", // you can filter tags decode
+            htmlDecode: 'style,script,iframe', // you can filter tags decode
             emoji: true,
             taskList: true,
             tex: true, // 默认不解析
@@ -102,7 +102,7 @@
       });
   })
 
-  .controller("AuthorController", function($scope, blogAPI) {
+  .controller('AuthorController', function($scope, blogAPI) {
     $scope.$watch(function() {
       return $scope.uid;
     }, function() {

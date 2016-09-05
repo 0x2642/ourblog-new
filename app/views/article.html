@@ -1,4 +1,4 @@
-<article class="article" ng-if="article._id">
+<article class="article" ng-show="article._id">
   <div class="tags">
     <a ng-repeat="tag in article.tags" ui-sref="tag({tid:tag})">{{tag}}</a>
   </div>
@@ -11,7 +11,4 @@
   <div id="md-view" class="markdown"></div>
 </article>
 
-<author uid="article.author.id" ng-if="article.id"></author>
-
-<p>Context</p>
-<a>{{article.content}}</a>
+<author uid="article.author.id" ng-show="article.id"></author>

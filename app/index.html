@@ -23,25 +23,25 @@
         <img src="https://avatars2.githubusercontent.com/u/12589920?v=3&s=120" />
       </div>
       <div class="header-title clearfix">
-        <h1><a ui-sref="home">0x2642 Blog</a></h1>
+        <h1><a ui-sref-opts="{reload:true}" ui-sref="home">0x2642 Blog</a></h1>
         <p class="header-intro">//当你下班的时候想想还在加班的教主</p>
       </div>
       <nav class="navbar clearfix">
         <ul class="navbar-list">
           <li class="navbar-item">
-            <a class="navbar-link" ui-sref="home">Home</a>
+            <a class="navbar-link" ui-sref-opts="{reload:true}" ui-sref="home">Home</a>
             <p class="navbar-desc">肮脏的主页</p>
           </li>
           <li class="navbar-item">
-            <a class="navbar-link" ui-sref="tag({tid: 'Code'})">Code</a>
+            <a class="navbar-link" ui-sref-opts="{reload:true}" ui-sref="tag({tid: 'Code'})">Code</a>
             <p class="navbar-desc">加班之道</p>
           </li>
           <li class="navbar-item">
-            <a class="navbar-link" ui-sref="tag({tid: 'ACG'})">ACG</a>
+            <a class="navbar-link" ui-sref-opts="{reload:true}" ui-sref="tag({tid: 'ACG'})">ACG</a>
             <p class="navbar-desc">萌萌二次元</p>
           </li>
           <li class="navbar-item">
-            <a class="navbar-link" ui-sref="tag({tid: 'Life'})">Life</a>
+            <a class="navbar-link" ui-sref-opts="{reload:true}" ui-sref="tag({tid: 'Life'})">Life</a>
             <p class="navbar-desc">生活与哲学</p>
           </li>
         </ul>
@@ -75,14 +75,14 @@
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>
   <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="bower_components/editor.md/editormd.js"></script>
   <script src="bower_components/editor.md/lib/marked.min.js"></script>
   <script src="bower_components/editor.md/lib/prettify.min.js"></script>
+  <script src="bower_components/editor.md/lib/raphael.min.js"></script>
+  <script src="bower_components/editor.md/lib/underscore.min.js"></script>
+  <script src="bower_components/editor.md/lib/sequence-diagram.min.js"></script>
   <script src="bower_components/editor.md/lib/flowchart.min.js"></script>
   <script src="bower_components/editor.md/lib/jquery.flowchart.min.js"></script>
-  <script src="bower_components/editor.md/lib/underscore.min.js"></script>
-  <script src="bower_components/editor.md/lib/raphael.min.js"></script>
-  <script src="bower_components/editor.md/lib/sequence-diagram.min.js"></script>
+  <script src="bower_components/editor.md/editormd.js"></script>
   <script src="bower_components/nprogress/nprogress.js"></script>
   <script src="scripts/app.js"></script>
   <script src="scripts/controllers.js"></script>

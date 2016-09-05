@@ -46,11 +46,11 @@
   blogServices.factory('nProgress', function() {
     var start = function() {
       NProgress.start();
+      NProgress.set(0.4);
     };
 
     var done = function() {
       NProgress.done();
-      NProgress.remove();
     };
 
     return {
