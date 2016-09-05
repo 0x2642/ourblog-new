@@ -3,6 +3,7 @@ var strings = require('../strings.js');
 var path = require("path");
 var Dao = require('../../dao/indexDAO.js');
 var adminCtl = Dao.Admin;
+var articleCtl = Dao.Article;
 var util = require('../../util');
 var crypto = require('../../util/crypto');
 var consts = require('../../util/constant');
@@ -19,12 +20,20 @@ exports.messageListIdx = function(req, res, next) {
 	renderRequest(req, res, next, 'view/subadmin/subadmin_message_list.ejs', 'index');
 }
 
+exports.articlePostIndex = function(req, res, next) {
+	renderRequest(req, res, next, 'view/subadmin/subadmin_article.ejs', 'index');
+}
+
 exports.messageSubmit = function(req, res, next) {
 	renderRequest(req, res, next, null, 'msg_submit');
 }
 
 exports.subAdminLogin = function(req, res, next) {
 	renderRequest(req, res, next, null, 'sub_admin_login');
+}
+
+exports.artilePostSubmit = function(req, res, next) {
+	renderRequest(req, res, next, null, 'art_submit');
 }
 
 function renderRequest(req, res, next, target_view, type) {
@@ -59,6 +68,8 @@ function renderRequest(req, res, next, target_view, type) {
 					indexRenderRequest(res, admin, target_view);
 				} else if (type == 'msg_submit') {
 					messageSubmitRequest(req, res, next, admin);
+				} else if (type == 'art_submit') {
+					articleSubmitRequest(req, res, next, admin);
 				} else {
 					// TODO Nothing
 				}
@@ -75,6 +86,41 @@ function indexRenderRequest(res, admin, target_view) {
 		title: strings.getPageTitle('STR_ADMIN_01_01_01'),
 		sidebar_dashboard: strings.getPageTitle('STR_ADMIN_01_02_01'),
 		admin: admin
+	});
+}
+
+function articleSubmitRequest(req, res, next, admin) {
+	var userInfo = {
+		author: {
+			'id': '11', 
+			'name': admin.username
+		},
+		title: req.body.article_title,
+		description: req.body.article_description,
+		content: req.body.article_context,
+		createTime: new Date().getTime(),
+		thumb: 'images/thumb.jpg',
+		status: 1,
+		tags : [
+			'code',
+			'jiaban'
+		]
+	};
+	var ep = new EventProxy();
+	ep.fail(next);
+
+	ep.on('save_error', function(errmsg) {
+		res.render(path.join(getViewPath() + 'view/admin_error.ejs'), {
+			err_msg: errmsg
+		});
+	});
+
+	articleCtl.save(userInfo, function(err) {
+		if (err) {
+			ep.emit('save_error', strings.getPageTitle('STR_ARTICLE_ERR_01'));
+		} else {
+			res.redirect('/admin/subadmin_dashboard');
+		}
 	});
 }
 

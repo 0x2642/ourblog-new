@@ -16,5 +16,7 @@ var StringList = {
 	"STR_ADMIN_ERR_04" : "删除所有用户失败",
 	"STR_ADMIN_ERR_05" : "未找到用户",
 	"STR_ADMIN_ERR_06" : "更新申诉失败",
-	"STR_ADMIN_ERR_07" : "用户名和密码不匹配"
+	"STR_ADMIN_ERR_07" : "用户名和密码不匹配", 
+
+	"STR_ARTICLE_ERR_01": "文章录入失败"
 }

@@ -152,12 +152,10 @@ exports.save = function(artistInfo, callback) {
     articleModel.title = artistInfo.title;
     articleModel.description = artistInfo.description;
     articleModel.content = artistInfo.content;
-    articleModel.createTime = artistInfo.createTime;
     articleModel.thumb = artistInfo.thumb;
     articleModel.status = artistInfo.status;
     articleModel.tags = artistInfo.tags;
     articleModel.save(callback);
   }
-
 
 };

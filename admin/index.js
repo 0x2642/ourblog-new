@@ -262,6 +262,9 @@ router.post('/subadmin_message', subAdminController.messageSubmit);
 
 router.get('/subadmin_message_list', subAdminController.messageListIdx);
 
+router.get('/subadmin_post', subAdminController.articlePostIndex);
+router.post('/subadmin_post', subAdminController.artilePostSubmit);
+
 router.get('/logout', subAdminController.subadminLogout);
 
 
