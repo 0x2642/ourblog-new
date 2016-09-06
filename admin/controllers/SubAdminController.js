@@ -89,7 +89,20 @@ function indexRenderRequest(res, admin, target_view) {
 	});
 }
 
+function contractTags(tag, tags) {
+	// Exclude empty tags
+	if (null != tag && undefined != tag && tag.length > 0) {
+		tags.push(tag);
+	}
+	return tags;
+}
+
 function articleSubmitRequest(req, res, next, admin) {
+	var tags = [];
+	tags = contractTags(req.body.tag3, contractTags(req.body.tag2, 
+		contractTags(req.body.tag1, tags)));
+	console.log('tags: ' + tags);
+
 	var userInfo = {
 		author: {
 			'id': '11', 
@@ -101,10 +114,7 @@ function articleSubmitRequest(req, res, next, admin) {
 		createTime: new Date().getTime(),
 		thumb: 'images/thumb.jpg',
 		status: 1,
-		tags : [
-			'code',
-			'jiaban'
-		]
+		tags : tags
 	};
 	var ep = new EventProxy();
 	ep.fail(next);
