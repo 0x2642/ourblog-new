@@ -12,7 +12,7 @@
           <h2><a ui-sref="article({aid: article._id})">{{article.title}}</a></h2>
           <div class="metadata clearfix">
             <p>作者：<a ui-sref="author({uid: article.author.id})">{{article.author.name}}</a></p>
-            <p>时间：{{article.timestamp|date:"yyyy-MM-dd"}}</p>
+            <p>时间：{{article.createTime | date:"yyyy-MM-dd"}}</p>
           </div>
           <p class="info-desc">{{article.description}}</p>
         </div>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="list-footer" ng-if="pagenation.max>1">
-    <button ng-click="previousPage()" ng-hide="!pagenation||(pagenation.current==1)" class="large">上一页</button>
-    <button ng-click="nextPage()" ng-hide="(pagenation.current==pagenation.max)" class="large">下一页</button>
+    <button ng-click="previousPage()" ng-hide="!pagenation||(pagenation.current===1)" class="large">上一页</button>
+    <button ng-click="nextPage()" ng-hide="(pagenation.current===pagenation.max)" class="large">下一页</button>
   </div>
 </div>
