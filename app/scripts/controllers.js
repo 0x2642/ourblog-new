@@ -57,7 +57,7 @@
           }
           $scope.articles = data.articles;
           $scope.pagenation = data.pagenation;
-          if ($stateParams.uid && data.articles && data.articles[0].author && data.articles[0].author.name) {
+          if ($stateParams.uid && data.articles[0] && data.articles[0].author && data.articles[0].author.name) {
             $scope.meta = $scope.updateTitle('@' + data.articles[0].author.name);
           }
           return data;
