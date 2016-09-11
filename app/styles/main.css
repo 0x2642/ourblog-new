@@ -344,6 +344,27 @@ textarea:focus {
   box-shadow: 0 1px 2px 0 #F00;
 }
 
+.msg-box {
+  font-weight: bold;
+  z-index: 9999;
+  position: fixed;
+  top: 5%;
+  right: -240px;
+  width: 200px;
+  min-height: 40px;
+  padding: 10px 20px;
+  background-color: #FCFCFC;
+  border-radius: 4px;
+  opacity: 0;
+  box-shadow: 0 0 8px 0 #000;
+  transition: all 200ms ease-out;
+}
+
+.msg-box.show {
+  right: 20px;
+  opacity: 1;
+}
+
 
 /* ==========================================================================
    List classes

@@ -3,7 +3,7 @@
 
   var blogController = angular.module('blogController', ['ngSanitize'])
 
-  .controller('BlogController', function($scope, $state) {
+  .controller('BlogController', function($scope, $state, MessageService) {
 
     //TODO: Initialize View
 
@@ -21,7 +21,7 @@
     };
   })
 
-  .controller('ListController', function($scope, $stateParams, blogAPI, nProgress) {
+  .controller('ListController', function($scope, $stateParams, blogAPI, nProgress, MessageService) {
 
     var params = {};
     if ($stateParams.tid) {
@@ -51,12 +51,20 @@
       nProgress.start();
       blogAPI.getArticleList(params, page)
         .then(function(data) {
+          if (data.articles.length === 0) {
+            MessageService.push('这里什么都没有！');
+            MessageService.redirectTo();
+          }
           $scope.articles = data.articles;
           $scope.pagenation = data.pagenation;
           if ($stateParams.uid && data.articles && data.articles[0].author && data.articles[0].author.name) {
             $scope.meta = $scope.updateTitle('@' + data.articles[0].author.name);
           }
           return data;
+        })
+        .catch(function(msg) {
+          MessageService.push(msg);
+          MessageService.redirectTo();
         })
         .finally(function() {
           nProgress.done();
@@ -78,7 +86,7 @@
     };
   })
 
-  .controller('ArticleController', function($scope, $stateParams, blogAPI, nProgress) {
+  .controller('ArticleController', function($scope, $stateParams, blogAPI, nProgress, MessageService) {
     nProgress.start();
     blogAPI.getArticle($stateParams.aid)
       .then(function(data) {
@@ -97,6 +105,10 @@
         }
         return data;
       })
+      .catch(function(msg) {
+        MessageService.push(msg);
+        MessageService.redirectTo();
+      })
       .finally(function() {
         nProgress.done();
       });
@@ -111,6 +123,26 @@
           .then(function(data) {
             $scope.author = data;
           });
+      }
+    });
+  })
+
+  .controller('MessageController', function($scope, MessageService, $timeout) {
+    var messages = $scope.messages = [];
+
+    $scope.isShow = false;
+
+    $scope.$watch(MessageService.getQueryLength, function(value) {
+      if (value > 0) {
+        messages.push('出错啦！' + MessageService.pop());
+        $scope.isShow = true;
+        $timeout(5000).then(function() {
+          $scope.isShow = false;
+          messages.shift();
+          if (messages.length > 0) {
+            $scope.isShow = true;
+          }
+        });
       }
     });
   });

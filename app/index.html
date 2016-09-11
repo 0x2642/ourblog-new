@@ -67,7 +67,9 @@
     </div>
   </footer>
 
-  <div class="msg-box" ng-class="{hidden: !hasError}"></div>
+  <div class="msg-box" ng-controller="MessageController" ng-class="{show: isShow}">
+    <p ng-bind="messages[0]"></p>
+  </div>
 
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
